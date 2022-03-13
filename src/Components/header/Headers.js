@@ -15,6 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import logo from '../../logo.svg'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -156,30 +157,34 @@ export function Headers() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" style={{backgroundColor:"white", boxShadow:"rgb(140 152 164 / 25%) 0px 3px 6px 0px"}} >
                 <Toolbar>
                     <IconButton
                         size="large"
                         edge="start"
-                        color="inherit"
+                        style={{color:"rgb(34, 51, 84)"}}
                         aria-label="open drawer"
                         sx={{ mr: 2 }}
                     >
                         <MenuIcon />
                     </IconButton>
+                    {/*<img src={logo} width={50}/>*/}
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
+                        style={{color:"rgb(34, 51, 84)"}}
                     >
                         MUI
                     </Typography>
-                    <Search>
+
+                    <Search style={{backgroundColor:"rgba(110, 117, 159, 0.1)"}}>
                         <SearchIconWrapper>
-                            <SearchIcon />
+                            <SearchIcon style={{color:"rgb(34, 51, 84)"}} />
                         </SearchIconWrapper>
                         <StyledInputBase
+                            style={{color:"rgb(34, 51, 84)"}}
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
                         />
@@ -188,7 +193,7 @@ export function Headers() {
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={4} color="error">
-                                <MailIcon />
+                                <MailIcon style={{color:"rgb(34, 51, 84)"}} />
                             </Badge>
                         </IconButton>
                         <IconButton
@@ -197,7 +202,7 @@ export function Headers() {
                             color="inherit"
                         >
                             <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
+                                <NotificationsIcon style={{color:"rgb(34, 51, 84)"}} />
                             </Badge>
                         </IconButton>
                         <IconButton
@@ -209,7 +214,7 @@ export function Headers() {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <AccountCircle style={{color:"rgb(34, 51, 84)"}} />
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
