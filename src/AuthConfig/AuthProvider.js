@@ -1,15 +1,16 @@
-import {createContext, useEffect, useState} from "react";
-import {API_BASE} from "../Constants/Constants";
+import { createContext, useEffect, useState } from "react";
+import { API_BASE } from "../Constants/Constants";
+import { useSnackbar } from "notistack";
 
 export const AuthContext = createContext(null);
-const axios = require('axios').default;
+const axios = require("axios").default;
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   const signin = (userData, callback) => {
-    authenticate(userData)
-    callback();
+    authenticate(userData, callback);
   };
 
   const signout = (callback) => {
@@ -17,34 +18,37 @@ function AuthProvider({ children }) {
     callback();
   };
 
-  useEffect(()=>{
-    isAuthenticated()
-  },[])
+  useEffect(() => {
+    isAuthenticated();
+  }, []);
 
-  async function authenticate(userData) {
+  async function authenticate(userData, callback) {
     try {
-      const response = await axios.post(`${API_BASE}/authenticate`,userData);
-      if(response.status === 200){
-        localStorage.setItem("token", response.data.id_token)
-        profile()
+      const response = await axios.post(`${API_BASE}/authenticate`, userData);
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.id_token);
+        profile();
+        callback();
       }
     } catch (error) {
-      console.error(error);
+      enqueueSnackbar(`Login or password wrong! Please try again!`, {
+        variant: "error",
+      });
     }
   }
 
   async function isAuthenticated() {
     try {
       let jwtToken = localStorage.getItem("token");
-      console.log(jwtToken)
-      if(jwtToken != null && !(jwtToken === "")){
+      console.log(jwtToken);
+      if (jwtToken != null && !(jwtToken === "")) {
         const response = await axios.get(`${API_BASE}/account/authenticate`, {
           headers: {
-            "Authorization": `Bearer ${jwtToken}`
-          }
+            Authorization: `Bearer ${jwtToken}`,
+          },
         });
-        if(response.status === 200){
-          profile()
+        if (response.status === 200) {
+          profile();
         }
       }
     } catch (error) {
@@ -52,18 +56,17 @@ function AuthProvider({ children }) {
     }
   }
 
-
   async function profile() {
     try {
       let jwtToken = localStorage.getItem("token");
-        const response = await axios.get(`${API_BASE}/account`, {
-          headers: {
-            "Authorization": `Bearer ${jwtToken}`
-          }
-        });
-        if(response.status === 200){
-          setUser(response.data)
-        }
+      const response = await axios.get(`${API_BASE}/account`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
+      if (response.status === 200) {
+        setUser(response.data);
+      }
     } catch (error) {
       console.error(error);
     }

@@ -8,12 +8,15 @@ import SignIn from "./Pages/Auth/SignIn";
 import RequireAuth from "./AuthConfig/RequireAuth";
 import SignUp from "./Pages/Auth/SignUp";
 import {SnackbarProvider} from "notistack";
+import ResetPassword from "./Pages/Auth/ResetPassword";
+import ResetPasswordFinish from "./Pages/Auth/ResetPasswordFinish";
 
 function App() {
     return (
     <>
+    <SnackbarProvider>
       <AuthProvider>
-          <SnackbarProvider>
+
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -30,10 +33,13 @@ function App() {
           </Route>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/account/reset/finish" element={<ResetPasswordFinish />} />
           <Route path="*" element={<NotFound404 />} />
         </Routes>
-          </SnackbarProvider>
+
       </AuthProvider>
+    </SnackbarProvider>
     </>
   );
 }

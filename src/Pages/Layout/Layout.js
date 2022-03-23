@@ -14,6 +14,7 @@ function Layout() {
         <CustomLink to={"/"}>Home</CustomLink>
         <CustomLink to={"/sign-in"}>Sign In</CustomLink>
         <CustomLink to={"/sign-up"}>Sign Up</CustomLink>
+        <CustomLink to={"/something"}>Sign Up</CustomLink>
         <CustomLink to={"/reset-password"}>Reset Password</CustomLink>
       </header>
       <AuthStatus />

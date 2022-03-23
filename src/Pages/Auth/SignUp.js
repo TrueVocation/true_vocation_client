@@ -1,20 +1,20 @@
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import useAuth from "../../AuthConfig/useAuth";
 import {Headers} from "../../Components/header/Headers";
-import {Container, Grid, TextField} from "@mui/material";
-import {ReactComponent as Main} from '../../images/undraw_check_boxes_re_v40f.svg'
+import {Container, createTheme, Grid, TextField} from "@mui/material";
+import {ReactComponent as Main} from '../../images/registration.svg'
 import Typography from "@mui/material/Typography";
 import {ReactComponent as Logo} from '../../logo.svg';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {useSnackbar} from "notistack";
 import {default as axios} from "axios";
 import {API_BASE} from "../../Constants/Constants";
 
 function SignUp() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({mode:"onBlur"});
+    const { register, handleSubmit, watch, formState: { errors, isSubmitSuccessful }, reset, } = useForm({mode:"onBlur"});
     const { enqueueSnackbar } = useSnackbar();
 
     const [login, setLogin] = useState('');
@@ -56,10 +56,17 @@ function SignUp() {
         try {
             const response = await axios.post(`${API_BASE}/account/register`,userData);
             if(response.status === 201){
-                enqueueSnackbar("Account created successfully!", {variant:"success"});
+                enqueueSnackbar("Account created successfully! Check your mail to activate account!", {variant:"success"});
+                setEmail('')
+                setPasswordConfirm('')
+                setLogin('')
+                setPassword('')
             }
+            console.error(response);
         } catch (error) {
             console.error(error);
+
+            enqueueSnackbar("Something went wrong! Please try again!", {variant:"error"});
         }
     }
 
@@ -73,30 +80,23 @@ function SignUp() {
                     <Grid container item xs={5} style={{padding: 0, paddingLeft: 25, paddingRight: 25}}
                           flexDirection={"column"}
                           justifyContent={"space-evenly"} spacing={0} alignItems={"center"}>
-
                         <Grid
                             container
                             item
                             direction="column"
                             alignItems="flex-start"
-                            style={{margin: 0}}
-                        >
-                            <Typography variant={"body1"} component={"p"}
-                                        style={{color: " rgb(103, 119, 136)"}}>SIGN UP</Typography>
-                            <Typography variant={"h4"} fontFamily={"Inter"} component={"h4"}
-                                        style={{fontWeight: "bold"}}>Create an account</Typography>
-                            <Typography variant={"body1"} component={"p"} style={{color: " rgb(103, 119, 136)"}}>Fill out the form to get started.</Typography>
+                            style={{margin: 0}}>
+                            <Typography variant={"body1"} component={"p"} fontFamily={"Inter"} style={{color: " rgb(103, 119, 136)"}}>SIGN UP</Typography>
+                            <Typography variant={"h4"} fontSize={30} fontWeight={700} style={{color:"rgb(45, 55, 72)"}} fontFamily={"Inter"}>Create an account</Typography>
+                            <Typography variant={"body1"} component={"p"} style={{color: " rgb(103, 119, 136)"}} fontFamily={"Inter"}>Fill out the form to get started.</Typography>
                         </Grid>
                         <Grid item container direction="row"
                               justifyContent="flex-start"
-                              alignItems={"flex-start"}
-
-                        >
+                              alignItems={"flex-start"}>
                             <form style={{width: "100%"}} onSubmit={handleSubmit(onSubmitRegistration)}>
-
                                 <Grid item>
-                                    <Grid container direction={"column"} justifyContent={"space-between"} marginBottom={1}>
-                                        <Typography marginBottom={1} variant={"subtitle2"} component={"p"}>Login</Typography>
+                                    <Grid container direction={"column"} justifyContent={"space-between"}>
+                                        <Typography marginBottom={1} variant={"subtitle2"} component={"p"} fontFamily={"Inter"}>Login</Typography>
                                         <TextField {...register("login", {
                                             required: 'Login field is required',
                                             minLength:{
@@ -107,13 +107,13 @@ function SignUp() {
                                                 value:50,
                                                 message:"length must be less than 50 character"
                                             }
-                                        })} helperText={errors?.login && errors?.login?.message || ' '} error={!!errors?.login} value={login} onChange={handleLoginChange} type={"text"} id="user_login" label="Your login" variant="outlined"/>
+                                        })}  helperText={errors?.login && errors?.login?.message || ' '} error={!!errors?.login} value={login} onChange={handleLoginChange} fontFamily={"Inter"} type={"text"} id="user_login" label="Your login" variant="outlined"/>
                                     </Grid>
                                 </Grid>
 
                                 <Grid item>
-                                <Grid container direction={"column"} justifyContent={"space-between"} marginBottom={1}>
-                                    <Typography marginBottom={1} variant={"subtitle2"} component={"p"}>Email</Typography>
+                                <Grid container direction={"column"} justifyContent={"space-between"}>
+                                    <Typography marginBottom={1} variant={"subtitle2"} component={"p"} fontFamily={"Inter"}>Email</Typography>
                                     <TextField {...register("email", {
                                         required: 'Email field is required',
                                         minLength:{
@@ -128,8 +128,8 @@ function SignUp() {
                                 </Grid>
                                 </Grid>
 
-                                <Grid container direction={"column"} justifyContent={"space-between"} marginBottom={1}>
-                                    <Typography marginBottom={1} variant={"subtitle2"} component={"p"}>New password</Typography>
+                                <Grid container direction={"column"} justifyContent={"space-between"}>
+                                    <Typography marginBottom={1} variant={"subtitle2"} component={"p"} fontFamily={"Inter"}>New password</Typography>
                                     <TextField {...register("password", {
                                         required: 'Password field is required',
                                         minLength:{
@@ -140,11 +140,11 @@ function SignUp() {
                                             value:99,
                                             message:"length must be less than 100 character"
                                         }
-                                    })} helperText={errors?.password && errors?.password?.message || ' '} error={!!errors?.password} value={password} onChange={handlePasswordChange} id="user_password" label="New password" variant="outlined"/>
+                                    })} helperText={errors?.password && errors?.password?.message || ' '} type={"password"} error={!!errors?.password} value={password} onChange={handlePasswordChange} id="user_password" label="New password" variant="outlined"/>
                                 </Grid>
 
-                                <Grid container direction={"column"} justifyContent={"space-between"} marginBottom={1}>
-                                    <Typography marginBottom={1} variant={"subtitle2"} component={"p"}>New password confirmation</Typography>
+                                <Grid container direction={"column"} justifyContent={"space-between"}>
+                                    <Typography marginBottom={1} variant={"subtitle2"} component={"p"} fontFamily={"Inter"}>New password confirmation</Typography>
                                     <TextField {...register("passwordConfirm", {
                                         required: 'Password Confirmation field is required',
                                         minLength:{
@@ -155,14 +155,14 @@ function SignUp() {
                                             value:99,
                                             message:"length must be less than 100 character"
                                         }
-                                    })} helperText={errors?.passwordConfirm && errors?.passwordConfirm?.message || ' '} error={!!errors?.passwordConfirm} value={passwordConfirm} onChange={handlePasswordConfirmChange} id="user_confirm_password" label="Confirm the new password" variant="outlined"/>
+                                    })} helperText={errors?.passwordConfirm && errors?.passwordConfirm?.message || ' '} type={"password"} error={!!errors?.passwordConfirm} value={passwordConfirm} onChange={handlePasswordConfirmChange} id="user_confirm_password" label="Confirm the new password" variant="outlined"/>
                                 </Grid>
 
                                 <Grid container direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
-                                    <Typography variant={"subtitle2"} component={"h6"}>Already have an account?
+                                    <Typography variant={"subtitle2"} component={"h6"} fontFamily={"Inter"}>Already have an account?
                                         <Link style={{textDecoration: "none", color: "rgb(55, 125, 255)"}} to="/sign-in"> Login.</Link>
                                     </Typography>
-                                    <Button type={"submit"} style={{backgroundColor: "rgb(66, 125, 255)"}} variant="contained">Sign Up</Button>
+                                    <Button type={"submit"} style={{backgroundColor: "rgb(66, 125, 255)",textTransform:"initial"}} variant="contained" fontFamily={"Inter"}>Sign Up</Button>
                                 </Grid>
                             </form>
                         </Grid>
