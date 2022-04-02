@@ -1,0 +1,72 @@
+`import useAuth from "../../AuthConfig/useAuth";
+import Box from "@mui/material/Box";
+import {Grid} from "@mui/material";
+import {ReactComponent as Main} from '../../images/undraw_job_hunt_re_q203.svg'
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { motion } from "framer-motion"
+import CustomAnimatedComponent from "../../Components/motion/CustomAnimatedComponent";
+
+const Home = () => {
+  const auth = useAuth();
+
+  const animation = {
+    visible: custom => ({ opacity: 1, x: 0, transition: {delay: custom * 0.2} }),
+    hidden: { opacity: 0, x: -100 },
+  }
+
+
+
+  return (<motion.div
+        initial={"hidden"}
+        whileInView={"visible"}
+  >
+   <Box sx={{display:"flex", flexDirection:"column"}}>
+    <Grid container item xs={12}>
+      <Grid item xs={1}
+
+      />
+      <Grid item xs={5}>
+      <CustomAnimatedComponent variants={animation} custom={1}>
+          <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"} style={{color:"#2d3e4a", marginTop:140,marginBottom:0}}>Learn new skills, gain more experience</Typography>
+          </CustomAnimatedComponent>
+          <CustomAnimatedComponent variants={animation} custom={2}>
+          <Typography variant={"h5"} fontFamily={"Inter"} style={{color:"rgb(103, 119, 136)",marginTop:20}}>Our mission is to spread education that is easy accessible and everyone can learn.</Typography>
+        </CustomAnimatedComponent>
+        <Grid container justifyContent={"space-between"} flexDirection={"row"} xs={7} style={{marginTop:40}}>
+          <Button size={"large"} variant={"outlined"} id={"primary_button_outlined"}>Purchase now</Button>
+          <Button size={"large"} variant={"contained"} id={"primary_button"}>View documentation</Button>
+        </Grid>
+
+      </Grid>
+      <Grid container justifyContent={"center"} item xs={6}
+      style={{padding:15}}
+      >
+        <Main/>
+      </Grid>
+    </Grid>
+    <Grid container item xs={12} style={{backgroundColor:"#F7F9FF"}}>
+      <Grid item xs={1}
+
+      />
+      <Grid item xs={5}>
+        <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"} style={{color:"#2d3e4a", marginTop:140,marginBottom:0}}>Learn new skills, gain more experience</Typography>
+        <Typography variant={"h5"} fontFamily={"Inter"} style={{color:"rgb(103, 119, 136)",marginTop:20}}>Our mission is to spread education that is easy accessible and everyone can learn.</Typography>
+        <Grid container justifyContent={"space-between"} flexDirection={"row"} xs={7} style={{marginTop:40}}>
+          <Button size={"large"} variant={"outlined"} id={"primary_button_outlined"}>Purchase now</Button>
+          <Button size={"large"} variant={"contained"} id={"primary_button"}>View documentation</Button>
+        </Grid>
+
+      </Grid>
+      <Grid container justifyContent={"center"} item xs={6}
+            style={{padding:15}}
+      >
+        <Main/>
+      </Grid>
+    </Grid>
+  </Box>;
+  </motion.div>)
+}
+
+export default Home;
+`

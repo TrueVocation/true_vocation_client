@@ -12,6 +12,7 @@ import {useForm} from "react-hook-form";
 import {useSnackbar} from "notistack";
 import {default as axios} from "axios";
 import {API_BASE} from "../../Constants/Constants";
+import '../../Constants/buttons.scss'
 
 function SignUp() {
     const { register, handleSubmit, watch, formState: { errors, isSubmitSuccessful }, reset, } = useForm({mode:"onBlur"});
@@ -160,9 +161,9 @@ function SignUp() {
 
                                 <Grid container direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
                                     <Typography variant={"subtitle2"} component={"h6"} fontFamily={"Inter"}>Already have an account?
-                                        <Link style={{textDecoration: "none", color: "rgb(55, 125, 255)"}} to="/sign-in"> Login.</Link>
+                                        <Link style={{textDecoration: "none", color: "#0095FF"}} to="/sign-in"> Login.</Link>
                                     </Typography>
-                                    <Button type={"submit"} style={{backgroundColor: "rgb(66, 125, 255)",textTransform:"initial"}} variant="contained" fontFamily={"Inter"}>Sign Up</Button>
+                                    <Button type={"submit"} id={"primary_button"} variant="contained" fontFamily={"Inter"}>Sign Up</Button>
                                 </Grid>
                             </form>
                         </Grid>

@@ -1,15 +1,13 @@
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import useAuth from "../../AuthConfig/useAuth";
 import {Headers} from "../../Components/header/Headers";
-import {Checkbox, Container, createTheme, Grid, TextField} from "@mui/material";
-import {ReactComponent as Main} from '../../images/undraw_check_boxes_re_v40f.svg'
+import {Checkbox, Container, Grid, TextField} from "@mui/material";
+import {ReactComponent as Main} from '../../images/undraw_authentication_re_svpt.svg'
 import Typography from "@mui/material/Typography";
-import {ReactComponent as Logo} from '../../logo.svg';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useForm} from "react-hook-form";
-import CountUp from "react-countup";
 
 function SignIn() {
 
@@ -19,6 +17,7 @@ function SignIn() {
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
+    const [values, setValues] = useState({showPassword: false})
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -38,6 +37,18 @@ function SignIn() {
         // eslint-disable-next-line no-unused-expressions
         setRememberMe(!rememberMe)
     }
+
+    const handleClickShowPassword = () => {
+        setValues({
+            ...values,
+            showPassword: !values.showPassword,
+        });
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
 
     function handleLoginSubmit(data) {
         const userData = {
@@ -68,8 +79,8 @@ function SignIn() {
                             alignItems="flex-start"
                             style={{margin: 0}}
                         >
-                            <Typography variant={"body1"} component={"p"} fontFamily={"Inter"} style={{color: " rgb(103, 119, 136)"}}>LOGIN</Typography>
-                            <Typography variant={"h4"} fontFamily={"Inter"} component={"h4"} style={{fontWeight: "700", color:"rgb(45, 55, 72)"}}>Welcome back</Typography>
+                            <Typography variant={"body1"} component={"p"} fontFamily={"Inter"} style={{color: "rgb(103, 119, 136)"}}>LOGIN</Typography>
+                            <Typography variant={"h4"} fontFamily={"Inter"} component={"h4"} style={{fontWeight: "700", color:"#2d3e4a"}}>Welcome back</Typography>
                             <Typography variant={"body1"} component={"p"} style={{color: " rgb(103, 119, 136)"}} fontFamily={"Inter"}>Login to manage your account.</Typography>
                         </Grid>
                         <Grid item container direction="row"
@@ -96,7 +107,7 @@ function SignIn() {
                                     <Grid container direction={"row"} justifyContent={"space-between"} marginBottom={1}>
                                         <Typography variant={"subtitle2"} component={"p"} fontFamily={"Inter"}>Enter your password</Typography>
                                         <Typography variant={"subtitle2"} component={"h6"} fontFamily={"Inter"}>
-                                            <Link style={{textDecoration: "none", color: "rgb(55, 125, 255)"}} to="/reset-password">Forgot your password?</Link>
+                                            <Link style={{textDecoration: "none", color: "#0095FF"}} to="/reset-password">Forgot your password?</Link>
                                         </Typography>
                                     </Grid>
                                     <TextField {...register("password", {
@@ -124,9 +135,9 @@ function SignIn() {
 
                                 <Grid container direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
                                     <Typography variant={"subtitle2"} component={"h6"} fontFamily={"Inter"}>Don't have an account yet?
-                                        <Link style={{textDecoration: "none", color: "rgb(55, 125, 255)"}} to="/sign-up" fontFamily={"Inter"}> Sign up here.</Link>
+                                        <Link style={{textDecoration: "none", color: "#0095FF",fontFamily:"Inter"}} to="/sign-up"> Sign up here.</Link>
                                     </Typography>
-                                    <Button  size={"large"} type={"submit"} style={{backgroundColor: "rgb(66, 125, 255)", textTransform:"initial"}} variant="contained" fontFamily={"Inter"}>Login</Button>
+                                    <Button id={"primary_button"}  size={"large"} type={"submit"} variant="contained" fontFamily={"Inter"}>Login</Button>
                                 </Grid>
 
                             </form>
