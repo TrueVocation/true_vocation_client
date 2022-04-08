@@ -6,15 +6,27 @@
   margin-right: 8px;
   &:hover {
     transform: scale(1.05);
+    color: black;
   }
 }
 
 .custom_active_link {
-  border-bottom: 3px solid #300698;
+  border-bottom: 3px solid #0095FF;
   padding-top: 2px;
   padding-bottom: 2px;
   margin-left: 8px;
   margin-right: 8px;
   //border-end-end-radius: 18px;
+}
 
+
+#footer_link{
+  text-decoration:none;
+  font-family: Inter;
+  margin-bottom:8px;
+  font-size:15px;
+  color:#AEB4BE;
+  &:hover {
+    color: white;
+  }
 }

@@ -107,7 +107,7 @@ function SignIn() {
                                     <Grid container direction={"row"} justifyContent={"space-between"} marginBottom={1}>
                                         <Typography variant={"subtitle2"} component={"p"} fontFamily={"Inter"}>Enter your password</Typography>
                                         <Typography variant={"subtitle2"} component={"h6"} fontFamily={"Inter"}>
-                                            <Link style={{textDecoration: "none", color: "#0095FF"}} to="/reset-password">Forgot your password?</Link>
+                                            <Link style={{textDecoration: "none", color: "rgb(55, 125, 255)"}} to="/reset-password">Forgot your password?</Link>
                                         </Typography>
                                     </Grid>
                                     <TextField {...register("password", {
@@ -135,7 +135,7 @@ function SignIn() {
 
                                 <Grid container direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
                                     <Typography variant={"subtitle2"} component={"h6"} fontFamily={"Inter"}>Don't have an account yet?
-                                        <Link style={{textDecoration: "none", color: "#0095FF",fontFamily:"Inter"}} to="/sign-up"> Sign up here.</Link>
+                                        <Link style={{textDecoration: "none", color: "rgb(55, 125, 255)",fontFamily:"Inter"}} to="/sign-up"> Sign up here.</Link>
                                     </Typography>
                                     <Button id={"primary_button"}  size={"large"} type={"submit"} variant="contained" fontFamily={"Inter"}>Login</Button>
                                 </Grid>

@@ -4,6 +4,7 @@ import AuthStatus from "../../AuthConfig/AuthStatus";
 import CustomLink from "../../Components/links/CustomLink";
 import '../Layout/layout.scss'
 import {Headers} from "../../Components/header/Headers";
+import Footer from "../../Components/footer/Footer";
 
 
 function Layout() {
@@ -22,7 +23,7 @@ function Layout() {
 
       {/*<AuthStatus />*/}
       <Outlet />
-
+        <Footer/>
       {/*<footer>footer</footer>*/}
     </>
   );

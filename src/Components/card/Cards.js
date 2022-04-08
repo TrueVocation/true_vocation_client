@@ -52,7 +52,7 @@ export function Cards() {
             <CardMedia
                 component="img"
                 height="194"
-                image="/static/images/cards/paella.jpg"
+                image="https://pbs.twimg.com/profile_images/955414941/IT_400x400.jpg"
                 alt="Paella dish"
             />
             <CardContent>
