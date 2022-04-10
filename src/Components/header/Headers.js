@@ -1,23 +1,27 @@
+import '../../Constants/buttons.scss'
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import {alpha, styled} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import logo from '../../logo.svg'
+import {ReactComponent as Logo} from '../../images/Group 58.svg';
+import {Container, Grid, useScrollTrigger} from "@mui/material";
+import PropTypes from "prop-types";
+import useAuth from "../../AuthConfig/useAuth";
+import Button from "@mui/material/Button";
+import {Link, useNavigate} from "react-router-dom";
+import CustomLink from "../links/CustomLink";
 
-const Search = styled('div')(({ theme }) => ({
+
+const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -33,7 +37,7 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -43,7 +47,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -57,9 +61,41 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+
+function HideOnScroll(props) {
+    const {children, window} = props;
+    // Note that you normally won't need to set the window ref as useScrollTrigger
+    // will default to window.
+    // This is only being set here because the demo is in an iframe.
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold: 0,
+        target: window ? window() : undefined,
+    });
+
+    return React.cloneElement(children, {
+        style: {
+            boxShadow: trigger ? "rgb(140 152 164 / 25%) 0px 3px 6px 0px" : "none"
+        }
+    });
+}
+
+HideOnScroll.propTypes = {
+    children: PropTypes.element.isRequired,
+    /**
+     * Injected by the documentation to work in an iframe.
+     * You won't need it on your project.
+     */
+    window: PropTypes.func,
+};
+
+
 export function Headers() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+    const auth = useAuth();
+    const navigate = useNavigate();
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -123,7 +159,7 @@ export function Headers() {
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="error">
-                        <MailIcon />
+                        <MailIcon/>
                     </Badge>
                 </IconButton>
                 <p>Messages</p>
@@ -135,7 +171,7 @@ export function Headers() {
                     color="inherit"
                 >
                     <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
+                        <NotificationsIcon/>
                     </Badge>
                 </IconButton>
                 <p>Notifications</p>
@@ -144,11 +180,11 @@ export function Headers() {
                 <IconButton
                     size="large"
                     aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
+                    aria-controls="primary-search-account-menu" alignItems={"center"}
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle />
+                    <AccountCircle/>
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -156,83 +192,147 @@ export function Headers() {
     );
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" style={{backgroundColor:"white", boxShadow:"rgb(140 152 164 / 25%) 0px 3px 6px 0px"}} >
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        style={{color:"rgb(34, 51, 84)"}}
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    {/*<img src={logo} width={50}/>*/}
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                        style={{color:"rgb(34, 51, 84)"}}
-                    >
-                        MUI
-                    </Typography>
+        <HideOnScroll>
+            <AppBar position={"sticky"} color={"inherit"}>
+                <Container maxWidth={"xl"} sx={{width: 1375}}>
+                    <Toolbar style={{justifyContent:"space-between"}}>
+                        {/*<IconButton*/}
+                        {/*    size="large"*/}
+                        {/*    edge="start"*/}
+                        {/*    style={{color:"rgb(34, 51, 84)"}}*/}
+                        {/*    aria-label="open drawer"*/}
+                        {/*    sx={{ mr: 2 }}*/}
+                        {/*>*/}
+                        {/*    <MenuIcon />*/}
+                        {/*</IconButton>*/}
+                        {/*<img src={logo} width={80}/>*/}
 
-                    <Search style={{backgroundColor:"rgba(110, 117, 159, 0.1)"}}>
-                        <SearchIconWrapper>
-                            <SearchIcon style={{color:"rgb(34, 51, 84)"}} />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            style={{color:"rgb(34, 51, 84)"}}
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
-                                <MailIcon style={{color:"rgb(34, 51, 84)"}} />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon style={{color:"rgb(34, 51, 84)"}} />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle style={{color:"rgb(34, 51, 84)"}} />
-                        </IconButton>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
-                    </Box>
-                </Toolbar>
+                        <Box display={"flex"} flexDirection={"row"} sx={{flexGrow:1}}>
+                            <Link to={"/"}><Logo/></Link>
+                                    <Link to={"/"}
+                                          style={{
+                                              color: "rgb(34, 51, 84)",
+                                              marginLeft: 5,
+                                              fontWeight: 700,
+                                              marginTop: 7,
+                                              fontFamily: "Inter",
+                                              fontSize: 21,
+                                              textDecoration:"none",
+                                              alignSelf:"center"
+                                          }}>
+
+                                        True Vocation</Link>
+
+
+                            <Grid container item sx={{paddingTop:1, marginLeft:5}} xs={6}
+                                  display={"flex"} flexDirection={"row"} justifyContent={"flex-start"} alignItems={"center"}>
+                                <CustomLink item to={"/"} style={{color:"white",fontFamily:"Inter"}}>Home</CustomLink>
+                                <CustomLink to={"/wef"} style={{color:"#eaeced",fontFamily:"Inter"}}>Universities</CustomLink>
+                                <CustomLink to={"/fwef"} style={{color:"#08262C",fontFamily:"Inter"}}>Specialities</CustomLink>
+                                <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>Professions</CustomLink>
+                            </Grid>
+                        </Box>
+
+
+
+                        {/*<Box flexDirection={"column"}>*/}
+                        {/*    <Grid container item justifyContent={"center"}>*/}
+                        {/*        <Logo />*/}
+                        {/*    </Grid>*/}
+                        {/*    <Grid container item flexDirection={"column"} justifyContent={"center"}>*/}
+                        {/*        <Typography*/}
+                        {/*            variant="h6"*/}
+                        {/*            noWrap*/}
+                        {/*            component="p"*/}
+                        {/*            sx={{ display: { xs: 'none', sm: 'block' } }}*/}
+                        {/*            style={{color:"rgb(34, 51, 84)",fontWeight:700, fontFamily:"Inter",fontSize:18, margin:0, padding:0}}*/}
+                        {/*            alignSelf={"center"}*/}
+                        {/*        >*/}
+                        {/*            True*/}
+                        {/*        </Typography>*/}
+                        {/*        <Typography*/}
+                        {/*            variant="body1"*/}
+                        {/*            noWrap*/}
+                        {/*            component="span"*/}
+                        {/*            sx={{ display: { xs: 'none', sm: 'block' } }}*/}
+                        {/*            style={{color:"rgb(34, 51, 84)",fontWeight:700, fontFamily:"Inter",fontSize:18, margin:0, padding:0}}*/}
+                        {/*            alignSelf={"center"}*/}
+                        {/*        >*/}
+                        {/*            Vocation*/}
+                        {/*        </Typography>*/}
+                        {/*    </Grid>*/}
+                        {/*</Box>*/}
+
+
+                        {/*<Search style={{backgroundColor:"rgba(110, 117, 159, 0.1)"}}>*/}
+                        {/*    <SearchIconWrapper>*/}
+                        {/*        <SearchIcon style={{color:"rgb(34, 51, 84)"}} />*/}
+                        {/*    </SearchIconWrapper>*/}
+                        {/*    <StyledInputBase*/}
+                        {/*        style={{color:"rgb(34, 51, 84)"}}*/}
+                        {/*        placeholder="Search…"*/}
+                        {/*        inputProps={{ 'aria-label': 'search' }}*/}
+                        {/*    />*/}
+                        {/*</Search>*/}
+
+                        {auth.user != null ?
+                            <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+                                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                                    <Badge badgeContent={4} color="error">
+                                        <MailIcon style={{color: "rgb(34, 51, 84)"}}/>
+                                    </Badge>
+                                </IconButton>
+                                <IconButton
+                                    size="large"
+                                    aria-label="show 17 new notifications"
+                                    color="inherit"
+                                >
+                                    <Badge badgeContent={17} color="error">
+                                        <NotificationsIcon style={{color: "rgb(34, 51, 84)"}}/>
+                                    </Badge>
+                                </IconButton>
+                                <IconButton
+                                    size="large"
+                                    edge="end"
+                                    aria-label="account of current user"
+                                    aria-controls={menuId}
+                                    aria-haspopup="true"
+                                    onClick={handleProfileMenuOpen}
+                                    color="inherit"
+                                >
+                                    <AccountCircle style={{color: "rgb(34, 51, 84)"}}/>
+                                </IconButton>
+                            </Box>
+                            :
+                            <Box display={"flex"} flexDirection={"row"} justifyContent={"space-between"} width={185}>
+                                <Button variant={"outlined"} onClick={() => navigate('/sign-in')}
+                                        id={'primary_button_outlined'}>
+                                    {/*<Link to={"/sign-in"} style={{textTransform:"initial",textDecoration:"none", color: "white"}}>Sign in</Link>*/}
+                                    Sign in
+                                </Button>
+                                <Button variant={"contained"} onClick={() => navigate('/sign-up')} id={'primary_button'}>
+                                    {/*<Link to={"/sign-up"} style={{textTransform:"initial",textDecoration:"none", color: "white"}}>Sign up</Link>*/}
+                                    Sign up
+                                </Button>
+                            </Box>
+                        }
+
+
+                        {/*<Box sx={{display: {xs: 'flex', md: 'none'}}}>*/}
+                        {/*    <IconButton*/}
+                        {/*        size="large"*/}
+                        {/*        aria-label="show more"*/}
+                        {/*        aria-controls={mobileMenuId}*/}
+                        {/*        aria-haspopup="true"*/}
+                        {/*        onClick={handleMobileMenuOpen}*/}
+                        {/*        color="inherit"*/}
+                        {/*    >*/}
+                        {/*        <MoreIcon/>*/}
+                        {/*    </IconButton>*/}
+                        {/*</Box>*/}
+                    </Toolbar>
+                </Container>
             </AppBar>
-            {renderMobileMenu}
-            {renderMenu}
-        </Box>
+        </HideOnScroll>
     );
 }

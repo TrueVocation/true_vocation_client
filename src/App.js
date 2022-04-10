@@ -20,7 +20,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-
+              <Route path="sign-in" element={<SignIn />} />
+              <Route path="sign-up" element={<SignUp />} />
+              <Route path="reset-password" element={<ResetPassword />} />
+              <Route path="account/reset/finish" element={<ResetPasswordFinish />} />
             <Route
               path="something"
               element={
@@ -31,10 +34,6 @@ function App() {
             />
 
           </Route>
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/account/reset/finish" element={<ResetPasswordFinish />} />
           <Route path="*" element={<NotFound404 />} />
         </Routes>
 

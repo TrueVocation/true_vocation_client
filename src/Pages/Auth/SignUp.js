@@ -12,6 +12,7 @@ import {useForm} from "react-hook-form";
 import {useSnackbar} from "notistack";
 import {default as axios} from "axios";
 import {API_BASE} from "../../Constants/Constants";
+import '../../Constants/buttons.scss'
 
 function SignUp() {
     const { register, handleSubmit, watch, formState: { errors, isSubmitSuccessful }, reset, } = useForm({mode:"onBlur"});
@@ -73,8 +74,7 @@ function SignUp() {
     return (
         <>
 
-            <Box height={"650px"}>
-                <Headers/>
+            <Box>
                 <Container maxWidth="xl" style={{display: "flex", paddingLeft: 0, paddingRight: 0, height: "100%"}}>
                     <Grid item xs={1}/>
                     <Grid container item xs={5} style={{padding: 0, paddingLeft: 25, paddingRight: 25}}
@@ -162,7 +162,7 @@ function SignUp() {
                                     <Typography variant={"subtitle2"} component={"h6"} fontFamily={"Inter"}>Already have an account?
                                         <Link style={{textDecoration: "none", color: "rgb(55, 125, 255)"}} to="/sign-in"> Login.</Link>
                                     </Typography>
-                                    <Button type={"submit"} style={{backgroundColor: "rgb(66, 125, 255)",textTransform:"initial"}} variant="contained" fontFamily={"Inter"}>Sign Up</Button>
+                                    <Button type={"submit"} id={"primary_button"} variant="contained" fontFamily={"Inter"}>Sign Up</Button>
                                 </Grid>
                             </form>
                         </Grid>

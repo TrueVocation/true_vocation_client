@@ -190,14 +190,14 @@ function ResetPasswordFinish() {
                   onClick={back}
                   variant="outlined"
                   fontFamily={"Inter"}
-                  style={{textTransform:"initial"}}
+                  id={"primary_button_outlined"}
                   >
                   Back to login
                   </Button>
                   <Button
                   size={"large"}
                   type={"submit"}
-                  style={{backgroundColor: "rgb(66, 125, 255)",textTransform:"initial"}}
+                  id={"primary_button"}
                   variant="contained"
                   fontFamily={"Inter"}
                   >

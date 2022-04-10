@@ -1,0 +1,60 @@
+.custom_link {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-bottom: 3px solid white;
+  margin-left: 8px;
+  margin-right: 8px;
+  &:hover {
+    transform: scale(1.05);
+    color: black;
+  }
+}
+
+.custom_active_link {
+  border-bottom: 3px solid #0095FF;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-left: 8px;
+  margin-right: 8px;
+  //border-end-end-radius: 18px;
+}
+
+
+#footer_link{
+  text-decoration:none;
+  font-family: Inter;
+  margin-bottom:8px;
+  font-size:15px;
+  color:#AEB4BE;
+  &:hover {
+    color: white;
+  }
+}
+
+#social_facebook{
+  color:#AEB4BE;
+  &:hover {
+    color: #006ebe;
+  }
+}
+
+#social_twitter{
+  color:#AEB4BE;
+  &:hover {
+    color: #0095FF;
+  }
+}
+
+#social_github{
+  color:#AEB4BE;
+  &:hover {
+    color: #ff6100;
+  }
+}
+
+#social_youtube{
+  color:#AEB4BE;
+  &:hover {
+    color: #fd0001;
+  }
+}
