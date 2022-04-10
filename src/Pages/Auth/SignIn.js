@@ -63,8 +63,7 @@ function SignIn() {
 
     return (
         <>
-            <Box style={{height: "650px"}}>
-                <Headers/>
+            <Box>
                 <Container maxWidth="xl" style={{display: "flex", paddingLeft: 0, paddingRight: 0, height: "100%"}}>
                     <Grid item xs={1}/>
                     <Grid container item xs={5} style={{padding: 0, paddingLeft: 25, paddingRight: 25}}

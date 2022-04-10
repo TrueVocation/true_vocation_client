@@ -30,3 +30,31 @@
     color: white;
   }
 }
+
+#social_facebook{
+  color:#AEB4BE;
+  &:hover {
+    color: #006ebe;
+  }
+}
+
+#social_twitter{
+  color:#AEB4BE;
+  &:hover {
+    color: #0095FF;
+  }
+}
+
+#social_github{
+  color:#AEB4BE;
+  &:hover {
+    color: #ff6100;
+  }
+}
+
+#social_youtube{
+  color:#AEB4BE;
+  &:hover {
+    color: #fd0001;
+  }
+}
