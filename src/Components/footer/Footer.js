@@ -11,7 +11,7 @@ import '../links/links.scss'
 
 function Footer(props) {
     return (
-        <Box display={"flex"} flexDirection={"column"} sx={{backgroundColor:"#0c0e30",paddingBottom:2,paddingTop:8}}>
+        <Box display={"flex"} flexDirection={"column"} sx={{backgroundColor:"#0c0e30",paddingBottom:2,paddingTop:8,marginBottom:0}}>
             <Container maxWidth={"lg"} style={{paddingLeft:0,paddingRight:0,display:"flex",flexDirection:"row",alignItems:"start", marginBottom:80}}  >
                 <Grid item xs={4} container display={"flex"} flexDirection={"column"}>
                     <Grid item xs={12} container display={"flex"} flexDirection={"column"}>

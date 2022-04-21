@@ -18,7 +18,7 @@ function NotFound404() {
             <Grid item xs={1}/>
             <Grid item xs={5}>
                 <Typography variant={"h1"} fontFamily={"Inter"} fontWeight={"bold"}
-                            style={{color: "#2d3e4a", marginTop: 140, marginBottom: 0}}>404</Typography>
+                            style={{color: "#2d3e4a", marginTop: 140, marginBottom: 0}}>Not Found</Typography>
                 <Typography variant={"h5"} fontFamily={"Inter"}
                             style={{color: "rgb(103, 119, 136)", marginTop: 10, marginBottom:15}}>Oops! Looks like you followed a bad link.
                     If you think this is a problem with us, please tell us</Typography>

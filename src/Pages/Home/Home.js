@@ -54,7 +54,7 @@ const Home = () => {
                     color: "rgb(103, 119, 136)",
                     fontSize: 30,
                     position: "absolute",
-                    left: 1255
+                    left: 1225
                 }}
                 onClick={onClick}
             />
@@ -72,7 +72,7 @@ const Home = () => {
                     color: "rgb(103, 119, 136)",
                     fontSize: 30,
                     position: "absolute",
-                    left: -35
+                    left: -45
                 }}
                 onClick={onClick}
             />
@@ -120,11 +120,11 @@ const Home = () => {
     }
 
     const subjects = [
-        {name: "Physics"},
-        {name: "Physics"},
-        {name: "Physics"},
-        {name: "Physics"},
-        {name: "Physics"},
+        {name: "Physics", picture:"https://images.pexels.com/photos/60582/newton-s-cradle-balls-sphere-action-60582.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
+        {name: "Math", picture:"https://images.pexels.com/photos/6238297/pexels-photo-6238297.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
+        {name: "History", picture:"https://images.pexels.com/photos/36006/renaissance-schallaburg-figures-facade.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
+        {name: "Geography", picture:"https://images.pexels.com/photos/414916/pexels-photo-414916.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
+        {name: "Chemistry", picture: "https://images.pexels.com/photos/8544959/pexels-photo-8544959.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
     ]
 
     const universities = [
@@ -469,26 +469,25 @@ const Home = () => {
                             <Grid container item justifyContent={"center"} style={{marginTop: 15}}>
                                 <Button size={"large"} variant={"outlined"} id={"primary_button_outlined"}>Purchase
                                     now</Button>
-                                <Button size={"large"} variant={"contained"} id={"primary_button"}
+                                <Button size={"large"} onClick={()=>navigate("/subjects", true)} variant={"contained"} id={"primary_button"}
                                         style={{marginLeft: 15}}>View
                                     documentation</Button>
                             </Grid>
                         </CustomAnimatedComponent>
                     </Grid>
 
-                    <Grid item xs={10} alignSelf={"center"} style={{marginTop: 20, marginBottom: 20}}>
+                    <Grid item xs={10} alignSelf={"center"} style={{marginTop: 20, marginBottom: 20 }}>
                         <CustomAnimatedComponent variants={animationBottomToTop} custom={5}>
-                            <Slider {...settings} style={{height: 300}}>
-                                {subjects.map(() => {
+                            <Slider {...settings} style={{height: 350, alignItems:"center", display:"flex"}}>
+                                {subjects.map(subject => {
                                     return <Grid item style={{height: 300}}>
-                                        <CustomAnimatedComponent whileHover={{y: -10}} style={{
-                                            marginLeft: 20,
+                                        <CustomAnimatedComponent whileHover={{y: -10}} style={{ marginLeft: 20,
                                             marginRight: 20,
+                                            borderRadius:8, marginTop:40,paddingBottom:40,
                                             height: 300,
                                             display: "flex",
-                                            alignItems: "center"
-                                        }}>
-                                            <SubjectCard/>
+                                            alignItems: "center"}}>
+                                            <SubjectCard subject={subject} height={290} width={290} />
                                         </CustomAnimatedComponent>
                                     </Grid>
                                 })}
@@ -550,7 +549,7 @@ const Home = () => {
                             universities.map(university => {
                                 return <CustomAnimatedComponent variants={animationTextRightToLeft} custom={5}>
                                     <Grid item style={{paddingLeft: 32, paddingTop: 32}}>
-                                        <CustomAnimatedComponent whileHover={{y: -10}}>
+                                        <CustomAnimatedComponent whileHover={{scale: 1.04}}>
                                             <UniversityCard university={university}/>
                                         </CustomAnimatedComponent>
                                     </Grid>

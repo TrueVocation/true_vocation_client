@@ -9,6 +9,7 @@ function CustomLink({children, to, ...props}) {
             <Link to={to} style={{
                 textDecoration: "none",
                 fontFamily: "Inter",
+                fontSize:15,
                 color: "rgb(103, 119, 136)",
             }}>
                 {children}

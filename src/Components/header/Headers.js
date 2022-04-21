@@ -13,12 +13,15 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {ReactComponent as Logo} from '../../images/Group 58.svg';
-import {Container, Grid, useScrollTrigger} from "@mui/material";
+import {ClickAwayListener, Container, Divider, Grid, ListItemIcon, useScrollTrigger} from "@mui/material";
 import PropTypes from "prop-types";
 import useAuth from "../../AuthConfig/useAuth";
 import Button from "@mui/material/Button";
 import {Link, useNavigate} from "react-router-dom";
 import CustomLink from "../links/CustomLink";
+import Avatar from "@mui/material/Avatar";
+import {Logout, PersonAdd, Settings} from "@mui/icons-material";
+import Typography from "@mui/material/Typography";
 
 
 const Search = styled('div')(({theme}) => ({
@@ -117,6 +120,15 @@ export function Headers() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    const [anchor, setAnchor] = React.useState(null);
+    const open = Boolean(anchor);
+    const handleClick = (event) => {
+        setAnchor(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchor(null);
+    };
+
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -192,6 +204,7 @@ export function Headers() {
     );
 
     return (
+        <>
         <HideOnScroll>
             <AppBar position={"sticky"} color={"inherit"}>
                 <Container maxWidth={"xl"} sx={{width: 1375}}>
@@ -227,7 +240,8 @@ export function Headers() {
                             <Grid container item sx={{paddingTop:1, marginLeft:5}} xs={6}
                                   display={"flex"} flexDirection={"row"} justifyContent={"flex-start"} alignItems={"center"}>
                                 <CustomLink item to={"/"} style={{color:"white",fontFamily:"Inter"}}>Home</CustomLink>
-                                <CustomLink to={"/wef"} style={{color:"#eaeced",fontFamily:"Inter"}}>Universities</CustomLink>
+                                <div onClick={handleClick} style={{color:"rgb(103, 119, 136)",fontFamily:"Inter",cursor:"pointer"}}>Subjects</div>
+
                                 <CustomLink to={"/fwef"} style={{color:"#08262C",fontFamily:"Inter"}}>Specialities</CustomLink>
                                 <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>Professions</CustomLink>
                             </Grid>
@@ -334,5 +348,109 @@ export function Headers() {
                 </Container>
             </AppBar>
         </HideOnScroll>
+    <Menu
+        anchorEl={anchor}
+        variant={"menu"}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+            elevation: 0,
+            sx: {
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                //borderBottom: "3px solid rgb(55, 125, 255)",
+                padding:"25px 10px 10px 30px",
+                width:550,
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                },
+                '&:before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    left: 25,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                },
+            },
+        }}
+        transformOrigin={{ horizontal: 'left', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+    >
+        <Grid container xs={12} display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
+            <Grid item xs={3} display={"flex"} flexDirection={"column"}>
+                <Grid item marginBottom={5}>
+                    <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
+                                style={{
+                                    color: "rgb(52, 71, 103)",
+                                    fontWeight: "bold",
+                                    fontSize: 14,
+                                    marginBottom:10,
+                                    letterSpacing:0
+                                }}>
+                        True Vocation</Typography>
+                    <CustomLink to={"/fwef"} style={{color:"#08262C",fontFamily:"Inter"}}>Specialities</CustomLink>
+                    <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>Professions</CustomLink>
+                </Grid>
+                <Grid item>
+                    <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
+                                style={{
+                                    color: "rgb(52, 71, 103)",
+                                    fontWeight: "bold",
+                                    fontSize: 14,
+                                    marginBottom:10,
+                                    letterSpacing:0
+                                }}>
+                        True Vocation</Typography>
+                    <CustomLink to={"/fwef"} style={{color:"#08262C",fontFamily:"Inter"}}>Specialities</CustomLink>
+                    <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>Professions</CustomLink>
+                </Grid>
+            </Grid>
+            <Grid item xs={1} display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+                <Divider orientation={"vertical"} variant={"fullWidth"} style={{height:"100%"}} />
+            </Grid>
+
+            <Grid  item xs={3} display={"flex"} flexDirection={"column"} >
+                <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
+                            style={{
+                                color: "rgb(52, 71, 103)",
+                                fontWeight: "bold",
+                                fontSize: 14,
+                                marginBottom:10,
+                                letterSpacing:0
+                            }}>
+                    True Vocation</Typography>
+                <CustomLink to={"/fwef"} style={{color:"#08262C",fontFamily:"Inter"}}>qweqwe</CustomLink>
+                <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>qweqwe</CustomLink>
+            </Grid>
+            <Grid item xs={1} display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+                <Divider orientation={"vertical"} variant={"fullWidth"} style={{height:"100%"}} />
+            </Grid>
+            <Grid  item xs={3} display={"flex"} flexDirection={"column"}>
+                <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
+                            style={{
+                                color: "rgb(52, 71, 103)",
+                                fontWeight: "bold",
+                                fontSize: 14,
+                                marginBottom:10,
+                                letterSpacing:0
+                            }}>
+                    True Vocation</Typography>
+                <CustomLink to={"/Subjects"} style={{color:"#08262C",fontFamily:"Inter"}}>Subjects</CustomLink>
+                <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>123123</CustomLink>
+            </Grid>
+        </Grid>
+    </Menu>
+    </>
     );
 }

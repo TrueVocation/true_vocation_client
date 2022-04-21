@@ -10,6 +10,7 @@ import SignUp from "./Pages/Auth/SignUp";
 import {SnackbarProvider} from "notistack";
 import ResetPassword from "./Pages/Auth/ResetPassword";
 import ResetPasswordFinish from "./Pages/Auth/ResetPasswordFinish";
+import Subjects from "./Pages/Subjects/Subjects";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="sign-up" element={<SignUp />} />
               <Route path="reset-password" element={<ResetPassword />} />
               <Route path="account/reset/finish" element={<ResetPasswordFinish />} />
+              <Route path="subjects" element={<Subjects />} />
             <Route
               path="something"
               element={
