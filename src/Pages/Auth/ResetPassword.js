@@ -42,7 +42,7 @@ function ResetPassword() {
 
     return (
         <>
-            <Box>
+            <Box style={{height:window.innerHeight*0.8}}>
                 <Container maxWidth="xl" style={{
                     display: "flex",
                     paddingLeft: 0,

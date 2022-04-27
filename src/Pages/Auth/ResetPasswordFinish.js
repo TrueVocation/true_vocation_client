@@ -62,8 +62,7 @@ function ResetPasswordFinish() {
 
   return (
     <>
-      <Box style={{ height: "650px" }}>
-        <Headers />
+      <Box style={{ height: window.innerHeight*0.8 }}>
         <Container maxWidth="xl" style={{
             display: "flex",
             paddingLeft: 0,

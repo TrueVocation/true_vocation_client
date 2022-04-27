@@ -48,7 +48,8 @@ function Subjects(props) {
         <Box style={{
             paddingTop:32,
             backgroundColor:"#F7F9FF",
-            marginBottom:30
+            paddingBottom:30,
+            height:window.innerHeight
         }}>
             <Container maxWidth={"sm"}>
                 <SearchField value={search} handleChange={handleSearchChange} />

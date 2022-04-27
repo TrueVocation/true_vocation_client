@@ -30,9 +30,9 @@ function App() {
               <Route path="subjects" element={<Subjects />} />
               <Route path="tests" element={<Tests />} />
               <Route path="tests/:id" element={<TestDetails />} />
-
+              <Route path="*" element={<NotFound404 />} />
           </Route>
-          <Route path="*" element={<NotFound404 />} />
+
         </Routes>
 
       </AuthProvider>
