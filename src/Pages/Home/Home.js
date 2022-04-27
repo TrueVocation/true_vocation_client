@@ -53,8 +53,6 @@ const Home = () => {
                     display: "block",
                     color: "rgb(103, 119, 136)",
                     fontSize: 30,
-                    position: "absolute",
-                    left: 1225
                 }}
                 onClick={onClick}
             />
@@ -71,8 +69,6 @@ const Home = () => {
                     display: "block",
                     color: "rgb(103, 119, 136)",
                     fontSize: 30,
-                    position: "absolute",
-                    left: -45
                 }}
                 onClick={onClick}
             />
@@ -120,11 +116,26 @@ const Home = () => {
     }
 
     const subjects = [
-        {name: "Physics", picture:"https://images.pexels.com/photos/60582/newton-s-cradle-balls-sphere-action-60582.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
-        {name: "Math", picture:"https://images.pexels.com/photos/6238297/pexels-photo-6238297.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
-        {name: "History", picture:"https://images.pexels.com/photos/36006/renaissance-schallaburg-figures-facade.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
-        {name: "Geography", picture:"https://images.pexels.com/photos/414916/pexels-photo-414916.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
-        {name: "Chemistry", picture: "https://images.pexels.com/photos/7722797/pexels-photo-7722797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
+        {
+            name: "Physics",
+            picture: "https://images.pexels.com/photos/60582/newton-s-cradle-balls-sphere-action-60582.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        },
+        {
+            name: "Math",
+            picture: "https://images.pexels.com/photos/6238297/pexels-photo-6238297.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        },
+        {
+            name: "History",
+            picture: "https://images.pexels.com/photos/36006/renaissance-schallaburg-figures-facade.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        },
+        {
+            name: "Geography",
+            picture: "https://images.pexels.com/photos/414916/pexels-photo-414916.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        },
+        {
+            name: "Chemistry",
+            picture: "https://images.pexels.com/photos/7722797/pexels-photo-7722797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        },
     ]
 
     const universities = [
@@ -175,6 +186,20 @@ const Home = () => {
             city: "Almaty",
             address: "Manasa street 8"
         },
+        {
+            name: "Kazakh British Technical University",
+            image: "data:image/png;base64,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",
+            description: "Rather than worrying about switching offices every couple years, you can instead stay in the same location and grow-up from your shared coworking space to an office that takes up an entire floor.",
+            city: "Almaty",
+            address: "Manasa street 8"
+        },
+        {
+            name: "Kazakh British Technical University",
+            image: "data:image/png;base64,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",
+            description: "Rather than worrying about switching offices every couple years, you can instead stay in the same location and grow-up from your shared coworking space to an office that takes up an entire floor.",
+            city: "Almaty",
+            address: "Manasa street 8"
+        },
     ]
 
     const universityAnimationQueue = [5, 6, 7, 8, 9, 10]
@@ -185,7 +210,7 @@ const Home = () => {
                 initial={"hidden"}
                 whileInView={"visible"}
                 viewport={{amount: 0.3, once: true}}>
-                <Grid container item xs={12} style={{backgroundColor: "#e9f0f5"}}>
+                <Grid container item xs={12} style={{backgroundColor: "#e9f0f5", height: window.innerHeight * 0.8}}>
                     <Grid item xs={1}/>
                     <Grid item xs={5}>
                         <CustomAnimatedComponent variants={animationText} custom={1}>
@@ -198,7 +223,7 @@ const Home = () => {
                                         style={{color: "rgb(103, 119, 136)", marginTop: 20}}>Our mission is to spread
                                 education that is easy accessible and everyone can learn.</Typography>
                         </CustomAnimatedComponent>
-                        <Grid container justifyContent={"space-between"} flexDirection={"row"} xs={7}
+                        <Grid container justifyContent={"space-between"} flexDirection={"row"} xs={6}
                               style={{marginTop: 40}}>
                             <CustomAnimatedComponent variants={animationButton} custom={3}>
                                 <Button size={"large"} variant={"outlined"} id={"primary_button_outlined"}>Purchase
@@ -235,8 +260,10 @@ const Home = () => {
                     paddingTop: 40,
                     paddingBottom: 50,
                     paddingLeft: 15,
-                    paddingRight: 15
-                }} flexDirection={"column"}>
+                    paddingRight: 15,
+                    height: window.innerHeight * 0.8,
+                }} display={"flex"} flexDirection={"column"}>
+
                     <Grid container item justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>
                         <CustomAnimatedComponent variants={animationBottomToTop} custom={1}>
                             <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"center"}
@@ -269,13 +296,14 @@ const Home = () => {
                         </CustomAnimatedComponent>
                     </Grid>
 
-                    <Grid container item justifyContent={"center"} xs={12}>
-                        <CustomAnimatedComponent variants={animationBottomToTop} custom={5}>
-                            <Grid item style={{paddingLeft: 32, paddingTop: 32}}>
+                    <Grid container item display={"flex"} flexDirection={"row"} justifyContent={"center"} marginTop={6}>
+                        <Grid item xs={2} style={{marginLeft:30, marginRight:30}}>
+                            <CustomAnimatedComponent variants={animationBottomToTop} custom={5}>
+
                                 <Paper variant={"outlined"}
                                        style={{padding: 32, borderRadius: 8, border: "1px solid rgba(0, 0, 0, 0.12)"}}
                                        square={true}>
-                                    <Box flexDirection={"column"} width={230}>
+                                    <Box flexDirection={"column"}>
                                         <Avatar variant={"circular"} style={{
                                             marginBottom: 20,
                                             width: 50,
@@ -307,14 +335,16 @@ const Home = () => {
                                             instructors to make sure courses are well.</Typography>
                                     </Box>
                                 </Paper>
-                            </Grid>
-                        </CustomAnimatedComponent>
-                        <CustomAnimatedComponent variants={animationBottomToTop} custom={6}>
-                            <Grid item style={{paddingLeft: 32, paddingTop: 32}}>
+                            </CustomAnimatedComponent>
+                        </Grid>
+
+                        <Grid item xs={2} style={{marginLeft:30, marginRight:30}}>
+                            <CustomAnimatedComponent variants={animationBottomToTop} custom={6}>
+
                                 <Paper variant={"outlined"}
                                        style={{padding: 32, borderRadius: 8, border: "1px solid rgba(0, 0, 0, 0.12)"}}
                                        square={true}>
-                                    <Box flexDirection={"column"} width={230}>
+                                    <Box flexDirection={"column"}>
                                         <Avatar variant={"circular"} style={{
                                             marginBottom: 20,
                                             width: 50,
@@ -347,14 +377,17 @@ const Home = () => {
                                             students arround the world.</Typography>
                                     </Box>
                                 </Paper>
-                            </Grid>
-                        </CustomAnimatedComponent>
-                        <CustomAnimatedComponent variants={animationBottomToTop} custom={7}>
-                            <Grid item style={{paddingLeft: 32, paddingTop: 32}}>
+
+                            </CustomAnimatedComponent>
+                        </Grid>
+
+                        <Grid item xs={2} style={{marginLeft:30, marginRight:30}}>
+                            <CustomAnimatedComponent variants={animationBottomToTop} custom={7}>
+
                                 <Paper variant={"outlined"}
                                        style={{padding: 32, borderRadius: 8, border: "1px solid rgba(0, 0, 0, 0.12)"}}
                                        square={true}>
-                                    <Box flexDirection={"column"} width={230}>
+                                    <Box flexDirection={"column"}>
                                         <Avatar variant={"circular"} style={{
                                             marginBottom: 20,
                                             width: 50,
@@ -386,14 +419,17 @@ const Home = () => {
                                             for all students arround the world.</Typography>
                                     </Box>
                                 </Paper>
-                            </Grid>
-                        </CustomAnimatedComponent>
-                        <CustomAnimatedComponent variants={animationBottomToTop} custom={8}>
-                            <Grid item style={{paddingLeft: 32, paddingTop: 32}}>
+
+                            </CustomAnimatedComponent>
+                        </Grid>
+
+
+                        <Grid item xs={2} style={{marginLeft:30, marginRight:30}}>
+                            <CustomAnimatedComponent variants={animationBottomToTop} custom={8}>
                                 <Paper variant={"outlined"}
                                        style={{padding: 32, borderRadius: 8, border: "1px solid rgba(0, 0, 0, 0.12)"}}
                                        square={true}>
-                                    <Box flexDirection={"column"} width={230}>
+                                    <Box flexDirection={"column"}>
                                         <Avatar variant={"circular"} style={{
                                             marginBottom: 20,
                                             width: 50,
@@ -425,8 +461,9 @@ const Home = () => {
                                             1000+ online video courses.</Typography>
                                     </Box>
                                 </Paper>
-                            </Grid>
-                        </CustomAnimatedComponent>
+                            </CustomAnimatedComponent>
+                        </Grid>
+
                     </Grid>
                 </Grid>
             </motion.div>
@@ -469,25 +506,28 @@ const Home = () => {
                             <Grid container item justifyContent={"center"} style={{marginTop: 15}}>
                                 <Button size={"large"} variant={"outlined"} id={"primary_button_outlined"}>Purchase
                                     now</Button>
-                                <Button size={"large"} onClick={()=>navigate("/subjects", true)} variant={"contained"} id={"primary_button"}
+                                <Button size={"large"} onClick={() => navigate("/subjects", true)} variant={"contained"}
+                                        id={"primary_button"}
                                         style={{marginLeft: 15}}>View
                                     documentation</Button>
                             </Grid>
                         </CustomAnimatedComponent>
                     </Grid>
 
-                    <Grid item xs={10} alignSelf={"center"} style={{marginTop: 20, marginBottom: 20 }}>
+                    <Grid item xs={10} alignSelf={"center"} style={{marginTop: 20, marginBottom: 20}}>
                         <CustomAnimatedComponent variants={animationBottomToTop} custom={5}>
-                            <Slider {...settings} style={{height: 350, alignItems:"center", display:"flex"}}>
+                            <Slider {...settings} style={{height: 350, alignItems: "center", display: "flex"}}>
                                 {subjects.map(subject => {
                                     return <Grid item style={{height: 300}}>
-                                        <CustomAnimatedComponent whileHover={{y: -10}} style={{ marginLeft: 20,
+                                        <CustomAnimatedComponent whileHover={{y: -10}} style={{
+                                            marginLeft: 20,
                                             marginRight: 20,
-                                            borderRadius:8, marginTop:40,paddingBottom:40,
+                                            borderRadius: 8, marginTop: 40, paddingBottom: 40,
                                             height: 300,
                                             display: "flex",
-                                            alignItems: "center"}}>
-                                            <SubjectCard subject={subject} height={290} width={290} />
+                                            alignItems: "center"
+                                        }}>
+                                            <SubjectCard subject={subject} height={290} width={290}/>
                                         </CustomAnimatedComponent>
                                     </Grid>
                                 })}
@@ -543,7 +583,7 @@ const Home = () => {
                         </CustomAnimatedComponent>
                     </Grid>
 
-                    <Grid container item justifyContent={"center"} xs={12}>
+                    <Grid container item flexDirection={"row"} justifyContent={"center"} xs={12}>
 
                         {
                             universities.map(university => {
