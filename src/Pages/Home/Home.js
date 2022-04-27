@@ -328,10 +328,10 @@ const Home = () => {
                                             </ReactVisibilitySensor>
                                         </Typography>
                                         <Typography variant={"h6"} fontFamily={"Inter"}
-                                                    style={{color: "#2d3e4a", fontSize: 20, marginBottom: 10}}>Expert
+                                                    style={{color: "#2d3e4a", fontSize: 25, marginBottom: 10}}>Expert
                                             instructors</Typography>
                                         <Typography variant={"body1"} fontFamily={"Inter"}
-                                                    style={{color: "rgb(103, 119, 136)", fontSize: 15}}>Expert
+                                                    style={{color: "rgb(103, 119, 136)", fontSize: 18}}>Expert
                                             instructors to make sure courses are well.</Typography>
                                     </Box>
                                 </Paper>
@@ -369,11 +369,11 @@ const Home = () => {
                                             </ReactVisibilitySensor>
                                         </Typography>
                                         <Typography variant={"h6"} fontFamily={"Inter"}
-                                                    style={{color: "#2d3e4a", fontSize: 20, marginBottom: 10}}>Active
+                                                    style={{color: "#2d3e4a", fontSize: 25, marginBottom: 10}}>Active
                                             students
                                         </Typography>
                                         <Typography variant={"body1"} fontFamily={"Inter"}
-                                                    style={{color: "rgb(103, 119, 136)", fontSize: 15}}>100K+ Active
+                                                    style={{color: "rgb(103, 119, 136)", fontSize: 18}}>100K+ Active
                                             students arround the world.</Typography>
                                     </Box>
                                 </Paper>
@@ -412,10 +412,10 @@ const Home = () => {
                                             </ReactVisibilitySensor>
                                         </Typography>
                                         <Typography variant={"h6"} fontFamily={"Inter"}
-                                                    style={{color: "#2d3e4a", fontSize: 20, marginBottom: 10}}>Free
+                                                    style={{color: "#2d3e4a", fontSize: 25, marginBottom: 10}}>Free
                                             resources</Typography>
                                         <Typography variant={"body1"} fontFamily={"Inter"}
-                                                    style={{color: "rgb(103, 119, 136)", fontSize: 15}}>Free resources
+                                                    style={{color: "rgb(103, 119, 136)", fontSize: 18}}>Free resources
                                             for all students arround the world.</Typography>
                                     </Box>
                                 </Paper>
@@ -454,10 +454,10 @@ const Home = () => {
                                             </ReactVisibilitySensor>
                                         </Typography>
                                         <Typography variant={"h6"} fontFamily={"Inter"}
-                                                    style={{color: "#2d3e4a", fontSize: 20, marginBottom: 10}}>Online
+                                                    style={{color: "#2d3e4a", fontSize: 25, marginBottom: 10}}>Online
                                             courses</Typography>
                                         <Typography variant={"body1"} fontFamily={"Inter"}
-                                                    style={{color: "rgb(103, 119, 136)", fontSize: 15}}>Choose from over
+                                                    style={{color: "rgb(103, 119, 136)", fontSize: 18}}>Choose from over
                                             1000+ online video courses.</Typography>
                                     </Box>
                                 </Paper>
