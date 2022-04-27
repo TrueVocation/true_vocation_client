@@ -53,7 +53,7 @@ function UniversityCard(props) {
                     </Grid>
                 </Grid>
                 <Grid xs={12} item container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}
-                      style={{padding: "10px 10px 10px 0"}}>
+                      style={{padding: "10px 0 10px 0"}}>
 
                     <Button variant={"outlined"} id={"primary_button_outlined"}>Learn More</Button>
                     <Checkbox style={{padding: 0}}

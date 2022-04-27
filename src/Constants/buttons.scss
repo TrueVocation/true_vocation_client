@@ -8,6 +8,10 @@
   font-family: Inter;
   color:$custom_primary;
   border-color: $custom_primary;
+  //&:hover{
+  //  color: white;
+  //  background-color: $custom_primary;
+  //}
 }
 
 #primary_button{
@@ -18,4 +22,20 @@
   font-family: Inter;
   color:white;
   background-color: $custom_primary;
+  //&:hover{
+  //  color: $custom_primary;
+  //  background-color: white;
+  //  border-color: $custom_primary;
+  //}
+}
+
+
+#warning_button{
+  text-transform: inherit;
+  font-weight: bold;
+  box-shadow: none;
+  border-radius: 6px;
+  font-family: Inter;
+  color:white;
+  background-color: $custom_warning;
 }

@@ -240,9 +240,10 @@ export function Headers() {
                             <Grid container item sx={{paddingTop:1, marginLeft:5}} xs={6}
                                   display={"flex"} flexDirection={"row"} justifyContent={"flex-start"} alignItems={"center"}>
                                 <CustomLink item to={"/"} style={{color:"white",fontFamily:"Inter"}}>Home</CustomLink>
-                                <div onClick={handleClick} style={{color:"rgb(103, 119, 136)",fontFamily:"Inter",cursor:"pointer"}}>Subjects</div>
+                                <CustomLink item to={"/"} style={{color:"white",fontFamily:"Inter"}}>Subjects</CustomLink>
+                                {/*<div onClick={handleClick} style={{color:"rgb(103, 119, 136)",fontFamily:"Inter",cursor:"pointer"}}>Subjects</div>*/}
 
-                                <CustomLink to={"/fwef"} style={{color:"#08262C",fontFamily:"Inter"}}>Specialities</CustomLink>
+                                <CustomLink to={"/tests"} style={{color:"#08262C",fontFamily:"Inter"}}>Tests</CustomLink>
                                 <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>Professions</CustomLink>
                             </Grid>
                         </Box>

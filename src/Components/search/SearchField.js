@@ -21,7 +21,7 @@ function SearchField(props) {
                 <Grid item container display={"flex"} flexDirection={"row"} style={{paddingTop:8,paddingBottom:8}}>
                     <InputBase fullWidth
                         id="outlined-adornment-weight"
-                        placeholder={"Search an subject"}
+                        placeholder={"Search..."}
                         style={{fontSize:18}}
                         value={value}
                         onChange={handleChange}

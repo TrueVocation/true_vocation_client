@@ -11,6 +11,8 @@ import {SnackbarProvider} from "notistack";
 import ResetPassword from "./Pages/Auth/ResetPassword";
 import ResetPasswordFinish from "./Pages/Auth/ResetPasswordFinish";
 import Subjects from "./Pages/Subjects/Subjects";
+import Tests from "./Pages/Tests/Tests";
+import TestDetails from "./Pages/Tests/TestDetails";
 
 function App() {
     return (
@@ -26,14 +28,8 @@ function App() {
               <Route path="reset-password" element={<ResetPassword />} />
               <Route path="account/reset/finish" element={<ResetPasswordFinish />} />
               <Route path="subjects" element={<Subjects />} />
-            <Route
-              path="something"
-              element={
-                <RequireAuth>
-                  <div>something</div>
-                </RequireAuth>
-              }
-            />
+              <Route path="tests" element={<Tests />} />
+              <Route path="tests/:id" element={<TestDetails />} />
 
           </Route>
           <Route path="*" element={<NotFound404 />} />
