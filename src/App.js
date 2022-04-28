@@ -13,6 +13,7 @@ import ResetPasswordFinish from "./Pages/Auth/ResetPasswordFinish";
 import Subjects from "./Pages/Subjects/Subjects";
 import Tests from "./Pages/Tests/Tests";
 import TestDetails from "./Pages/Tests/TestDetails";
+import UniversityDetails from "./Pages/Universities/UniversityDetails";
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
               <Route path="subjects" element={<Subjects />} />
               <Route path="tests" element={<Tests />} />
               <Route path="tests/:id" element={<TestDetails />} />
+              <Route path="university/:id" element={<UniversityDetails />} />
               <Route path="*" element={<NotFound404 />} />
           </Route>
 

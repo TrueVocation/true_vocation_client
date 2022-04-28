@@ -210,7 +210,7 @@ const Home = () => {
                 initial={"hidden"}
                 whileInView={"visible"}
                 viewport={{amount: 0.3, once: true}}>
-                <Grid container item xs={12} style={{backgroundColor: "#e9f0f5", height: window.innerHeight * 0.8}}>
+                <Grid container item xs={12} style={{backgroundColor: "#e9f0f5", height: window.innerHeight * 0.9}}>
                     <Grid item xs={1}/>
                     <Grid item xs={5}>
                         <CustomAnimatedComponent variants={animationText} custom={1}>
@@ -243,7 +243,7 @@ const Home = () => {
                                                  animate={{rotate: 360, opacity: 1}}
                                                  transition={{duration: 1}}
                                                  style={{rotate: 0, opacity: 0}} custom={1}>
-                            <Main/>
+                                <Main style={{height:window.innerHeight*0.75}} />
                         </CustomAnimatedComponent>
                     </Grid>
                 </Grid>
@@ -261,7 +261,7 @@ const Home = () => {
                     paddingBottom: 50,
                     paddingLeft: 15,
                     paddingRight: 15,
-                    height: window.innerHeight * 0.8,
+                    height: window.innerHeight ,
                 }} display={"flex"} flexDirection={"column"}>
 
                     <Grid container item justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>

@@ -5,9 +5,12 @@ import Typography from "@mui/material/Typography";
 import {Bookmark, BookmarkBorderOutlined, LocationCity, LocationOnOutlined} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import {useNavigate} from "react-router-dom";
 
 function UniversityCard(props) {
     const {university} = props;
+
+    const navigate = useNavigate();
 
     return (
         <Paper variant={"elevation"} elevation={0} style={{
@@ -55,7 +58,7 @@ function UniversityCard(props) {
                 <Grid xs={12} item container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}
                       style={{padding: "10px 0 10px 0"}}>
 
-                    <Button variant={"outlined"} id={"primary_button_outlined"}>Learn More</Button>
+                    <Button onClick={()=>navigate(`university/${university.id}`)} variant={"outlined"} id={"primary_button_outlined"}>Learn More</Button>
                     <Checkbox style={{padding: 0}}
 
                               icon={<BookmarkBorderOutlined style={{fontSize: 35}}/>}

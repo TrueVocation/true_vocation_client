@@ -1,7 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {Container, Divider, Grid, LinearProgress, linearProgressClasses, Tooltip, tooltipClasses} from "@mui/material";
+import {
+    CircularProgress, circularProgressClasses,
+    Container,
+    Divider,
+    Grid,
+    LinearProgress,
+    linearProgressClasses,
+    Tooltip,
+    tooltipClasses
+} from "@mui/material";
 import {default as axios} from "axios";
 import {API_BASE} from "../../Constants/Constants";
 import {useForm} from "react-hook-form";
@@ -197,6 +206,41 @@ function TestDetails(props) {
     }, [])
 
 
+    function FacebookCircularProgress(props) {
+        return (
+            <Box sx={{ position: 'relative' }}>
+                <CircularProgress
+                    variant="determinate"
+                    sx={{
+                        color: (theme) =>
+                            theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+                    }}
+                    size={40}
+                    thickness={4}
+                    {...props}
+                    value={100}
+                />
+                <CircularProgress
+                    variant="indeterminate"
+                    disableShrink
+                    sx={{
+                        color: (theme) => (theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'),
+                        animationDuration: '550ms',
+                        position: 'absolute',
+                        left: 0,
+                        [`& .${circularProgressClasses.circle}`]: {
+                            strokeLinecap: 'round',
+                        },
+                    }}
+                    size={40}
+                    thickness={4}
+                    {...props}
+                />
+            </Box>
+        );
+    }
+
+
     const startTest = () =>{
         return <form style={{width: "100%"}} onSubmit={handleSubmit(onSubmit)}>
             {questions.map((question, index) => {
@@ -209,6 +253,21 @@ function TestDetails(props) {
                               square={true}>
                     <Grid container direction={"column"} justifyContent={"space-between"}
                           marginBottom={1}>
+                        <Grid item style={{width:"inherit", marginBottom:5}}>
+                            <Typography variant={"h3"} fontFamily={"Inter"} style={{
+                                color: "rgb(45, 62, 74)",
+                                fontSize: 25,
+                                fontWeight: "bold",
+                                marginBottom: 10,
+                                alignSelf:"end"
+                            }}
+                            >
+                                Find out your type of thinking and learning directions
+                            </Typography>
+                        </Grid>
+                        <Grid item style={{width:"inherit", marginBottom:5}}>
+                            <img style={{width:"inherit", borderRadius:15}} src={"https://www.trentu.ca/online/sites/trentu.ca.online/files/images/banners/onlinestudybanner.jpg"}/>
+                        </Grid>
                         <Grid item style={{marginBottom:25}}>
                             <BorderLinearProgress variant="determinate" value={progress} />
                         </Grid>
@@ -408,7 +467,7 @@ function TestDetails(props) {
                 <Container style={{width:"70%", alignSelf:"center"}}>
                     <Grid xs={12} >
 
-                        {isStartTest ? startTest() : testDetailsPaper()}
+                        {isStartTest ? questions.length!==0 ? startTest() : <FacebookCircularProgress /> : testDetailsPaper()}
                         {/*<Radar data={data} />*/}
                     </Grid>
                 </Container>
