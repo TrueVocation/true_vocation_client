@@ -126,10 +126,10 @@ function UniversityDetails(props) {
                                 a 13th-century Earl of Leicester credited with establishing the first Parliament of
                                 England in 1265.</Typography>
                         </CustomAnimatedComponent>
-                        <Grid container justifyContent={"space-between"} flexDirection={"row"} xs={6}
+                        <Grid container flexDirection={"row"} xs={6}
                               style={{marginTop: 40}}>
                             <CustomAnimatedComponent variants={animationButton} custom={3}>
-                                <Button size={"large"} variant={"outlined"} id={"primary_button_outlined"}>Purchase
+                                <Button size={"large"} style={{marginRight:20}} variant={"outlined"} id={"primary_button_outlined"}>Purchase
                                     now</Button>
                             </CustomAnimatedComponent>
                             <CustomAnimatedComponent variants={animationButton} custom={4}>
@@ -205,20 +205,28 @@ function UniversityDetails(props) {
                             Universities.
                         </Typography>
 
-                       <Grid item container display={"flex"} flexDirection={"row"} style={{marginTop:20}}>
+                       <Grid item container display={"flex"} flexDirection={"row"} style={{marginTop:20, marginBottom:35}}>
+                           <CustomAnimatedComponent style={{borderLeft:"5px solid transparent",borderTopLeftRadius:15,borderBottomLeftRadius:15}} whileHover={{borderLeft:"5px solid rgb(253,215,23)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
                            <UniversityInfoCard backColor={"rgb(253,243,184)"} text={{text:"Programs", number:44}} icon={<SchoolOutlined fontSize={"large"} style={{color:"rgb(253,215,23)"}} />} />
+                           </CustomAnimatedComponent>
+                           <CustomAnimatedComponent style={{borderLeft:"5px solid transparent",borderTopLeftRadius:15,borderBottomLeftRadius:15}} whileHover={{borderLeft:"5px solid rgb(0,184,254)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
                            <UniversityInfoCard backColor={"rgb(191,237,254)"} text={{text:"Faculties", number:14}} icon={<MenuBookOutlined fontSize={"large"} style={{color:"rgb(0,184,254)"}} />} />
-                           <UniversityInfoCard backColor={"rgb(233,191,252)"} text={{text:"Professions", number:190}} icon={<WorkOutlineOutlined fontSize={"large"} style={{color:"rgb(166,0,246)"}} />} />
-                           {/*<UniversityInfoCard backColor={"rgb(191,253,222)"} text={{text:"Professions", number:193}} icon={<GroupAddOutlined fontSize={"large"} style={{color:"rgb(0,253,123)"}} />} />*/}
+                           </CustomAnimatedComponent>
+                           <CustomAnimatedComponent style={{borderLeft:"5px solid transparent",borderTopLeftRadius:15,borderBottomLeftRadius:15}} whileHover={{borderLeft:"5px solid rgb(166,0,246)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
+                               <UniversityInfoCard backColor={"rgb(233,191,252)"} text={{text:"Professions", number:190}} icon={<WorkOutlineOutlined fontSize={"large"} style={{color:"rgb(166,0,246)"}} />} />
+                               </CustomAnimatedComponent>
+                                   {/*<UniversityInfoCard backColor={"rgb(191,253,222)"} text={{text:"Professions", number:193}} icon={<GroupAddOutlined fontSize={"large"} style={{color:"rgb(0,253,123)"}} />} />*/}
+                                   <CustomAnimatedComponent style={{borderLeft:"5px solid transparent",borderTopLeftRadius:15,borderBottomLeftRadius:15}} whileHover={{borderLeft:"5px solid rgb(253,110,1)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
                            <UniversityInfoCard backColor={"rgb(253,218,191)"} text={{text:"Specialties", number:60}} icon={<GroupAddOutlined fontSize={"large"} style={{color:"rgb(253,110,1)"}} />} />
-                         </Grid>
+                                   </CustomAnimatedComponent>
+                                   </Grid>
 
                         <Grid item xs={6}>
                             <Typography variant={"h4"} fontFamily={"Inter"} fontWeight={"bold"} alignSelf={"center"}
                                         style={{color: "#2d3e4a", marginBottom: 0}}>Contacts</Typography>
                             <Paper variant={"elevation"} elevation={0} style={{
                                 borderRadius: 15,
-                                boxShadow: "0 3px 16px 0 rgb(114 114 114 / 20%)",
+                                boxShadow: "rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px",
                                 padding: "15px 25px 15px 20px",
                                 marginTop:20,
                                 marginBottom:35,

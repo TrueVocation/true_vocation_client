@@ -12,10 +12,10 @@ function UniversityInfoCard(props) {
     return (
         <Paper variant={"elevation"} elevation={0} style={{
             borderRadius: 15,
-            boxShadow: "0 3px 16px 0 rgb(114 114 114 / 20%)",
+            boxShadow: "0 3px 16px 0 rgb(114 114 114 / 30%)",
             padding: "15px 25px 15px 20px",
             marginRight:35,
-            marginBottom:35
+            cursor:"pointer",
         }}
                square={true}>
             <Grid container display={"flex"} flexDirection={"row"} alignItems={"center"} justifyContent={"space-between"}>

@@ -223,10 +223,10 @@ const Home = () => {
                                         style={{color: "rgb(103, 119, 136)", marginTop: 20}}>Our mission is to spread
                                 education that is easy accessible and everyone can learn.</Typography>
                         </CustomAnimatedComponent>
-                        <Grid container justifyContent={"space-between"} flexDirection={"row"} xs={6}
+                        <Grid container flexDirection={"row"}
                               style={{marginTop: 40}}>
                             <CustomAnimatedComponent variants={animationButton} custom={3}>
-                                <Button size={"large"} variant={"outlined"} id={"primary_button_outlined"}>Purchase
+                                <Button size={"large"} style={{marginRight:20}} variant={"outlined"} id={"primary_button_outlined"}>Purchase
                                     now</Button>
                             </CustomAnimatedComponent>
                             <CustomAnimatedComponent variants={animationButton} custom={4}>
