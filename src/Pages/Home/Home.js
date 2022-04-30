@@ -1,7 +1,7 @@
 import useAuth from "../../AuthConfig/useAuth";
 import Box from "@mui/material/Box";
 import {Divider, Grid, TextField} from "@mui/material";
-import {ReactComponent as Main} from '../../images/undraw_job_hunt_re_q203.svg'
+import {ReactComponent as Main} from '../../images/05.Data.svg'
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {motion} from "framer-motion"
