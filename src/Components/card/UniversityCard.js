@@ -42,12 +42,12 @@ function UniversityCard(props) {
                             {university.description}
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>
-                        <LocationCity/>
-                        <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"end"}
-                                    style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 3}}>Location: <strong
-                            style={{color: "rgb(45, 62, 74)"}}>{university.city}</strong></Typography>
-                    </Grid>
+                    {/*<Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>*/}
+                    {/*    <LocationCity/>*/}
+                    {/*    <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"end"}*/}
+                    {/*                style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 3}}>Location: <strong*/}
+                    {/*        style={{color: "rgb(45, 62, 74)"}}>{university.city}</strong></Typography>*/}
+                    {/*</Grid>*/}
                     <Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>
                         <LocationOnOutlined/>
                         <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"end"}

@@ -13,19 +13,24 @@ function NotFound404() {
     }
 
   return <>
-        <Grid container flexDirection={"row"} justifyContent={"center"} alignItems={"center"} xs={12} style={{height:window.innerHeight*0.8}}>
-            <Grid item xs={1}/>
-            <Grid item xs={5}>
-                <Typography variant={"h1"} fontFamily={"Inter"} fontWeight={"bold"}
+        <Grid container flexDirection={"row"} justifyContent={"center"} alignItems={"center"} xs={12} style={{minHeight:window.innerHeight*0.8}}>
+
+
+            <Grid item xs={12} sm={12} md={5} lg={5} xl={5} style={{paddingTop:20, paddingLeft:20,paddingRight:10}}>
+                <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"}
                             style={{color: "#2d3e4a", marginBottom: 0}}>Not Found</Typography>
                 <Typography variant={"h5"} fontFamily={"Inter"}
                             style={{color: "rgb(103, 119, 136)", marginTop: 10, marginBottom:15}}>Oops! Looks like you followed a bad link.
                     If you think this is a problem with us, please tell us</Typography>
                 <Button size={"large"} id={"primary_button"} onClick={back} variant={"contained"} style={{textTransform:"initial"}}>Back home</Button>
             </Grid>
-            <Grid item xs={6} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+
+
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6} display={"flex"} alignItems={"center"} justifyContent={"center"}>
                 <Main/>
             </Grid>
+
+
         </Grid>
     </>
 

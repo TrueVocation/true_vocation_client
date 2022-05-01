@@ -63,10 +63,10 @@ function SignIn() {
 
     return (
         <>
-            <Box style={{height:window.innerHeight*0.8}}>
-                <Container maxWidth="xl" style={{display: "flex", paddingLeft: 0, paddingRight: 0, height: "100%"}}>
-                    <Grid item xs={1}/>
-                    <Grid container item xs={5} style={{padding: 0, paddingLeft: 25, paddingRight: 25}}
+            <Box style={{minHeight:window.innerHeight*0.8,display:"flex", alignItems:"center"}}>
+                <Grid container display={"flex"} justifyContent={"center"} style={{display: "flex", paddingLeft: 0, paddingRight: 0, height: "100%"}}>
+
+                    <Grid container item xs={12} sm={8} md={6} lg={5} xl={4} style={{padding: 0, paddingLeft: 25, paddingRight: 25,paddingTop:20}}
                           flexDirection={"column"}
                           justifyContent={"space-evenly"} spacing={0} alignItems={"center"}>
                         <Grid/>
@@ -144,11 +144,13 @@ function SignIn() {
                         <Grid/>
                         <Grid/>
                     </Grid>
-                    <Grid container item xs={6} style={{padding: 20}} justifyContent={"center"} alignItems={"center"}>
+
+
+                    <Grid container item xs={12} sm={12} md={6} lg={6} xl={6} style={{padding: 25}} justifyContent={"center"} alignItems={"center"}>
                         <Main/>
                     </Grid>
 
-                </Container>
+                </Grid>
             </Box>
         </>
 

@@ -75,7 +75,7 @@ function TestDetails(props) {
 
     const test = {
         id: 1,
-        name: "Test",
+        name: "Klimov's test",
         description: "panel Liaison value-added",
         instruction: "                                    JHipster gives a great choice as one can choose between an image type or any binary type. JDL lets you do the same. Create a custom type (see DataType) with the editor, name it according to these conventions:\n" +
             "\n" +
@@ -170,6 +170,7 @@ function TestDetails(props) {
     async function testStart() {
         try {
             let jwtToken = localStorage.getItem("token");
+            setIsStartTest(true);
             const response = await axios.get(
                 `${API_BASE}/test-questions/1?page=0&size=1&sort=id&order=desc`, {
                     headers: {
@@ -183,7 +184,6 @@ function TestDetails(props) {
                 setIsFirstPage(response.data.first);
                 setQuestionsCount(response.headers['x-total-count']);
                 setCurrentPageNumber(response.data.number);
-                setIsStartTest(true);
                 setProgress(10)
             }
         } catch (error) {
@@ -242,7 +242,7 @@ function TestDetails(props) {
 
 
     const startTest = () =>{
-        return <form style={{width: "100%"}} onSubmit={handleSubmit(onSubmit)}>
+        return <form onSubmit={handleSubmit(onSubmit)}>
             {questions.map((question, index) => {
                 return <Paper key={question.id} variant={"elevation"} elevation={3} style={{
                     borderRadius: 15,
@@ -409,7 +409,7 @@ function TestDetails(props) {
                     TextBlob to create a field for a CLOB (long text).
                     And you can create as many DataTypes as you like.
                 </Typography>
-                <Grid item xs={2}>
+                <Grid item xs={12}>
                     <Button onClick={()=>testStart()} id={"warning_button"}  size={"large"} type={"submit"} variant="contained" fontFamily={"Inter"}>Start Test</Button>
                 </Grid>
             </Grid>
@@ -434,11 +434,10 @@ function TestDetails(props) {
 
     return (
         <Box style={{
-            backgroundColor: "#F7F9FF"
+            backgroundColor: "#F7F9FF",
         }}>
             <Box style={{
                 backgroundImage: `url("${test.picture}")`,
-                backgroundSize: "100%",
                 backgroundRepeat: "no-repeat",
                 height: "520px"
             }}>
@@ -458,19 +457,21 @@ function TestDetails(props) {
                         is</Typography>
                 </Box>
             </Box>
+
+
             <Box style={{
                 backgroundColor: "#e9f0f5",
                 paddingBottom: 30,
                 paddingTop: 30,
-                display:"flex"
+                display:"flex", justifyContent:"center"
             }}>
-                <Container style={{width:"70%", alignSelf:"center"}}>
-                    <Grid xs={12} >
+                <Grid container item xs={11} sm={11} md={10} lg={8} xl={8} isplay={"flex"} justifyContent={"center"} style={{width:"70%", alignSelf:"center"}}>
+                    <Grid xs={12} display={"flex"} justifyContent={"center"} >
 
                         {isStartTest ? questions.length!==0 ? startTest() : <FacebookCircularProgress /> : testDetailsPaper()}
                         {/*<Radar data={data} />*/}
                     </Grid>
-                </Container>
+                </Grid>
             </Box>
         </Box>
     );
