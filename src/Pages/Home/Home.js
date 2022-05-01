@@ -1,7 +1,7 @@
 import useAuth from "../../AuthConfig/useAuth";
 import Box from "@mui/material/Box";
 import {Divider, Grid, TextField} from "@mui/material";
-import {ReactComponent as Main} from '../../images/05.Data.svg'
+import {ReactComponent as Main} from '../../images/qwer.svg'
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {motion} from "framer-motion"
@@ -215,29 +215,26 @@ const Home = () => {
                     <Grid item xs={5}>
                         <CustomAnimatedComponent variants={animationText} custom={1}>
                             <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"}
-                                        style={{color: "#2d3e4a", marginTop: 140, marginBottom: 0}}>Learn new skills,
-                                gain more experience</Typography>
+                                        style={{color: "#2d3e4a", marginTop: 140, marginBottom: 0}}>Find out who you want to be in the future</Typography>
                         </CustomAnimatedComponent>
                         <CustomAnimatedComponent variants={animationText} custom={2}>
                             <Typography variant={"h5"} fontFamily={"Inter"}
-                                        style={{color: "rgb(103, 119, 136)", marginTop: 20}}>Our mission is to spread
-                                education that is easy accessible and everyone can learn.</Typography>
+                                        style={{color: "rgb(103, 119, 136)", marginTop: 20}}>Our mission is to send and provide all the necessary information to schoolchildren to choose the right future</Typography>
                         </CustomAnimatedComponent>
                         <Grid container flexDirection={"row"}
                               style={{marginTop: 40}}>
                             <CustomAnimatedComponent variants={animationButton} custom={3}>
-                                <Button size={"large"} style={{marginRight:20}} variant={"outlined"} id={"primary_button_outlined"}>Purchase
-                                    now</Button>
+                                <Button size={"large"} style={{marginRight:20}} variant={"outlined"} id={"primary_button_outlined"}>Take a career guidance test
+                                    </Button>
                             </CustomAnimatedComponent>
                             <CustomAnimatedComponent variants={animationButton} custom={4}>
-                                <Button size={"large"} variant={"contained"} id={"primary_button"}>View
-                                    documentation</Button>
+                                <Button size={"large"} variant={"contained"} id={"primary_button"}>Professions</Button>
                             </CustomAnimatedComponent>
                         </Grid>
 
                     </Grid>
                     <Grid container justifyContent={"center"} item xs={6}
-                          style={{padding: 15}}
+                          style={{paddingTop: 50}}
                     >
                         <CustomAnimatedComponent transformTemplate={template}
                                                  animate={{rotate: 360, opacity: 1}}
