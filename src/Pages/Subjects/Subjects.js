@@ -49,7 +49,7 @@ function Subjects(props) {
             paddingTop:32,
             backgroundColor:"#F7F9FF",
             paddingBottom:30,
-            height:window.innerHeight
+            minHeight:window.innerHeight
         }}>
             <Container maxWidth={"sm"}>
                 <SearchField value={search} handleChange={handleSearchChange} />

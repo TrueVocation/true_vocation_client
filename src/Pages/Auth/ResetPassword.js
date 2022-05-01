@@ -42,19 +42,18 @@ function ResetPassword() {
 
     return (
         <>
-            <Box style={{height:window.innerHeight*0.8}}>
-                <Container maxWidth="xl" style={{
+            <Box style={{minHeight:window.innerHeight*0.8}}>
+                <Grid container display={"flex"} justifyContent={"center"} style={{
                     display: "flex",
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                    height: "100%",
+                    paddingLeft: 25,
+                    paddingRight: 25,
+                    paddingTop: 20,
                 }}
                 >
-                    <Grid item xs={1}/>
                     <Grid
                         container
+                        xs={12} sm={8} md={6} lg={5} xl={4}
                         item
-                        xs={5}
                         style={{padding: 0, paddingLeft: 25, paddingRight: 25}}
                         flexDirection={"column"}
                         justifyContent={"space-evenly"}
@@ -205,14 +204,14 @@ function ResetPassword() {
                     <Grid
                         container
                         item
-                        xs={6}
+                        xs={12} sm={12} md={6} lg={6} xl={6}
                         style={{padding: 20}}
                         justifyContent={"center"}
                         alignItems={"center"}
                     >
                         <Main/>
                     </Grid>
-                </Container>
+                </Grid>
             </Box>
         </>
     );
