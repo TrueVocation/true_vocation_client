@@ -1,7 +1,7 @@
 import useAuth from "../../AuthConfig/useAuth";
 import Box from "@mui/material/Box";
 import {Divider, Grid, TextField} from "@mui/material";
-import {ReactComponent as Main} from '../../images/qwer.svg'
+import {ReactComponent as Main} from '../../images/purple-svg/Illustration_Analysis Skills-ai (3).svg'
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {motion} from "framer-motion"
@@ -18,6 +18,7 @@ import Slider from "react-slick";
 import './_home.scss'
 import SubjectCard from "../../Components/card/SubjectCard";
 import UniversityCard from "../../Components/card/UniversityCard";
+import '../../Constants/colors.scss'
 
 const Home = () => {
     const auth = useAuth();
@@ -183,14 +184,13 @@ const Home = () => {
 
     const universityAnimationQueue = [5, 6, 7, 8, 9, 10]
 
-    return (<Box sx={{display: "flex", flexDirection: "column"}}>
+    return (<Box sx={{display: "flex", flexDirection: "column",backgroundColor:"#F7F9FF"}} >
         <motion.div
             initial={"hidden"}
             whileInView={"visible"}
             viewport={{amount: 0.3, once: true}}>
-            <Grid container item xs={12} style={{backgroundColor: "#e9f0f5", height: window.innerHeight * 0.9}}>
-                <Grid item xs={1}/>
-                <Grid item xs={5}>
+            <Grid id={"back"} container item xs={12} style={{height: window.innerHeight * 0.9}}>
+                <Grid item xs={12} sm={12} md={6} lg={6} xl={6} style={{padding:"10px 25px 0 25px"}}>
                     <CustomAnimatedComponent variants={animationText} custom={1}>
                         <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"}
                                     style={{color: "#2d3e4a", marginTop: 140, marginBottom: 0}}>Find out who you
@@ -213,16 +213,18 @@ const Home = () => {
                             <Button size={"large"} variant={"contained"} id={"primary_button"}>Professions</Button>
                         </CustomAnimatedComponent>
                     </Grid>
-
                 </Grid>
-                <Grid container justifyContent={"center"} item xs={6}
+
+                <Grid container justifyContent={"center"} display={"flex"} item xs={12} sm={12} md={6} lg={6} xl={6}
                       style={{paddingTop: 50}}
                 >
                     <CustomAnimatedComponent transformTemplate={template}
                                              animate={{rotate: 360, opacity: 1}}
                                              transition={{duration: 1}}
-                                             style={{rotate: 0, opacity: 0}} custom={1}>
-                        <Main style={{height: window.innerHeight * 0.75}}/>
+                                             style={{rotate: 0, opacity: 0,display:"flex",width:"100%"}} custom={1}
+
+                    >
+                        <Main/>
                     </CustomAnimatedComponent>
                 </Grid>
             </Grid>
@@ -279,13 +281,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(131, 0, 184)"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(111, 53, 186)"
                                     }}>
                                         <Groups/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "rgb(131, 0, 184)",
+                                                    color: "rgb(111, 53, 186)",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -317,13 +319,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(131, 0, 184)"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(111, 53, 186)"
                                     }}>
                                         <School/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "rgb(131, 0, 184)",
+                                                    color: "rgb(111, 53, 186)",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -356,13 +358,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(131, 0, 184)"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(111, 53, 186)"
                                     }}>
                                         <MenuBook/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "rgb(131, 0, 184)",
+                                                    color: "rgb(111, 53, 186)",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -395,13 +397,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(131, 0, 184)"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(111, 53, 186)"
                                     }}>
                                         <AccountBalance/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "rgb(131, 0, 184)",
+                                                    color: "rgb(111, 53, 186)",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -560,7 +562,7 @@ const Home = () => {
             viewport={{amount: 0.3, once: true}}
         >
             <Grid container item justifyContent={"center"} xs={12} style={{
-                background: "linear-gradient(#e9f0f5 40%, rgb(131, 0, 184) 0%) transparent",
+                background: "linear-gradient(#e9f0f5 40%, rgb(111, 53, 186) 0%) transparent",
                 paddingTop: 40,
                 paddingBottom: 50,
                 paddingLeft: 15,

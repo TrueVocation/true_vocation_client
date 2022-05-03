@@ -1,7 +1,6 @@
 import React from 'react';
 import Box from "@mui/material/Box";
 import {Grid} from "@mui/material";
-import {ReactComponent as Logo} from "../../images/113-atom (2).svg";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import {useNavigate} from "react-router-dom";
