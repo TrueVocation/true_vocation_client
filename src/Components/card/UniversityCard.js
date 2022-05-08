@@ -5,9 +5,12 @@ import Typography from "@mui/material/Typography";
 import {Bookmark, BookmarkBorderOutlined, LocationCity, LocationOnOutlined} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import {useNavigate} from "react-router-dom";
 
 function UniversityCard(props) {
     const {university} = props;
+
+    const navigate = useNavigate();
 
     return (
         <Paper variant={"elevation"} elevation={0} style={{
@@ -16,7 +19,7 @@ function UniversityCard(props) {
             padding: "20px 15px 5px 15px"
         }}
                square={true}>
-            <Box flexDirection={"column"} width={360}>
+            <Box flexDirection={"column"}>
                 <Grid xs={12} container flexDirection={"row"} justifyContent={"center"}
                       style={{borderBottom: "1px solid #E0E0E0", paddingBottom: 5}}>
                     <Grid item xs={4} alignSelf={"center"}>
@@ -35,16 +38,16 @@ function UniversityCard(props) {
                 <Grid xs={12} container flexDirection={"column"} marginTop={2}>
                     <Grid item xs={12} marginBottom={1}>
                         <Typography variant={"h5"} fontFamily={"Inter"}
-                                    style={{color: "rgb(45, 62, 74)", fontSize: 15, height: 120}}>
+                                    style={{color: "rgb(45, 62, 74)", fontSize: 15}}>
                             {university.description}
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>
-                        <LocationCity/>
-                        <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"end"}
-                                    style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 3}}>Location: <strong
-                            style={{color: "rgb(45, 62, 74)"}}>{university.city}</strong></Typography>
-                    </Grid>
+                    {/*<Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>*/}
+                    {/*    <LocationCity/>*/}
+                    {/*    <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"end"}*/}
+                    {/*                style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 3}}>Location: <strong*/}
+                    {/*        style={{color: "rgb(45, 62, 74)"}}>{university.city}</strong></Typography>*/}
+                    {/*</Grid>*/}
                     <Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>
                         <LocationOnOutlined/>
                         <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"end"}
@@ -53,9 +56,9 @@ function UniversityCard(props) {
                     </Grid>
                 </Grid>
                 <Grid xs={12} item container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}
-                      style={{padding: "10px 10px 10px 0"}}>
+                      style={{padding: "10px 0 10px 0"}}>
 
-                    <Button variant={"outlined"} id={"primary_button_outlined"}>Learn More</Button>
+                    <Button onClick={()=>navigate(`university/${university.id}`)} variant={"outlined"} id={"primary_button_outlined"}>Learn More</Button>
                     <Checkbox style={{padding: 0}}
 
                               icon={<BookmarkBorderOutlined style={{fontSize: 35}}/>}

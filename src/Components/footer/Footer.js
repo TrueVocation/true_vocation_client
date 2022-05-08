@@ -12,10 +12,12 @@ import '../links/links.scss'
 function Footer(props) {
     return (
         <Box display={"flex"} flexDirection={"column"} sx={{backgroundColor:"#0c0e30",paddingBottom:2,paddingTop:8,marginBottom:0}}>
-            <Container maxWidth={"lg"} style={{paddingLeft:0,paddingRight:0,display:"flex",flexDirection:"row",alignItems:"start", marginBottom:80}}  >
-                <Grid item xs={4} container display={"flex"} flexDirection={"column"}>
-                    <Grid item xs={12} container display={"flex"} flexDirection={"column"}>
-                        <Grid item xs={6}  container display={"flex"} flexDirection={"column"}>
+            <Grid container xs={10} alignSelf={"center"} rowSpacing={2} columnSpacing={{md:4, sm:4, xs:4}} style={{paddingLeft:0,paddingRight:0, marginBottom:80}}  >
+
+
+                <Grid item xl={4} lg={4} md={4} sm={12} xs={12} container display={"flex"}  direction={"row"} flexDirection={"column"} >
+                    <Grid item xs={12} container display={"flex"} flexDirection={"row"} rowSpacing={{xs:1,sm:1}} >
+                        <Grid item xs={12} sm={12} md={12} xl={12}  container display={"flex"} flexDirection={"column"}>
                             <Logo style={{alignSelf:"center"}} />
                             <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"center"} alignSelf={"center"}
                                         style={{
@@ -29,20 +31,20 @@ function Footer(props) {
                                 True Vocation</Typography>
                         </Grid>
 
-                        <Grid item container xs={6} style={{paddingLeft:0}} display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"}>
+                        <Grid item container xs={12} md={12}  xl={12} sm={6}  style={{paddingLeft:0}} display={"flex"} flexDirection={"row"} alignItems={"center"} justifyContent={"center"}>
                             <Facebook id={"social_facebook"} />
                             <GitHub id={"social_github"}/>
                             <Twitter id={"social_twitter"} />
                             <YouTube id={"social_youtube"} />
                         </Grid>
-                        <Grid item container xs={6} display={"flex"} flexDirection={"row"}>
+                        <Grid item container xs={12} md={12}  xl={12} sm={6}  display={"flex"} flexDirection={"row"} justifyContent={"center"}>
                             <GooglePlay/>
                             {/*<AppStore/>*/}
                         </Grid>
                     </Grid>
                 </Grid>
 
-                <Grid item container display={"flex"} flexDirection={"column"} xs={2} >
+                <Grid item container display={"flex"} flexDirection={"column"} xl={2} lg={2} md={2} sm={3}  xs={6} >
                     <Typography variant={"h6"} style={{
                         color:"white",fontWeight:"bold",fontFamily:"Inter",letterSpacing:"-0.125px",marginBottom:15}}>
                         Company
@@ -57,7 +59,7 @@ function Footer(props) {
                 </Grid>
 
 
-                <Grid item container display={"flex"} flexDirection={"column"} xs={2} alignItems={"flex-start"}>
+                <Grid item container display={"flex"} flexDirection={"column"} xl={2} lg={2} md={2} sm={3} xs={6} alignItems={"flex-start"} >
                     <Typography variant={"h6"} style={{
                         color:"white",fontWeight:"bold",fontFamily:"Inter",letterSpacing:"-0.125px",marginBottom:15}}>
                         Resources
@@ -72,7 +74,7 @@ function Footer(props) {
 
 
 
-                <Grid item container display={"flex"} flexDirection={"column"} xs={2}>
+                <Grid item container display={"flex"} flexDirection={"column"} xl={2} lg={2} md={2} sm={3} xs={6} >
                     <Typography variant={"h6"} style={{
                         color:"white",fontWeight:"bold",fontFamily:"Inter",letterSpacing:"-0.125px",marginBottom:15}}>
                         Help & Support
@@ -88,7 +90,7 @@ function Footer(props) {
 
 
 
-                <Grid item container display={"flex"} flexDirection={"column"} xs={2}>
+                <Grid item container display={"flex"} flexDirection={"column"} xl={2} lg={2} md={2} sm={3} xs={6} >
                     <Typography variant={"h6"} style={{
                         color:"white",fontWeight:"bold",fontFamily:"Inter",marginBottom:15}}>
                         Legal
@@ -102,8 +104,10 @@ function Footer(props) {
                 </Grid>
 
 
-            </Container>
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+            </Grid>
+
+
+            <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} >
                 <Typography variant={"body1"} textAlign={"center"} style={{
                     textDecoration:"none",
                     fontFamily:"Inter",

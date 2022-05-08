@@ -11,7 +11,7 @@
 }
 
 .custom_active_link {
-  border-bottom: 3px solid rgb(55, 125, 255);
+  border-bottom: 3px solid rgb(131, 0, 184);
   padding-top: 2px;
   padding-bottom: 2px;
   margin-left: 8px;
@@ -33,6 +33,7 @@
 
 #social_facebook{
   color:#AEB4BE;
+  margin-left: 20px;
   &:hover {
     color: #006ebe;
   }
@@ -40,6 +41,7 @@
 
 #social_twitter{
   color:#AEB4BE;
+  margin-left: 20px;
   &:hover {
     color: #0095FF;
   }
@@ -47,6 +49,7 @@
 
 #social_github{
   color:#AEB4BE;
+  margin-left: 20px;
   &:hover {
     color: #ff6100;
   }
@@ -54,6 +57,7 @@
 
 #social_youtube{
   color:#AEB4BE;
+  margin-left: 20px;
   &:hover {
     color: #fd0001;
   }
