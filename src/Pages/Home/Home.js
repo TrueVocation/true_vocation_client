@@ -48,7 +48,7 @@ const Home = () => {
         return (<ArrowForwardIos
             className={className}
             style={{
-                ...style, display: "block", color: "rgb(103, 119, 136)", fontSize: 30,
+                ...style, display: "flex", color: "rgb(103, 119, 136)", fontSize: 30,
             }}
             onClick={onClick}
         />);
@@ -59,7 +59,7 @@ const Home = () => {
         return (<ArrowBackIos
             className={className}
             style={{
-                ...style, display: "block", color: "rgb(103, 119, 136)", fontSize: 30,
+                ...style, display: "flex", color: "rgb(103, 119, 136)", fontSize: 30,
             }}
             onClick={onClick}
         />);
@@ -189,20 +189,26 @@ const Home = () => {
             whileInView={"visible"}
             viewport={{amount: 0.3, once: true}}>
             <Grid id={"back"} container item xs={12} style={{minHeight: window.innerHeight * 0.9}}>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6} style={{padding:"10px 25px 0 25px"}}>
-                    <CustomAnimatedComponent variants={animationText} custom={1}>
-                        <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"}
-                                    style={{color: "#2d3e4a", marginTop: 140, marginBottom: 0}}>Find out who you
-                            want to be in the future</Typography>
-                    </CustomAnimatedComponent>
-                    <CustomAnimatedComponent variants={animationText} custom={2}>
-                        <Typography variant={"h5"} fontFamily={"Inter"}
-                                    style={{color: "rgb(103, 119, 136)", marginTop: 20}}>Our mission is to send and
-                            provide all the necessary information to schoolchildren to choose the right
-                            future</Typography>
-                    </CustomAnimatedComponent>
-                    <Grid container flexDirection={"row"}
-                          style={{marginTop: 40}}>
+                <Grid item xs={12} sm={12} md={0.5} lg={0.5} xl={0.5}/>
+                <Grid container display={"flex"} flexDirection={"column"} item xs={12} sm={12} md={5.5} lg={5.5} xl={5.5} style={{padding:"10px 25px 0 25px"}}>
+                    <Grid item xs={0} sm={0} md={2} lg={2} xl={2}/>
+                    <Grid item >
+                        <CustomAnimatedComponent variants={animationText} custom={1}>
+                            <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"}
+                                        style={{color: "#2d3e4a", marginBottom: 0}}>Find out who you
+                                want to be in the future</Typography>
+                        </CustomAnimatedComponent>
+                    </Grid>
+                    <Grid item>
+                        <CustomAnimatedComponent variants={animationText} custom={2}>
+                            <Typography variant={"h5"} fontFamily={"Inter"}
+                                        style={{color: "rgb(103, 119, 136)", marginTop: 20}}>Our mission is to send and
+                                provide all the necessary information to schoolchildren to choose the right
+                                future</Typography>
+                        </CustomAnimatedComponent>
+                    </Grid>
+
+                    <Grid item container display={"flex"} flexDirection={"row"} style={{marginTop:15}}>
                         <CustomAnimatedComponent variants={animationButton} custom={3}>
                             <Button size={"large"} style={{marginRight: 20, marginBottom:10}} variant={"outlined"}
                                     id={"primary_button_outlined"}>Take a career guidance test
@@ -484,7 +490,7 @@ const Home = () => {
                                         display: "flex",
                                         alignItems: "center"
                                     }}>
-                                        <SubjectCard subject={subject} height={290} width={290}/>
+                                        <SubjectCard subject={subject} height={290} width={500}/>
                                     </CustomAnimatedComponent>
                                 </Grid>
                             })}
