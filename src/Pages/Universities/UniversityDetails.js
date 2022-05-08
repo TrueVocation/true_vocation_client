@@ -16,6 +16,7 @@ import {
     WorkOutlineOutlined
 } from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
+import GoogleMaps from "../../Components/googlemap/GoogleMaps";
 
 function TabPanel(props) {
     return null;
@@ -210,17 +211,37 @@ function UniversityDetails(props) {
                         </Typography>
 
                        <Grid item container display={"flex"} flexDirection={"row"} style={{marginTop:20, marginBottom:35}}>
-                           <CustomAnimatedComponent style={{borderLeft:"5px solid transparent",borderTopLeftRadius:15,borderBottomLeftRadius:15}} whileHover={{borderLeft:"5px solid rgb(253,215,23)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
+                           <CustomAnimatedComponent style={{
+                               borderLeft:"5px solid transparent",
+                               borderTopLeftRadius:15,
+                               borderBottomLeftRadius:15,
+                               marginBottom:15
+                           }} whileHover={{borderLeft:"5px solid rgb(253,215,23)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
                            <UniversityInfoCard backColor={"rgb(253,243,184)"} text={{text:"Programs", number:44}} icon={<SchoolOutlined fontSize={"large"} style={{color:"rgb(253,215,23)"}} />} />
                            </CustomAnimatedComponent>
-                           <CustomAnimatedComponent style={{borderLeft:"5px solid transparent",borderTopLeftRadius:15,borderBottomLeftRadius:15}} whileHover={{borderLeft:"5px solid rgb(0,184,254)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
+                           <CustomAnimatedComponent style={{
+                               borderLeft:"5px solid transparent",
+                               borderTopLeftRadius:15,
+                               borderBottomLeftRadius:15,
+                               marginBottom:15
+                           }} whileHover={{borderLeft:"5px solid rgb(0,184,254)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
                            <UniversityInfoCard backColor={"rgb(191,237,254)"} text={{text:"Faculties", number:14}} icon={<MenuBookOutlined fontSize={"large"} style={{color:"rgb(0,184,254)"}} />} />
                            </CustomAnimatedComponent>
-                           <CustomAnimatedComponent style={{borderLeft:"5px solid transparent",borderTopLeftRadius:15,borderBottomLeftRadius:15}} whileHover={{borderLeft:"5px solid rgb(166,0,246)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
+                           <CustomAnimatedComponent style={{
+                               borderLeft:"5px solid transparent",
+                               borderTopLeftRadius:15,
+                               borderBottomLeftRadius:15,
+                               marginBottom:15
+                           }} whileHover={{borderLeft:"5px solid rgb(166,0,246)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
                                <UniversityInfoCard backColor={"rgb(233,191,252)"} text={{text:"Professions", number:190}} icon={<WorkOutlineOutlined fontSize={"large"} style={{color:"rgb(166,0,246)"}} />} />
                                </CustomAnimatedComponent>
                                    {/*<UniversityInfoCard backColor={"rgb(191,253,222)"} text={{text:"Professions", number:193}} icon={<GroupAddOutlined fontSize={"large"} style={{color:"rgb(0,253,123)"}} />} />*/}
-                                   <CustomAnimatedComponent style={{borderLeft:"5px solid transparent",borderTopLeftRadius:15,borderBottomLeftRadius:15}} whileHover={{borderLeft:"5px solid rgb(253,110,1)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
+                                   <CustomAnimatedComponent style={{
+                                       borderLeft:"5px solid transparent",
+                                       borderTopLeftRadius:15,
+                                       borderBottomLeftRadius:15,
+                                       marginBottom:15
+                                   }} whileHover={{borderLeft:"5px solid rgb(253,110,1)", borderTopLeftRadius:15,borderBottomLeftRadius:15}}>
                            <UniversityInfoCard backColor={"rgb(253,218,191)"} text={{text:"Specialties", number:60}} icon={<GroupAddOutlined fontSize={"large"} style={{color:"rgb(253,110,1)"}} />} />
                                    </CustomAnimatedComponent>
                                    </Grid>
@@ -257,6 +278,10 @@ function UniversityDetails(props) {
 
                                 </Grid>
                             </Paper>
+                        </Grid>
+
+                        <Grid item xs={12} sm={12} md={8} lg={7} xl={6} style={{marginTop:15}}>
+                            <GoogleMaps/>
                         </Grid>
 
                     </TabPanel>
