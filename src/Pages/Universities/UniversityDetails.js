@@ -226,7 +226,7 @@ function UniversityDetails(props) {
                                         style={{color: "#2d3e4a", marginBottom: 0}}>Contacts</Typography>
                             <Paper variant={"elevation"} elevation={0} style={{
                                 borderRadius: 15,
-                                boxShadow: "rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px",
+                                boxShadow: "0 3px 16px 0 rgb(114 114 114 / 30%)",
                                 padding: "15px 25px 15px 20px",
                                 marginTop:20,
                                 marginBottom:35,

@@ -322,7 +322,7 @@ function TestDetails(props) {
                                     display:"flex"
                                 }}>
                                     <input
-                                        style={{alignSelf: "center",width:18,height:18,margin:0, marginRight:7, verticalAlign:"center"}}
+                                        style={{alignSelf: "center",width:18,height:18,margin:0, marginRight:7, verticalAlign:"center",color:"rgb(131, 0, 184)"}}
                                         {...register(`${question.id}`, {required: true})}
                                         type="radio" value={answer.id}/>
                                     {/*{errors.question.id?.type === 'required' && "First name is required"}*/}
@@ -393,21 +393,14 @@ function TestDetails(props) {
                             </React.Fragment>
                         }
                     >
-                        <IconButton style={{padding:0}} color="primary" aria-label="add an alarm">
+                        <IconButton style={{padding:0,color:"rgb(131, 0, 184)"}} aria-label="add an alarm">
                             <InfoOutlined/>
                         </IconButton>
                     </HtmlTooltip>
                 </Grid>
                 <Typography variant={"h5"} fontFamily={"Inter"}
                             style={{color: "rgb(45, 62, 74)", fontSize: 20, marginBottom:10}}>
-                    {test.description}
-                    AnyBlob or Blob to create a field of the “any” binary type;
-                    ImageBlob to create a field meant to be an image.
-                    TextBlob to create a field for a CLOB (long text).
-                    And you can create as many DataTypes as you like.AnyBlob or Blob to create a field of the “any” binary type;
-                    ImageBlob to create a field meant to be an image.
-                    TextBlob to create a field for a CLOB (long text).
-                    And you can create as many DataTypes as you like.
+                    This test is designed to identify a person's predisposition to a certain type of profession. The test is used for selection for various types of professions in accordance with the classification of types of professions by E.A.Klimov. This is a classic career guidance test "Differential Diagnostic Questionnaire (DDO)", which is used for career guidance and professional selection of adolescents and adults. According to the results of the survey, the orientation of a person to 5 types of professions is revealed, according to the classification of E.A.Klimov
                 </Typography>
                 <Grid item xs={12}>
                     <Button onClick={()=>testStart()} id={"warning_button"}  size={"large"} type={"submit"} variant="contained" fontFamily={"Inter"}>Start Test</Button>
@@ -486,7 +479,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
-        backgroundColor: "rgb(55, 125, 255)",
+        backgroundColor: "rgb(131, 0, 184)",
     },
 }));
 

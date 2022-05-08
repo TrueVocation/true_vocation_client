@@ -28,11 +28,10 @@ const Home = () => {
     const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
     const settings = {
-        className: "paper_center",
         centerMode: true,
         infinite: true,
-        centerPadding: "60px",
-        slidesToShow: 4,
+        centerPadding: "10px",
+        slidesToShow: 1,
         speed: 500,
         accessibility: true,
         arrows: true,
@@ -189,7 +188,7 @@ const Home = () => {
             initial={"hidden"}
             whileInView={"visible"}
             viewport={{amount: 0.3, once: true}}>
-            <Grid id={"back"} container item xs={12} style={{height: window.innerHeight * 0.9}}>
+            <Grid id={"back"} container item xs={12} style={{minHeight: window.innerHeight * 0.9}}>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6} style={{padding:"10px 25px 0 25px"}}>
                     <CustomAnimatedComponent variants={animationText} custom={1}>
                         <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"}
@@ -205,7 +204,7 @@ const Home = () => {
                     <Grid container flexDirection={"row"}
                           style={{marginTop: 40}}>
                         <CustomAnimatedComponent variants={animationButton} custom={3}>
-                            <Button size={"large"} style={{marginRight: 20}} variant={"outlined"}
+                            <Button size={"large"} style={{marginRight: 20, marginBottom:10}} variant={"outlined"}
                                     id={"primary_button_outlined"}>Take a career guidance test
                             </Button>
                         </CustomAnimatedComponent>
@@ -238,10 +237,10 @@ const Home = () => {
             viewport={{amount: 0.3, once: true}}
         >
             <Grid container item xs={12} style={{
-                paddingTop: 40, paddingBottom: 50, paddingLeft: 15, paddingRight: 15, height: window.innerHeight,
+                paddingTop: 20, paddingBottom: 50, paddingLeft: 15, paddingRight: 15, minHeight: window.innerHeight,
             }} display={"flex"} flexDirection={"column"}>
 
-                <Grid container item justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>
+                <Grid container xs={12} sm={12} md={12} lg={12} xl={12} item justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>
                     <CustomAnimatedComponent variants={animationBottomToTop} custom={1}>
                         <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"center"}
                                     style={{
@@ -272,8 +271,8 @@ const Home = () => {
                     </CustomAnimatedComponent>
                 </Grid>
 
-                <Grid container item display={"flex"} flexDirection={"row"} justifyContent={"center"} marginTop={6}>
-                    <Grid item xs={2} style={{marginLeft: 30, marginRight: 30}}>
+                <Grid container xs={12} sm={12} md={12} lg={12} xl={12} item display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} marginTop={6}>
+                    <Grid item xs={12} sm={5.5} md={5.5} lg={2.75} xl={2.75} style={{ marginBottom:20}}>
                         <CustomAnimatedComponent variants={animationBottomToTop} custom={5}>
 
                             <Paper variant={"outlined"}
@@ -311,7 +310,7 @@ const Home = () => {
                         </CustomAnimatedComponent>
                     </Grid>
 
-                    <Grid item xs={2} style={{marginLeft: 30, marginRight: 30}}>
+                    <Grid item xs={12} sm={5.5} md={5.5} lg={2.75} xl={2.75} style={{ marginBottom:20}}>
                         <CustomAnimatedComponent variants={animationBottomToTop} custom={6}>
 
                             <Paper variant={"outlined"}
@@ -350,7 +349,7 @@ const Home = () => {
                         </CustomAnimatedComponent>
                     </Grid>
 
-                    <Grid item xs={2} style={{marginLeft: 30, marginRight: 30}}>
+                    <Grid item xs={12} sm={5.5} md={5.5} lg={2.75} xl={2.75} style={{ marginBottom:20}}>
                         <CustomAnimatedComponent variants={animationBottomToTop} custom={7}>
 
                             <Paper variant={"outlined"}
@@ -390,7 +389,7 @@ const Home = () => {
                     </Grid>
 
 
-                    <Grid item xs={2} style={{marginLeft: 30, marginRight: 30}}>
+                    <Grid item xs={12} sm={5.5} md={5.5} lg={2.75} xl={2.75} style={{ marginBottom:20}}>
                         <CustomAnimatedComponent variants={animationBottomToTop} custom={8}>
                             <Paper variant={"outlined"}
                                    style={{padding: 32, borderRadius: 8, border: "1px solid rgba(0, 0, 0, 0.12)"}}
@@ -440,7 +439,7 @@ const Home = () => {
             <Grid container item xs={12} style={{
                 backgroundColor: "#e9f0f5", paddingTop: 40, paddingBottom: 50, paddingLeft: 15, paddingRight: 15
             }} flexDirection={"column"}>
-                <Grid container item justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>
+                <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>
                     <CustomAnimatedComponent variants={animationText} custom={1}>
                         <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"center"}
                                     style={{
@@ -470,7 +469,7 @@ const Home = () => {
                     </CustomAnimatedComponent>
                 </Grid>
 
-                <Grid item xs={10} alignSelf={"center"} style={{marginTop: 20, marginBottom: 20}}>
+                <Grid item xs={11} alignSelf={"center"} style={{marginTop: 20, marginBottom: 20}}>
                     <CustomAnimatedComponent variants={animationBottomToTop} custom={5}>
                         <Slider {...settings} style={{height: 350, alignItems: "center", display: "flex"}}>
                             {subjects.map(subject => {
@@ -503,15 +502,16 @@ const Home = () => {
         </Box>
 
 
-        <motion.div
-            initial={"hidden"}
-            whileInView={"visible"}
-            viewport={{amount: 0.3, once: true}}
-        >
+
             <Grid container item xs={12} style={{
                 backgroundColor: "#e9f0f5", paddingTop: 40, paddingBottom: 50, paddingLeft: 15, paddingRight: 15
             }} flexDirection={"column"}>
-                <Grid container item justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>
+                <motion.div
+                    initial={"hidden"}
+                    whileInView={"visible"}
+                    viewport={{amount: 0.3, once: true}}
+                >
+                <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>
                     <CustomAnimatedComponent variants={animationText} custom={1}>
                         <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"center"}
                                     style={{
@@ -539,21 +539,29 @@ const Home = () => {
                         </Grid>
                     </CustomAnimatedComponent>
                 </Grid>
+                </motion.div>
 
-                <Grid container item flexDirection={"row"} justifyContent={"center"} xs={12}>
+                <Grid container item flexDirection={"row"} justifyContent={"space-evenly"} xs={12} sm={12} md={12} lg={12} xl={12}>
 
-                    {universities.map(university => {
-                        return <CustomAnimatedComponent variants={animationTextRightToLeft} custom={5}>
-                            <Grid item style={{paddingLeft: 32, paddingTop: 32}}>
-                                <CustomAnimatedComponent whileHover={{scale: 1.04}}>
+                    {universities.map((university, index) => {
+                        return  <Grid container item key={index} style={{ paddingTop: 32,display:"flex",width:"100%"}} xs={11} sm={5.5} md={5.5} lg={2.75} xl={2.75}  >
+                        <motion.div
+                            initial={"hidden"}
+                            whileInView={"visible"}
+                            viewport={{amount: 0.3, once: true}}
+                        >
+                        <CustomAnimatedComponent variants={animationTextRightToLeft} custom={1}>
+                                <CustomAnimatedComponent whileHover={{scale: 1.04,width:"100%"}} style={{ display:"flex", width:"100%"}}>
                                     <UniversityCard university={university}/>
                                 </CustomAnimatedComponent>
-                            </Grid>
+
                         </CustomAnimatedComponent>
+                        </motion.div>
+                        </Grid>
+
                     })}
                 </Grid>
             </Grid>
-        </motion.div>
 
 
         <motion.div
@@ -588,8 +596,8 @@ const Home = () => {
                         </CustomAnimatedComponent>
                         <CustomAnimatedComponent variants={animationTextRightToLeft} custom={4}>
                             <Grid container item justifyContent={"center"} xs={12} style={{marginTop: 20}}>
-                                <Grid item>
-                                    <TextField style={{width: 400}} {...register("login", {
+                                <Grid container justifyContent={"center"} item xs={12} sm={10} md={6} lg={6} xl={4}>
+                                    <TextField style={{width:"100%"}} {...register("login", {
                                         required: 'Login field is required', minLength: {
                                             value: 2, message: "length must be greater than 1 character"
                                         }, maxLength: {
@@ -601,9 +609,9 @@ const Home = () => {
                                                variant="outlined"/>
 
                                 </Grid>
-                                <Grid item>
+                                <Grid container justifyContent={"center"} item xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Button size={"large"} variant={"contained"} id={"primary_button"}
-                                            style={{marginLeft: 15, height: 56}}>Explore More</Button>
+                                            style={{ height: 56}}>Explore More</Button>
                                 </Grid>
                             </Grid>
                         </CustomAnimatedComponent>

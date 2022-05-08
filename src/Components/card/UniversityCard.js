@@ -19,7 +19,7 @@ function UniversityCard(props) {
             padding: "20px 15px 5px 15px"
         }}
                square={true}>
-            <Box flexDirection={"column"} width={360}>
+            <Box flexDirection={"column"}>
                 <Grid xs={12} container flexDirection={"row"} justifyContent={"center"}
                       style={{borderBottom: "1px solid #E0E0E0", paddingBottom: 5}}>
                     <Grid item xs={4} alignSelf={"center"}>
@@ -38,7 +38,7 @@ function UniversityCard(props) {
                 <Grid xs={12} container flexDirection={"column"} marginTop={2}>
                     <Grid item xs={12} marginBottom={1}>
                         <Typography variant={"h5"} fontFamily={"Inter"}
-                                    style={{color: "rgb(45, 62, 74)", fontSize: 15, height: 120}}>
+                                    style={{color: "rgb(45, 62, 74)", fontSize: 15}}>
                             {university.description}
                         </Typography>
                     </Grid>
