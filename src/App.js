@@ -14,6 +14,7 @@ import Subjects from "./Pages/Subjects/Subjects";
 import Tests from "./Pages/Tests/Tests";
 import TestDetails from "./Pages/Tests/TestDetails";
 import UniversityDetails from "./Pages/Universities/UniversityDetails";
+import Posts from "./Pages/Posts/Posts";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
             <Route index element={<Home />} />
               <Route path="sign-in" element={<SignIn />} />
               <Route path="sign-up" element={<SignUp />} />
+              <Route path="posts" element={<Posts />} />
               <Route path="reset-password" element={<ResetPassword />} />
               <Route path="account/reset/finish" element={<ResetPasswordFinish />} />
               <Route path="subjects" element={<Subjects />} />

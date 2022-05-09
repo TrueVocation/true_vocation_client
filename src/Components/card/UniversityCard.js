@@ -2,10 +2,11 @@ import React from 'react';
 import Box from "@mui/material/Box";
 import {Checkbox, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {Bookmark, BookmarkBorderOutlined, LocationCity, LocationOnOutlined} from "@mui/icons-material";
+import {Bookmark, BookmarkBorderOutlined, ForumRounded, LocationCity, LocationOnOutlined} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import {useNavigate} from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
 
 function UniversityCard(props) {
     const {university} = props;
