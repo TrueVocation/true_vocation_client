@@ -2,23 +2,19 @@ import React from 'react';
 import Paper from "@mui/material/Paper";
 import {Checkbox, Divider, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {
-    Bookmark,
-    BookmarkBorderOutlined,
-    Favorite,
-    FavoriteBorder,
-    ForumOutlined,
-    ForumRounded, ModeCommentOutlined
-} from "@mui/icons-material";
+import {Bookmark, BookmarkBorderOutlined, Favorite, FavoriteBorder, ModeCommentOutlined} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
+import {useNavigate} from "react-router-dom";
 
 function PostsCardVertical(props) {
+    const navigate = useNavigate();
     return (
         <Paper variant={"elevation"} elevation={0} style={{
             borderRadius: 15,
             boxShadow: "rgb(140 152 164 / 25%) 0px 3px 6px 0px",
-            padding: "0 0 0 0"
-        }}>
+            padding: "0 0 0 0",
+            cursor:"pointer"
+        }} onClick={()=>navigate(`/posts/${1}`)}>
             <Grid>
                 <img style={{
                     width: "100%",
@@ -31,6 +27,15 @@ function PostsCardVertical(props) {
                 padding: "15px 15px 10px 15px"
             }}>
                 <Typography variant={"h3"} style={{
+                    fontSize: 15,
+                    fontFamily: "Inter",
+                    color: "rgb(103, 119, 136)",
+                    marginBottom:5
+                }}>
+                    16 March 2020
+                </Typography>
+
+                <Typography variant={"h3"} style={{
                     fontSize: 25,
                     fontWeight: "bold",
                     fontFamily: "Inter",
@@ -42,7 +47,7 @@ function PostsCardVertical(props) {
 
 
                 <Typography variant={"h3"} style={{
-                    fontSize: 18,
+                    fontSize: 17,
                     fontFamily: "Inter",
                     color: "rgb(103, 119, 136)",
                     marginTop: 10
@@ -51,31 +56,24 @@ function PostsCardVertical(props) {
                     et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                     aliquip ex ea commodo consequat.
                 </Typography>
-                <Typography variant={"h3"} style={{
-                    fontSize: 18,
-                    fontFamily: "Inter",
-                    color: "rgb(103, 119, 136)",
-                    marginTop: 10
-                }}>
-                    03.10.1999
-                </Typography>
+
 
                 <Divider style={{borderColor:"rgb(0, 0, 0, 0.12)",height:10,marginBottom:10}} />
                 <Grid item container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
-                    <Grid item>
+                    <Grid item alignSelf={"center"}>
                         <Checkbox style={{padding: 0}}
 
-                                  icon={<FavoriteBorder style={{fontSize: 35}}/>}
-                                  checkedIcon={<Favorite style={{color: "#FFC107", fontSize: 35}}/>}
-                        />
+                                  icon={<FavoriteBorder style={{fontSize: 32}}/>}
+                                  checkedIcon={<Favorite style={{color: "#FF2052", fontSize: 32}}/>}
+                        />   256
 
-                        <IconButton><ModeCommentOutlined style={{fontSize:30}}/></IconButton>
+                        <IconButton><ModeCommentOutlined style={{fontSize:30}}/></IconButton>151
                     </Grid>
-                    <Grid item>
+                    <Grid item alignSelf={"center"}>
                         <Checkbox style={{padding: 0}}
 
-                                  icon={<BookmarkBorderOutlined style={{fontSize: 35}}/>}
-                                  checkedIcon={<Bookmark style={{color: "#FFC107", fontSize: 35}}/>}
+                                  icon={<BookmarkBorderOutlined style={{fontSize: 32}}/>}
+                                  checkedIcon={<Bookmark style={{color: "#FFC107", fontSize: 32}}/>}
                         />
                     </Grid>
                 </Grid>
