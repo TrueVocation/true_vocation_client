@@ -57,7 +57,8 @@ function UniversityDetails(props) {
             url.searchParams.set('url', university.logo);
             const response = await axios.get(url.toString());
             if (response.status === 200) {
-                setImage("data:image/png;base64," + response.data);
+                const contentType = response.headers['Content-Type']
+                setImage(`data:${contentType};base64,` + response.data);
                 console.log(response.data)
             }
         } catch (error) {
