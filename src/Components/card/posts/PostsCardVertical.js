@@ -15,11 +15,10 @@ function PostsCardVertical(props) {
             padding: "0 0 0 0",
             cursor:"pointer"
         }} onClick={()=>navigate(`/posts/${1}`)}>
-            <Grid>
+            <Grid style={{padding:10}}>
                 <img style={{
                     width: "100%",
-                    borderTopRightRadius: 15,
-                    borderTopLeftRadius: 15
+                    borderRadius:15
                 }}
                      src={"https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"}/>
             </Grid>

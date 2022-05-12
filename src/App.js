@@ -16,6 +16,7 @@ import TestDetails from "./Pages/Tests/TestDetails";
 import UniversityDetails from "./Pages/Universities/UniversityDetails";
 import Posts from "./Pages/Posts/Posts";
 import PostDetails from "./Pages/Posts/PostDetails";
+import Profile from "./Pages/User/Profile";
 
 function App() {
     return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="tests" element={<Tests />} />
               <Route path="tests/:id" element={<TestDetails />} />
               <Route path="university/:id" element={<UniversityDetails />} />
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<NotFound404 />} />
           </Route>
 

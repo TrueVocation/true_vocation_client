@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import {Bookmark, BookmarkBorderOutlined, Favorite, FavoriteBorder, ModeCommentOutlined} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 
-function PostsCardVertical(props) {
+function PostsCardHorizontal(props) {
     return (
         <Paper variant={"elevation"} elevation={0} style={{
             borderRadius: 15,
@@ -14,18 +14,17 @@ function PostsCardVertical(props) {
         }}>
             <Grid container display={"flex"} flexDirection={"row"}>
 
-            <Grid item xs={6}>
+            <Grid item xs={4} style={{padding:20}}>
                 <img style={{
                     width: "100%",
                     height: "100%",
-                    borderBottomLeftRadius: 15,
-                    borderTopLeftRadius: 15
+                    borderRadius:15
                 }}
                      src={"https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"}/>
             </Grid>
 
-            <Grid item xs={6} display={"flex"} flexDirection={"column"} justifyContent={"space-between"} style={{
-                padding: "15px 15px 10px 15px"
+            <Grid item xs={8} display={"flex"} flexDirection={"column"} justifyContent={"space-between"} style={{
+                padding: "20px 20px 10px 10px"
             }}>
                 <Grid item>
                     <Typography variant={"h3"} style={{
@@ -90,4 +89,4 @@ function PostsCardVertical(props) {
     );
 }
 
-export default PostsCardVertical;
+export default PostsCardHorizontal;

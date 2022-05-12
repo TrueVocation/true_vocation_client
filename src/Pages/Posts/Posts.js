@@ -22,7 +22,7 @@ TabPanel.propTypes = {
 
 const DataTableGridView = () =>{
     return <Grid container item justifyContent={"space-evenly"}>
-        <Grid item xs={5.5} style={{marginBottom:50}}>
+        <Grid item xs={10} style={{marginBottom:50}}>
             <CustomAnimatedComponent whileHover={{scale:1.02}} style={{
                 display: "flex",
                 alignItems: "center"
@@ -32,7 +32,7 @@ const DataTableGridView = () =>{
             </CustomAnimatedComponent>
         </Grid>
 
-        <Grid item xs={5.5} style={{marginBottom:50}}>
+        <Grid item xs={10} style={{marginBottom:50}}>
             <CustomAnimatedComponent whileHover={{scale:1.02}} style={{
                 display: "flex",
                 alignItems: "center"
@@ -42,7 +42,7 @@ const DataTableGridView = () =>{
             </CustomAnimatedComponent>
         </Grid>
 
-        <Grid item xs={5.5} style={{marginBottom:50}}>
+        <Grid item xs={10} style={{marginBottom:50}}>
             <CustomAnimatedComponent whileHover={{scale:1.02}} style={{
                 display: "flex",
                 alignItems: "center"
@@ -150,7 +150,7 @@ function Posts(props) {
         };
     }
     return (
-        <Box>
+        <Box style={{backgroundColor:"rgb(242, 245, 249)"}}>
             <Grid container xs={12} display={"flex"} justifyContent={"center"} flexDirection={"row"} alignSelf={"center"}>
                 <Grid item xs={12} container justifyContent={"center"} marginBottom={3}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
