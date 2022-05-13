@@ -66,6 +66,28 @@ function AuthProvider({ children }) {
       });
       if (response.status === 200) {
         setUser(response.data);
+        fetchUserImage(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function fetchUserImage(user) {
+    try {
+      let jwtToken = localStorage.getItem("token");
+      const url = new URL(`${API_BASE}/account/viewAvatar/${user.id}`);
+      url.searchParams.set("url", user.imageUrl)
+      const response = await axios.get(url.toString(), {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
+      if (response.status === 200) {
+        const contentType = response.headers['Content-Type']
+        const avatar = `data:${contentType};base64,` + response.data
+        console.log(avatar)
+        localStorage.setItem("avatar",avatar);
       }
     } catch (error) {
       console.error(error);

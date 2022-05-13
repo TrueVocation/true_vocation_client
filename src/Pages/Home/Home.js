@@ -1,7 +1,8 @@
 import useAuth from "../../AuthConfig/useAuth";
 import Box from "@mui/material/Box";
 import {Divider, Grid, TextField} from "@mui/material";
-import {ReactComponent as Main} from '../../images/purple-svg/Illustration_Analysis Skills-ai (3).svg'
+// import {ReactComponent as Main} from '../../images/purple-svg/Illustration_Analysis Skills-ai (3).svg'
+import {ReactComponent as Main} from '../../images/back2.svg'
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {motion} from "framer-motion"
@@ -218,14 +219,14 @@ const Home = () => {
                     <Grid item >
                         <CustomAnimatedComponent variants={animationText} custom={1}>
                             <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"}
-                                        style={{color: "#2d3e4a", marginBottom: 0}}>Find out who you
+                                        style={{color: "white", marginBottom: 0}}>Find out who you
                                 want to be in the future</Typography>
                         </CustomAnimatedComponent>
                     </Grid>
                     <Grid item>
                         <CustomAnimatedComponent variants={animationText} custom={2}>
                             <Typography variant={"h5"} fontFamily={"Inter"}
-                                        style={{color: "rgb(103, 119, 136)", marginTop: 20}}>Our mission is to send and
+                                        style={{color: "white", marginTop: 20}}>Our mission is to send and
                                 provide all the necessary information to schoolchildren to choose the right
                                 future</Typography>
                         </CustomAnimatedComponent>
@@ -249,10 +250,10 @@ const Home = () => {
                     <CustomAnimatedComponent transformTemplate={template}
                                              animate={{rotate: 360, opacity: 1}}
                                              transition={{duration: 1}}
-                                             style={{rotate: 0, opacity: 0,display:"flex",width:"100%"}} custom={1}
+                                             style={{rotate: 0, opacity: 0,display:"flex",width:"100%",height:"100%"}} custom={1}
 
                     >
-                        <Main/>
+                    <div id={"back2"} style={{width:"100%",height:"650px",alignSelf:"center"}} />
                     </CustomAnimatedComponent>
                 </Grid>
             </Grid>
@@ -266,7 +267,7 @@ const Home = () => {
             viewport={{amount: 0.3, once: true}}
         >
             <Grid container item xs={12} style={{
-                paddingTop: 20, paddingBottom: 50, paddingLeft: 15, paddingRight: 15, minHeight: window.innerHeight,
+                paddingTop: 20, paddingBottom: 50, paddingLeft: 15, paddingRight: 15, minHeight: window.innerHeight*0.8,
             }} display={"flex"} flexDirection={"column"}>
 
                 <Grid container xs={12} sm={12} md={12} lg={12} xl={12} item justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>
@@ -309,13 +310,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(111, 53, 186)"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "#7635dc"
                                     }}>
                                         <Groups/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "rgb(111, 53, 186)",
+                                                    color: "#7635dc",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -347,13 +348,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(111, 53, 186)"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "#7635dc"
                                     }}>
                                         <School/>
                                     </Avatar>
                                         <Typography variant={"h4"} fontFamily={"Inter"}
                                                     style={{
-                                                        color: "rgb(111, 53, 186)",
+                                                        color: "#7635dc",
                                                         fontWeight: "bold",
                                                         fontSize: 30,
                                                         marginBottom: 8
@@ -386,13 +387,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(111, 53, 186)"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "#7635dc"
                                     }}>
                                         <MenuBook/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "rgb(111, 53, 186)",
+                                                    color: "#7635dc",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -425,13 +426,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(111, 53, 186)"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "#7635dc"
                                     }}>
                                         <AccountBalance/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "rgb(111, 53, 186)",
+                                                    color: "#7635dc",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -457,6 +458,7 @@ const Home = () => {
 
                 </Grid>
             </Grid>
+            <Divider/>
         </motion.div>
 
 
@@ -466,7 +468,7 @@ const Home = () => {
             viewport={{amount: 0.3, once: true}}
         >
             <Grid container item xs={12} style={{
-                backgroundColor: "rgb(242, 245, 249)", paddingTop: 40, paddingBottom: 50, paddingLeft: 15, paddingRight: 15
+                backgroundColor: "#e9f0f5", paddingTop: 40, paddingBottom: 50, paddingLeft: 15, paddingRight: 15
             }} flexDirection={"column"}>
                 <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} justifyContent={"center"} flexDirection={"column"} alignContent={"center"}>
                     <CustomAnimatedComponent variants={animationText} custom={1}>
@@ -599,7 +601,7 @@ const Home = () => {
             viewport={{amount: 0.3, once: true}}
         >
             <Grid container item justifyContent={"center"} xs={12} style={{
-                background: "linear-gradient(#e9f0f5 40%, rgb(111, 53, 186) 0%) transparent",
+                background: "linear-gradient(#e9f0f5 40%, #7635dc 0%) transparent",
                 paddingTop: 40,
                 paddingBottom: 50,
                 paddingLeft: 15,

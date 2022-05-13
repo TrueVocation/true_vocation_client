@@ -17,6 +17,7 @@ import {useNavigate} from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import {API_BASE} from "../../Constants/Constants";
 import {default as axios} from "axios";
+import TextTruncate from 'react-text-truncate';
 
 function UniversityCard(props) {
     const {university} = props;
@@ -70,7 +71,12 @@ function UniversityCard(props) {
                     <Grid item xs={12} marginBottom={1}>
                         <Typography variant={"h5"} fontFamily={"Inter"}
                                     style={{color: "rgb(45, 62, 74)", fontSize: 15}}>
-                            {university.description}
+                            <TextTruncate
+                                line={3}
+                                element="span"
+                                truncateText="…"
+                                text={university.description}
+                            />
                         </Typography>
                     </Grid>
                     {/*<Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>*/}

@@ -77,8 +77,8 @@ function General(props) {
                         <Grid item container xs={12} display={"flex"} flexDirection={"row"}
                               justifyContent={"space-between"}>
 
-                            <Grid item xs={5.8} marginBottom={3}>
-                                <TextField {...register("login", {
+                            <Grid item xs={5.8} marginBottom={1}>
+                                <TextField size={"medium"}  InputProps={{style:{borderRadius:8}}}  {...register("login", {
                                     minLength: {
                                         value: 1,
                                         message: "length must be greater than 0 character"
@@ -94,8 +94,8 @@ function General(props) {
                                            label="Login" variant="outlined"/>
                             </Grid>
 
-                            <Grid item xs={5.8} marginBottom={3}>
-                                <TextField {...register("email", {
+                            <Grid item xs={5.8} marginBottom={1}>
+                                <TextField size={"medium"} InputProps={{style:{borderRadius:8}}}  {...register("email", {
                                     minLength: {
                                         value: 1,
                                         message: "length must be greater than 0 character"
@@ -111,8 +111,8 @@ function General(props) {
                                            id="user_login" label="Email" variant="outlined"/>
                             </Grid>
 
-                            <Grid item xs={5.8} marginBottom={3}>
-                                <TextField {...register("firstName", {
+                            <Grid item xs={5.8} marginBottom={1}>
+                                <TextField size={"medium"} InputProps={{style:{borderRadius:8}}}  {...register("firstName", {
                                     minLength: {
                                         value: 1,
                                         message: "length must be greater than 0 character"
@@ -129,8 +129,8 @@ function General(props) {
                                            label="Firstname" variant="outlined"/>
                             </Grid>
 
-                            <Grid item xs={5.8} marginBottom={3}>
-                                <TextField {...register("lastName", {
+                            <Grid item xs={5.8} marginBottom={1}>
+                                <TextField size={"medium"} InputProps={{style:{borderRadius:8}}}  {...register("lastName", {
                                     minLength: {
                                         value: 1,
                                         message: "length must be greater than 0 character"
@@ -146,8 +146,8 @@ function General(props) {
                                            label="Lastname" variant="outlined"/>
                             </Grid>
 
-                            <Grid item xs={5.8} marginBottom={3}>
-                                <TextField {...register("phoneNumber", {
+                            <Grid item xs={5.8} marginBottom={1}>
+                                <TextField size={"medium"} InputProps={{style:{borderRadius:8}}}  {...register("phoneNumber", {
                                     pattern: {
                                         value: /^((87)((0[0-9])|(47)|(5[0-1])|(6[0-4])|(7(1|[5-8])))(\d{7}))$/,
                                         message: "Wrong phone number format"
@@ -163,8 +163,8 @@ function General(props) {
                                            label="Phone number" variant="outlined"/>
                             </Grid>
 
-                            <Grid item xs={5.8} marginBottom={3}>
-                                <TextField {...register("birthdate", {
+                            <Grid item xs={5.8} marginBottom={1}>
+                                <TextField size={"medium"} InputProps={{style:{borderRadius:8}}}  {...register("birthdate", {
 
                                 })}
                                            name={'birthdate'}

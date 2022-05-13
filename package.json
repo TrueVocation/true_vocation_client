@@ -27,6 +27,7 @@
     "react-scripts": "5.0.0",
     "react-slick": "^0.28.1",
     "react-swipeable-views": "^0.14.0",
+    "react-text-truncate": "^0.18.0",
     "react-visibility-sensor": "^5.1.1",
     "slick-carousel": "^1.8.1",
     "use-local-storage": "^2.3.6",
