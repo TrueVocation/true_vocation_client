@@ -9,12 +9,21 @@ import {motion} from "framer-motion"
 import CustomAnimatedComponent from "../../Components/motion/CustomAnimatedComponent";
 import Paper from "@mui/material/Paper";
 import Avatar from "@mui/material/Avatar";
-import {AccountBalance, ArrowBackIos, ArrowForwardIos, Groups, MenuBook, School} from "@mui/icons-material";
+import {
+    AccountBalance,
+    ArrowBack,
+    ArrowBackIos,
+    ArrowForward,
+    ArrowForwardIos,
+    Groups,
+    MenuBook,
+    School
+} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import CountUp from "react-countup";
 import ReactVisibilitySensor from "react-visibility-sensor";
 import {useForm} from "react-hook-form";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Slider from "react-slick";
 import './_home.scss'
 import SubjectCard from "../../Components/card/SubjectCard";
@@ -22,6 +31,7 @@ import UniversityCard from "../../Components/card/UniversityCard";
 import '../../Constants/colors.scss'
 import {default as axios} from "axios";
 import {API_BASE} from "../../Constants/Constants";
+import IconButton from "@mui/material/IconButton";
 
 const Home = () => {
     const auth = useAuth();
@@ -32,42 +42,22 @@ const Home = () => {
     const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
     const settings = {
-        centerMode: true,
-        infinite: true,
-        centerPadding: "10px",
-        slidesToShow: 1,
-        speed: 500,
-        accessibility: true,
-        arrows: true,
         dots: true,
-        variableWidth: true,
-        swipeToSlide: true,
-        nextArrow: <SampleNextArrow/>,
-        prevArrow: <SamplePrevArrow/>,
-        adaptiveHeight: true
+        arrows: false,
+        slidesToShow: 4,
+        slidesToScroll: 1,
     };
 
-    function SampleNextArrow(props) {
-        const {className, style, onClick} = props;
-        return (<ArrowForwardIos
-            className={className}
-            style={{
-                ...style, display: "flex", color: "rgb(103, 119, 136)", fontSize: 30,
-            }}
-            onClick={onClick}
-        />);
-    }
+    const carouselRef = useRef(Slider)
 
-    function SamplePrevArrow(props) {
-        const {className, style, onClick} = props;
-        return (<ArrowBackIos
-            className={className}
-            style={{
-                ...style, display: "flex", color: "rgb(103, 119, 136)", fontSize: 30,
-            }}
-            onClick={onClick}
-        />);
-    }
+    const handlePrevious = () => {
+        carouselRef.current?.slickPrev();
+    };
+
+    const handleNext = () => {
+        carouselRef.current?.slickNext();
+    };
+
 
 
     const handleLoginChange = event => {
@@ -310,13 +300,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "#7635dc"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(85, 105, 255)"
                                     }}>
                                         <Groups/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "#7635dc",
+                                                    color: "rgb(85, 105, 255)",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -348,13 +338,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "#7635dc"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(85, 105, 255)"
                                     }}>
                                         <School/>
                                     </Avatar>
                                         <Typography variant={"h4"} fontFamily={"Inter"}
                                                     style={{
-                                                        color: "#7635dc",
+                                                        color: "rgb(85, 105, 255)",
                                                         fontWeight: "bold",
                                                         fontSize: 30,
                                                         marginBottom: 8
@@ -387,13 +377,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "#7635dc"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(85, 105, 255)"
                                     }}>
                                         <MenuBook/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "#7635dc",
+                                                    color: "rgb(85, 105, 255)",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -426,13 +416,13 @@ const Home = () => {
                                    square={true}>
                                 <Box flexDirection={"column"}>
                                     <Avatar variant={"circular"} style={{
-                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "#7635dc"
+                                        marginBottom: 20, width: 50, height: 50, backgroundColor: "rgb(85, 105, 255)"
                                     }}>
                                         <AccountBalance/>
                                     </Avatar>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{
-                                                    color: "#7635dc",
+                                                    color: "rgb(85, 105, 255)",
                                                     fontWeight: "bold",
                                                     fontSize: 30,
                                                     marginBottom: 8
@@ -502,24 +492,39 @@ const Home = () => {
 
                 <Grid item xs={11} alignSelf={"center"} style={{marginTop: 20, marginBottom: 20}}>
                     <CustomAnimatedComponent variants={animationBottomToTop} custom={5}>
-                        <Slider {...settings} style={{height: 350, alignItems: "center", display: "flex"}}>
-                            {subjects.map(subject => {
-                                return <Grid item style={{height: 300}}>
-                                    <CustomAnimatedComponent whileHover={{y: -10}} style={{
-                                        marginLeft: 20,
-                                        marginRight: 20,
-                                        borderRadius: 8,
-                                        marginTop: 40,
-                                        paddingBottom: 40,
-                                        height: 300,
-                                        display: "flex",
-                                        alignItems: "center"
-                                    }}>
-                                        <SubjectCard subject={subject} height={290} width={500}/>
-                                    </CustomAnimatedComponent>
-                                </Grid>
-                            })}
-                        </Slider>
+                        <Grid container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
+                            <Grid item xs={0.5} display={"flex"} alignItems={"center"}>
+                                <IconButton onClick={handlePrevious} aria-label="delete" size={"large"}>
+                                    <ArrowBack fontSize={"large"}/>
+                                </IconButton>
+                            </Grid>
+                            <Grid item xs={11}>
+                                <Slider ref={carouselRef} {...settings} style={{height: 350, alignItems: "center", display: "flex"}}>
+                                    {subjects.map(subject => {
+                                        return <Grid item style={{height: 300}}>
+                                            <CustomAnimatedComponent whileHover={{y: -10}} style={{
+                                                marginLeft: 20,
+                                                marginRight: 20,
+                                                borderRadius: 8,
+                                                marginTop: 40,
+                                                paddingBottom: 40,
+                                                height: 300,
+                                                display: "flex",
+                                                alignItems: "center"
+                                            }}>
+                                                <SubjectCard subject={subject} height={290} width={290}/>
+                                            </CustomAnimatedComponent>
+                                        </Grid>
+                                    })}
+                                </Slider>
+                            </Grid>
+                            <Grid item xs={0.5} display={"flex"} alignItems={"center"}>
+                                <IconButton onClick={handleNext} aria-label="delete" size={"large"}>
+                                    <ArrowForward fontSize={"large"}/>
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+
                     </CustomAnimatedComponent>
                 </Grid>
             </Grid>
@@ -601,7 +606,7 @@ const Home = () => {
             viewport={{amount: 0.3, once: true}}
         >
             <Grid container item justifyContent={"center"} xs={12} style={{
-                background: "linear-gradient(#e9f0f5 40%, #7635dc 0%) transparent",
+                background: "linear-gradient(#e9f0f5 40%, rgb(85, 105, 255) 0%) transparent",
                 paddingTop: 40,
                 paddingBottom: 50,
                 paddingLeft: 15,

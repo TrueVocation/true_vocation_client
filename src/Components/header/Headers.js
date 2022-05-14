@@ -20,9 +20,12 @@ import Button from "@mui/material/Button";
 import {Link, useNavigate} from "react-router-dom";
 import CustomLink from "../links/CustomLink";
 import Avatar from "@mui/material/Avatar";
-import {Block, School} from "@mui/icons-material";
+import {Block, Logout, School} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import CustomMenuLink from "../links/CustomMenuLink";
+import {API_BASE} from "../../Constants/Constants";
+import {default as axios} from "axios";
+import {useEffect} from "react";
 
 
 const Search = styled('div')(({theme}) => ({
@@ -125,6 +128,7 @@ HideOnScroll.propTypes = {
 
 export function Headers() {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [avatar, setAvatar] = React.useState('');
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
     const auth = useAuth();
@@ -376,8 +380,8 @@ export function Headers() {
                                         <Avatar
                                             alt="Remy Sharp"
                                             variant={"circular"}
-                                            style={{ width: 40, height: 40,objectFit:"contain"}}
-                                            src={localStorage.getItem("avatar")}
+                                            style={{ width: 40, height: 40}}
+                                            src={auth.avatar != null ? auth.avatar : null}
                                         />
                                         </StyledBadge>
                                     </IconButton>
@@ -585,7 +589,6 @@ export function Headers() {
                 open={openMenu}
                 onClose={handleCloseMenu}
                 onClick={handleCloseMenu}
-                onMouseLeave={handleCloseMenu}
                 MenuListProps={{
                     sx: {
                         padding: 0
@@ -634,40 +637,42 @@ export function Headers() {
                             alt="Remy Sharp"
                             variant={"rounded"}
                             style={{borderRadius: 8, width: 50, height: 50}}
-                            src={localStorage.getItem("avatar")}
+                            src={auth.avatar != null ? auth.avatar : null}
                             sx={{width: "100%", height: "100%"}}/>
 
 
-                        <Grid item xs={9} display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>
+                        <Grid style={{marginLeft:10}} item xs={"auto"} display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>
                             <Typography style={{
                                 fontFamily: "Inter",
                                 fontSize: "17px",
                                 fontWeight: "700",
-                                color: "rgb(110, 117, 159)"
+                                color: "rgb(45, 62, 74)",
                             }}>
-                                {/*{auth.user != null ? auth.user.email : null}*/}Randy Smith
+                                {auth.user != null ? auth.user.firstName+" "+auth.user.lastName : null}
                             </Typography>
 
                             <Typography style={{
                                 fontFamily: "Inter",
                                 fontSize: "15px",
                                 fontWeight: "400",
-                                color: "rgb(146, 151, 183)"
+                                color: "rgb(103, 119, 136)"
                             }}>
-                                {/*{auth.user != null ? auth.user.email : null}*/}admin@gmail.com
+                                {auth.user != null ? auth.user.email : null}
                             </Typography>
                         </Grid>
 
                     </Grid>
                     <Grid container item xs={12} display={"flex"} flexDirection={"column"}
                     style={{padding:"10px 18px 14px 18px"}}>
-                        <CustomMenuLink to={"/sign-in"}>Profile</CustomMenuLink>
+                        <CustomMenuLink to={"/profile"}>My Account</CustomMenuLink>
                         <CustomMenuLink to={"/wefwe"}>Settings</CustomMenuLink>
                     </Grid>
                     <Divider style={{height:"1px", background:"rgba(34, 51, 84, 0.1)", border:0}}/>
                     <Grid container item xs={12} display={"flex"} flexDirection={"column"}
-                          style={{padding:"10px 18px 14px 18px"}}>
-                        <Button size={"large"} variant={"text"} id={"primary_button_outlined"}>Sign out</Button>
+                          style={{padding:"5px 10px"}}>
+                        <Button onClick={() => {
+                            auth.signout(() => navigate("/"));
+                        }} size={"large"} startIcon={<Logout/>} variant={"text"}  id={"menu_text_button"}>Sign out</Button>
                     </Grid>
                 </Grid>
 

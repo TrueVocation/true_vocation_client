@@ -4,6 +4,7 @@ import * as PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import {Grid, Tab, Tabs} from "@mui/material";
 import General from "./General";
+import ChangePassword from "./ChangePassword";
 
 function TabPanel(props) {
     return null;
@@ -103,6 +104,7 @@ function Profile(props) {
                         <General/>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
+                        <ChangePassword/>
                     </TabPanel>
                 </Grid>
             </Grid>

@@ -1,12 +1,12 @@
 @import "src/Constants/colors";
 
-#primary_button_outlined{
+#primary_button_outlined {
   text-transform: inherit;
   font-weight: bold;
   box-shadow: none;
   border-radius: 10px;
   font-family: Inter;
-  color:$custom_primary;
+  color: $custom_primary;
   border-color: $custom_primary;
   //&:hover{
   //  animation: pulsate 1s ease-in-out;
@@ -19,26 +19,42 @@
 //  }
 //}
 
-#primary_button{
+#primary_button {
   text-transform: inherit;
   font-weight: bold;
   box-shadow: none;
   border-radius: 10px;
   font-family: Inter;
-  color:white;
+  color: white;
   background-color: $custom_primary;
-  &:hover{
+
+  &:hover {
     animation: pulsate 1s ease-in-out;
   }
 }
 
 
-#warning_button{
+#warning_button {
   text-transform: inherit;
   font-weight: bold;
   box-shadow: none;
   border-radius: 6px;
   font-family: Inter;
-  color:white;
+  color: white;
   background-color: $custom_warning;
+}
+
+#menu_text_button {
+  text-transform: inherit;
+  font-weight: 700;
+  box-shadow: none;
+  font-family: Inter;
+  padding: 10px 20px 10px 20px;
+  border-bottom: 3px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgb(85, 105, 255);
+  &:hover {
+    background: rgba(85, 105, 255, 0.1);
+  }
 }

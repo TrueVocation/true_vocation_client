@@ -31,7 +31,7 @@ function UniversityCard(props) {
             url.searchParams.set('url', university.logo);
             const response = await axios.get(url.toString());
             if (response.status === 200) {
-                const contentType = response.headers['Content-Type']
+                const contentType = response.headers['content-type']
                 setImage(`data:${contentType};base64,` + response.data);
                 console.log(response.data)
             }
@@ -127,4 +127,4 @@ function UniversityCard(props) {
     );
 }
 
-export default UniversityCard;
+export default React.memo(UniversityCard);
