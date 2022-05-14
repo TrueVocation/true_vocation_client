@@ -83,7 +83,7 @@ function TestDetails(props) {
             "                                    ImageBlob to create a field meant to be an image.\n" +
             "                                    TextBlob to create a field for a CLOB (long text).\n" +
             "                                    And you can create as many DataTypes as you like.",
-        picture: "https://images.pexels.com/photos/12064/pexels-photo-12064.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        picture: "https://postupi.online/images/tests-bg.svg"
     }
 
     const prevPage =()=>{
@@ -431,24 +431,27 @@ function TestDetails(props) {
         }}>
             <Box style={{
                 backgroundImage: `url("${test.picture}")`,
-                backgroundRepeat: "no-repeat",
-                height: "520px"
+                height: "520px",
+                backgroundRepeat:'no-repeat',
+                backgroundSize:'cover',
+                display:"flex",
+                justifyContent:"center"
             }}>
-                <Box style={{
-                    backgroundColor: "rgba(0,0,0,.5)",
-                    height: "520px"
-                }}
-                     display={"flex"} flexDirection={"column"} justifyContent={"center"}
+                <Grid container xs={11} sm={11} md={10} lg={8} xl={8}
+                     display={"flex"} flexDirection={"column"} justifyContent={"center"} alignSelf={"center"}
                 >
-                    <Typography variant={"h3"} fontFamily={"Inter"} fontWeight={"bold"} textAlign={"center"}
-                                style={{color: "white", marginBottom: 1}}>{test.name}</Typography>
-                    <Typography variant={"h3"} fontFamily={"Inter"} fontWeight={"bold"} textAlign={"center"}
-                                style={{color: "white", marginBottom: 10}}>A test to determine the
-                        profession</Typography>
-                    <Typography variant={"body1"} fontFamily={"Inter"} fontWeight={"bold"} textAlign={"center"}
-                                style={{color: "white", marginBottom: 0}}>Take the test and find out who your profession
-                        is</Typography>
-                </Box>
+                    <Grid item xs={12}>
+                        <Typography variant={"h3"} fontFamily={"Inter"} fontWeight={"bold"}
+                                    style={{color: "white", marginBottom: 1}}>{test.name}</Typography>
+                        <Typography variant={"h3"} fontFamily={"Inter"} fontWeight={"bold"}
+                                    style={{color: "white", marginBottom: 10}}>A test to determine the
+                            profession</Typography>
+                        <Typography variant={"body1"} fontFamily={"Inter"} fontWeight={"bold"}
+                                    style={{color: "white", marginBottom: 0}}>Take the test and find out who your profession
+                            is</Typography>
+                    </Grid>
+
+                </Grid>
             </Box>
 
 
