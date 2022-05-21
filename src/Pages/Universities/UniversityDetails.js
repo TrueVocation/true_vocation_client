@@ -231,20 +231,7 @@ function UniversityDetails(props) {
 
                         <Typography variant={"h5"} fontFamily={"Inter"}
                                     style={{color: "rgb(103, 119, 136)", marginTop: 20, fontSize: 20}}>
-                            De Montfort University Leicester (DMU) is a public university in the city of Leicester,
-                            England. It was established in accordance with the Further and Higher Education Act in 1992
-                            as a degree awarding body. The name De Montfort University was taken from Simon de Montfort,
-                            a 13th-century Earl of Leicester credited with establishing the first Parliament of England
-                            in 1265.
-
-                            De Montfort University has approximately 27,000 full and part-time students, 3,240 staff and
-                            an annual turnover in the region of £168 million.[1] The university is organised into four
-                            faculties: Art, Design, and Humanities (ADH); Business and Law (BAL); Health and Life
-                            Sciences (H&LS); and Computing, Engineering and Media (CEM). It is a Sustainable Development
-                            Hub, focusing on Peace, Justice and Strong Institutions, an initiative by the United Nations
-                            launched in 2018. The Department of Education awarded university a Gold rating in the 2017
-                            Teaching Excellence Framework. It is a member of the Association of Commonwealth
-                            Universities.
+                            {university.description}
                         </Typography>
 
                        <Grid item container display={"flex"} flexDirection={"row"} style={{marginTop:20, marginBottom:35}}>

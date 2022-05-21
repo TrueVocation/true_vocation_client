@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Divider, Grid, TextField} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -12,6 +12,8 @@ import {styled} from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
+import {default as axios} from "axios";
+import {API_BASE} from "../../Constants/Constants";
 
 const Input = styled('input')({
     display: 'none',
@@ -26,6 +28,16 @@ function General(props) {
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [birthdate, setBirthdate] = useState(null);
+
+    const buttonRef = useRef();
+
+    const [image, setImage] = useState('')
+    const onChangeAvatar = (event) => {
+        // buttonRef.current.submit();
+        setImage("12312312321312312")
+        console.log(123123213123123123123)
+        console.log(image)
+    }
 
     const handleChange = (event) => {
         console.log(event)
@@ -44,19 +56,47 @@ function General(props) {
         }
     }
 
-
     const onSubmit = data => {
 
     }
 
-    useEffect(()=>{
-        if(auth.user != null){
+    async function onAvatarSubmit(data) {
+        const formData = new FormData();
+        formData.append("file", data.file[0]);
+        console.log(formData.get("file"))
+        console.log(data)
+        const url = new URL(`${API_BASE}/account/uploadAvatar/${auth.user.id}`);
+        // url.searchParams.set("picture", formData);
+        try {
+            let jwtToken = localStorage.getItem("token");
+            const response = await axios.post(url.toString(), formData, {
+
+                headers: {
+                    Authorization: `Bearer ${jwtToken}`,
+                    'Content-Type': 'multipart/form-data'
+                },
+            });
+            if (response.status === 200) {
+                console.log(response.data)
+                auth.setAvatar(null);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+
+    useEffect(() => {
+        if (auth.user != null) {
             setLogin(auth.user.login)
             setFirstName(auth.user.firstName)
             setLastName(auth.user.lastName)
             setEmail(auth.user.email)
+            setBirthdate(auth.user.birthdate)
+            setPhoneNumber(auth.user.phoneNumber)
         }
-    })
+    }, [auth])
 
     return (
         <Grid container xs={12} display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
@@ -71,10 +111,10 @@ function General(props) {
                         <Grid item container xs={12} style={{padding: "25px 25px"}}>
                             <Typography variant={"h3"} style={{
                                 fontSize: 20,
-                                fontWeight:"600",
+                                fontWeight: "600",
                                 fontFamily: "Inter",
                                 color: "rgb(45, 62, 74)",
-                                textAlign:"center"
+                                textAlign: "center"
                             }}>
                                 Profile Picture
                             </Typography>
@@ -87,40 +127,51 @@ function General(props) {
                             <Box>
                                 <Badge
                                     overlap="circular"
-                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                                    style={{width:"100%"}}
+                                    anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+                                    style={{width: "100%"}}
                                     badgeContent={
                                         <label htmlFor="icon-button-file">
-                                            <Input accept="image/*" id="icon-button-file" type="file" />
-                                            <IconButton style={{backgroundColor:"rgb(55, 125, 255)",color:"white"}} size={"large"}  aria-label="upload picture" component="span">
-                                                <PhotoCamera />
-                                            </IconButton>
+                                            <form onSubmit={handleSubmit(onAvatarSubmit)}>
+                                                <Input onChange={(e)=>console.log("123123123123")}  ref={buttonRef} accept="image/*" {...register("file")} id="icon-button-file"
+                                                       type="file"/>
+                                                <IconButton type={"submit"} style={{
+                                                    backgroundColor: "rgb(55, 125, 255)",
+                                                    color: "white"
+                                                }} size={"large"} aria-label="upload picture" component="span">
+                                                    <PhotoCamera/>
+                                                </IconButton>
+                                            </form>
                                         </label>
                                     }
                                 >
-                                    <Avatar style={{width:"100%",height:"100%"}} alt="Travis Howard" src={auth.avatar !== null ? auth.avatar : null} />
+                                    <Avatar style={{width: "100%", height: "100%"}} alt="Travis Howard"
+                                            src={auth.avatar !== null ? auth.avatar : null}/>
                                 </Badge>
                             </Box>
 
                         </Grid>
-                        <Grid item xs={10} marginBottom={1} >
+                        <Grid item xs={10} marginBottom={1}>
                             <Typography variant={"h3"} style={{
                                 fontSize: 20,
-                                fontWeight:"600",
+                                fontWeight: "600",
                                 fontFamily: "Inter",
                                 color: "rgb(45, 62, 74)",
-                                textAlign:"center"
+                                textAlign: "center"
                             }}>
-                                {auth.avatar !== null ? auth.user.firstName+" "+auth.user.lastName : ''}
+                                {auth.user !== null ?
+                                    auth.user.firstname === null || auth.user.lastName == null ?
+                                        auth.user.login :
+                                        auth.user.firstName + " " + auth.user.lastName
+                                    : ''}
                             </Typography>
                         </Grid>
-                        <Grid item xs={10} style={{paddingBottom:20}}>
+                        <Grid item xs={10} style={{paddingBottom: 20}}>
                             <Typography variant={"h3"} style={{
                                 fontSize: 15,
                                 fontFamily: "Inter",
                                 color: "rgb(99, 115, 129)",
                                 marginTop: 10,
-                                textAlign:"center"
+                                textAlign: "center"
                             }}>
                                 Allowed *.jpeg, *.jpg, *.png,
                                 Recommended dimensions: 200x200, maximum file size: 5MB
@@ -140,10 +191,10 @@ function General(props) {
                         <Grid item container xs={12} style={{padding: "25px 25px"}}>
                             <Typography variant={"h3"} style={{
                                 fontSize: 20,
-                                fontWeight:"600",
+                                fontWeight: "600",
                                 fontFamily: "Inter",
                                 color: "rgb(45, 62, 74)",
-                                textAlign:"center"
+                                textAlign: "center"
                             }}>
                                 Edit Account Details
                             </Typography>
@@ -160,7 +211,14 @@ function General(props) {
                                       justifyContent={"space-between"}>
 
                                     <Grid item xs={12} sm={5.8} marginBottom={1}>
-                                        <TextField size={"medium"}  InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("login", {
+                                        <TextField size={"medium"} InputLabelProps={{style: {margin: "5px"}}}
+                                                   InputProps={{
+                                                       style: {
+                                                           borderRadius: 8,
+                                                           padding: "5px 5px",
+                                                           fontSize: 18
+                                                       }
+                                                   }}  {...register("login", {
                                             minLength: {
                                                 value: 1,
                                                 message: "length must be greater than 0 character"
@@ -169,15 +227,23 @@ function General(props) {
                                                 value: 50,
                                                 message: "length must be less than 50 character"
                                             }
-                                        })} name={'login'} helperText={errors?.login && errors?.login?.message || ' '}
+                                        })} helperText={errors?.login && errors?.login?.message || ' '}
                                                    error={!!errors?.login}
-                                                   value={login} onChange={handleChange} fontFamily={"Inter"} type={"text"}
+                                                   value={login} onChange={handleChange} fontFamily={"Inter"}
+                                                   type={"text"}
                                                    fullWidth
                                                    label="Login" variant="outlined"/>
                                     </Grid>
 
                                     <Grid item xs={12} sm={5.8} marginBottom={1}>
-                                        <TextField size={"medium"} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("email", {
+                                        <TextField size={"medium"} InputLabelProps={{style: {padding: "5px"}}}
+                                                   inputProps={{readOnly: true}} InputProps={{
+                                            style: {
+                                                borderRadius: 8,
+                                                padding: "5px 5px",
+                                                fontSize: 18
+                                            }
+                                        }}  {...register("email", {
                                             minLength: {
                                                 value: 1,
                                                 message: "length must be greater than 0 character"
@@ -188,13 +254,21 @@ function General(props) {
                                             }
                                         })} name={'email'} helperText={errors?.email && errors?.email?.message || ' '}
                                                    error={!!errors?.email}
-                                                   value={email} onChange={handleChange} fontFamily={"Inter"} type={"email"}
+                                                   value={email} onChange={handleChange} fontFamily={"Inter"}
+                                                   type={"email"}
                                                    fullWidth
                                                    id="user_login" label="Email" variant="outlined"/>
                                     </Grid>
 
                                     <Grid item xs={12} sm={5.8} marginBottom={1}>
-                                        <TextField size={"medium"} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("firstName", {
+                                        <TextField size={"medium"} InputLabelProps={{style: {padding: "5px"}}}
+                                                   InputProps={{
+                                                       style: {
+                                                           borderRadius: 8,
+                                                           padding: "5px 5px",
+                                                           fontSize: 18
+                                                       }
+                                                   }}  {...register("firstName", {
                                             minLength: {
                                                 value: 1,
                                                 message: "length must be greater than 0 character"
@@ -206,13 +280,21 @@ function General(props) {
                                         })} name={'firstName'}
                                                    helperText={errors?.firstName && errors?.firstName?.message || ' '}
                                                    error={!!errors?.firstName}
-                                                   value={firstName} onChange={handleChange} fontFamily={"Inter"} type={"text"}
+                                                   value={firstName} onChange={handleChange} fontFamily={"Inter"}
+                                                   type={"text"}
                                                    fullWidth
                                                    label="Firstname" variant="outlined"/>
                                     </Grid>
 
                                     <Grid item xs={12} sm={5.8} marginBottom={1}>
-                                        <TextField size={"medium"} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("lastName", {
+                                        <TextField size={"medium"} InputLabelProps={{style: {padding: "5px"}}}
+                                                   InputProps={{
+                                                       style: {
+                                                           borderRadius: 8,
+                                                           padding: "5px 5px",
+                                                           fontSize: 18
+                                                       }
+                                                   }}  {...register("lastName", {
                                             minLength: {
                                                 value: 1,
                                                 message: "length must be greater than 0 character"
@@ -221,15 +303,24 @@ function General(props) {
                                                 value: 50,
                                                 message: "length must be less than 50 character"
                                             }
-                                        })} name={'lastName'} helperText={errors?.lastName && errors?.lastName?.message || ' '}
+                                        })} name={'lastName'}
+                                                   helperText={errors?.lastName && errors?.lastName?.message || ' '}
                                                    error={!!errors?.lastName}
-                                                   value={lastName} onChange={handleChange} fontFamily={"Inter"} type={"text"}
+                                                   value={lastName} onChange={handleChange} fontFamily={"Inter"}
+                                                   type={"text"}
                                                    fullWidth
                                                    label="Lastname" variant="outlined"/>
                                     </Grid>
 
                                     <Grid item xs={12} sm={5.8} marginBottom={1}>
-                                        <TextField size={"medium"} InputLabelProps={{style:{padding:"5px"}}} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("phoneNumber", {
+                                        <TextField size={"medium"} InputLabelProps={{style: {padding: "5px"}}}
+                                                   InputProps={{
+                                                       style: {
+                                                           borderRadius: 8,
+                                                           padding: "5px 5px",
+                                                           fontSize: 18
+                                                       }
+                                                   }}  {...register("phoneNumber", {
                                             pattern: {
                                                 value: /^((87)((0[0-9])|(47)|(5[0-1])|(6[0-4])|(7(1|[5-8])))(\d{7}))$/,
                                                 message: "Wrong phone number format"
@@ -246,9 +337,14 @@ function General(props) {
                                     </Grid>
 
                                     <Grid item xs={12} sm={5.8} marginBottom={1}>
-                                        <TextField size={"medium"} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("birthdate", {
-
-                                        })}
+                                        <TextField size={"medium"} InputLabelProps={{style: {padding: "5px"}}}
+                                                   InputProps={{
+                                                       style: {
+                                                           borderRadius: 8,
+                                                           padding: "5px 5px",
+                                                           fontSize: 18
+                                                       }
+                                                   }}  {...register("birthdate", {})}
                                                    name={'birthdate'}
                                                    helperText={errors?.birthdate && errors?.birthdate?.message || ' '}
                                                    error={!!errors?.birthdate}

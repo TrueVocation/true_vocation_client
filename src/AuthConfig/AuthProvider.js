@@ -17,12 +17,13 @@ function AuthProvider({ children }) {
   const signout = (callback) => {
     setUser(null);
     setAvatar(null);
+    localStorage.removeItem("token")
     callback();
   };
 
   useEffect(() => {
     isAuthenticated();
-  }, []);
+  }, [avatar]);
 
   async function authenticate(userData, callback) {
     try {
@@ -61,7 +62,7 @@ function AuthProvider({ children }) {
   async function profile() {
     try {
       let jwtToken = localStorage.getItem("token");
-      const response = await axios.get(`${API_BASE}/account`, {
+      const response = await axios.get(`${API_BASE}/account/user`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
@@ -96,7 +97,7 @@ function AuthProvider({ children }) {
     }
   }
 
-  const value = { user,avatar, signin, signout };
+  const value = { user,avatar, signin, signout, setAvatar };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

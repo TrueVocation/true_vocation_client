@@ -85,17 +85,13 @@ function UniversityCard(props) {
                     {/*                style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 3}}>Location: <strong*/}
                     {/*        style={{color: "rgb(45, 62, 74)"}}>{university.city}</strong></Typography>*/}
                     {/*</Grid>*/}
-                    <Grid item xs={12} display={"flex"} flexDirection={"row"}>
-                        <Grid item xs={6} display={"flex"} flexDirection={"row"}>
+                    <Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>
+                        <Grid item xs={12} display={"flex"} flexDirection={"row"}>
                             <LocationOnOutlined style={{color:"rgb(99, 115, 129)",alignSelf:"center",fontSize:25}}/>
                             <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"center"}
                                         style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 10}}>{university.address}</Typography>
                         </Grid>
-                        <Grid item xs={6} display={"flex"} flexDirection={"row"}>
-                            <HomeOutlined style={{color:"rgb(99, 115, 129)",alignSelf:"center",fontSize:25}} alignSelf={"center"}/>
-                            <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"center"}
-                                        style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 10}}>Dormitory</Typography>
-                        </Grid>
+
 
                     </Grid>
                     <Grid item xs={12} display={"flex"} flexDirection={"row"}>
@@ -105,9 +101,9 @@ function UniversityCard(props) {
                                         style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft:10}}>Military</Typography>
                         </Grid>
                         <Grid item xs={6} display={"flex"} flexDirection={"row"}>
-                            <AssessmentOutlined style={{color:"rgb(99, 115, 129)",alignSelf:"center",fontSize:25}} alignSelf={"center"}/>
+                            <HomeOutlined style={{color:"rgb(99, 115, 129)",alignSelf:"center",fontSize:25}} alignSelf={"center"}/>
                             <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"center"}
-                                        style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 10}}>{university.status}</Typography>
+                                        style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 10}}>Dormitory</Typography>
                         </Grid>
 
                     </Grid>

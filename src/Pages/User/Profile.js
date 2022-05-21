@@ -80,13 +80,18 @@ function Profile(props) {
                         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                             <Tab label="General" style={{
                                 textTransform: "none",
-                                backgroundColor: "white",
-                                color: "rgb(55, 125, 255)"
+                                color: "white",
+                                fontWeight:"bold",
+                                fontSize:18,
+                                borderRadius:12,
                             }} {...a11yProps(0)} />
                             <Tab label="Change Password" style={{
                                 textTransform: "none",
-                                backgroundColor: "white",
-                                color: "rgb(55, 125, 255)"
+                                color: "white",
+                                fontWeight:"bold",
+                                marginLeft:5,
+                                fontSize:18,
+                                borderRadius:12,
                             }}{...a11yProps(1)} />
                         </Tabs>
                     </Grid>

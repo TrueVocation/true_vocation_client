@@ -648,7 +648,11 @@ export function Headers() {
                                 fontWeight: "700",
                                 color: "rgb(45, 62, 74)",
                             }}>
-                                {auth.user != null ? auth.user.firstName+" "+auth.user.lastName : null}
+                                {auth.user !== null ?
+                                    auth.user.firstname === null || auth.user.lastName == null ?
+                                        auth.user.login :
+                                        auth.user.firstName+" "+auth.user.lastName
+                                    : ''}
                             </Typography>
 
                             <Typography style={{

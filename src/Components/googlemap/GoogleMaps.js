@@ -1,9 +1,9 @@
 import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import {GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
 
 const containerStyle = {
-    width: '500px',
-    height: '400px'
+    width: '800px',
+    height: '800px'
 };
 
 const API_KEY = 'AIzaSyBxix7KLY3fOwuPlEQYLBIH5FPr6ihnc4Y';
@@ -35,11 +35,15 @@ function GoogleMaps() {
         <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={16}
+            zoom={1}
             onLoad={onLoad}
             onUnmount={onUnmount}
         >
-            { /* Child components, such as markers, info windows, etc. */ }
+            <Marker
+                title={'The marker`s title will appear as a tooltip.'}
+                name={'SOMA'}
+                position={{lat: 43.23522601799928, lng: 76.90971490331546}}
+            />
             <></>
         </GoogleMap>
     ) : <></>
