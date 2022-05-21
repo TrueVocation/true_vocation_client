@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import {Grid, Tab, Tabs} from "@mui/material";
 import General from "./General";
 import ChangePassword from "./ChangePassword";
+import './_profile.scss'
 
 function TabPanel(props) {
     return null;
@@ -59,10 +60,10 @@ function Profile(props) {
     }
 
     return (
-        <Box style={{backgroundColor: "rgb(242, 245, 249)"}} paddingBottom={4}>
+        <Box id={"background_box"}  style={{backgroundColor: "rgb(242, 245, 249)"}} paddingBottom={4}>
 
             <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}
-                 style={{backgroundColor: "rgb(55, 125, 255)"}}
+                 style={{height:window.innerHeight*0.15}}
             >
                 <Grid container display={"flex"} flexDirection={"row"} justifyContent={"center"}>
                     <Grid item xs={10} marginTop={3}>
@@ -76,34 +77,35 @@ function Profile(props) {
                         </Typography>
                     </Grid>
 
-                    <Grid item xs={10} marginTop={3}>
-                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                            <Tab label="General" style={{
-                                textTransform: "none",
-                                color: "white",
-                                fontWeight:"bold",
-                                fontSize:18,
-                                borderRadius:12,
-                            }} {...a11yProps(0)} />
-                            <Tab label="Change Password" style={{
-                                textTransform: "none",
-                                color: "white",
-                                fontWeight:"bold",
-                                marginLeft:5,
-                                fontSize:18,
-                                borderRadius:12,
-                            }}{...a11yProps(1)} />
-                        </Tabs>
-                    </Grid>
+
                 </Grid>
 
             </Box>
 
 
+
             <Grid container display={"flex"} flexDirection={"row"} justifyContent={"center"}
 
             >
-
+                <Grid item xs={10} marginTop={3}>
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                        <Tab label="General" style={{
+                            textTransform: "none",
+                            color: "rgb(59,59,59)",
+                            fontWeight:"bold",
+                            fontSize:16,
+                            backgroundColor: "rgb(242, 245, 249)"
+                        }} {...a11yProps(0)} />
+                        <Tab label="Change Password" style={{
+                            textTransform: "none",
+                            color: "rgb(59,59,59)",
+                            fontWeight:"bold",
+                            marginLeft:5,
+                            fontSize:16,
+                            backgroundColor: "rgb(242, 245, 249)"
+                        }}{...a11yProps(1)} />
+                    </Tabs>
+                </Grid>
                 <Grid item xs={10}>
                     <TabPanel value={value} index={0}>
                         <General/>
