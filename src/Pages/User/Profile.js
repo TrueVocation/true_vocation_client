@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import {Grid, Tab, Tabs} from "@mui/material";
 import General from "./General";
 import ChangePassword from "./ChangePassword";
-import './_profile.scss'
+import "./_profile.scss"
 
 function TabPanel(props) {
     return null;

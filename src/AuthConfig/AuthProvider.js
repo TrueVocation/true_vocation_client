@@ -8,6 +8,7 @@ const axios = require("axios").default;
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [avatar, setAvatar] = useState(null);
+  const [updateData, setUpdateData] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const signin = (userData, callback) => {
@@ -23,7 +24,7 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     isAuthenticated();
-  }, [avatar]);
+  }, [updateData]);
 
   async function authenticate(userData, callback) {
     try {
@@ -97,7 +98,7 @@ function AuthProvider({ children }) {
     }
   }
 
-  const value = { user,avatar, signin, signout, setAvatar };
+  const value = { user,avatar, signin, signout, setUpdateData };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

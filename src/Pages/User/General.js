@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Divider, Grid, TextField} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -7,13 +7,13 @@ import Button from "@mui/material/Button";
 import useAuth from "../../AuthConfig/useAuth";
 import IconButton from "@mui/material/IconButton";
 import {PhotoCamera} from "@mui/icons-material";
-import Stack from "@mui/material/Stack";
 import {styled} from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import {default as axios} from "axios";
 import {API_BASE} from "../../Constants/Constants";
+import {useSnackbar} from "notistack";
 
 const Input = styled('input')({
     display: 'none',
@@ -29,15 +29,8 @@ function General(props) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [birthdate, setBirthdate] = useState(null);
 
-    const buttonRef = useRef();
+    const { enqueueSnackbar } = useSnackbar();
 
-    const [image, setImage] = useState('')
-    const onChangeAvatar = (event) => {
-        // buttonRef.current.submit();
-        setImage("12312312321312312")
-        console.log(123123213123123123123)
-        console.log(image)
-    }
 
     const handleChange = (event) => {
         console.log(event)
@@ -56,15 +49,50 @@ function General(props) {
         }
     }
 
-    const onSubmit = data => {
+     async function onSubmit(data) {
+        const updateData = {
+            email: email,
+            login: login,
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            birthdate: birthdate
+        }
+        const url = new URL(`${API_BASE}/account/update-profile`);
+        try {
+            let jwtToken = localStorage.getItem("token");
+            const response = await axios.post(url.toString(), updateData, {
 
+                headers: {
+                    Authorization: `Bearer ${jwtToken}`
+                },
+            });
+            if (response.status === 200) {
+                console.log(response.data);
+                auth.setUpdateData(prevState => !prevState);
+                enqueueSnackbar(`Profile data successfully updated!`, {
+                    variant: "success",
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    },
+                });
+            }
+        } catch (error) {
+            enqueueSnackbar(`Something went wrong. Please try again later!`, {
+                variant: "error",
+                anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                },
+            });
+        }
     }
 
-    async function onAvatarSubmit(data) {
+    async function onChangeAvatar(event) {
         const formData = new FormData();
-        formData.append("file", data.file[0]);
+        formData.append("file", event.target.files[0]);
         console.log(formData.get("file"))
-        console.log(data)
         const url = new URL(`${API_BASE}/account/uploadAvatar/${auth.user.id}`);
         // url.searchParams.set("picture", formData);
         try {
@@ -78,7 +106,7 @@ function General(props) {
             });
             if (response.status === 200) {
                 console.log(response.data)
-                auth.setAvatar(null);
+                auth.setUpdateData(prevState => !prevState);
             }
         } catch (error) {
             console.error(error);
@@ -128,11 +156,11 @@ function General(props) {
                                 <Badge
                                     overlap="circular"
                                     anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-                                    style={{width: "100%"}}
+                                    style={{ height:"100%"}}
                                     badgeContent={
                                         <label htmlFor="icon-button-file">
-                                            <form onSubmit={handleSubmit(onAvatarSubmit)}>
-                                                <Input onChange={(e)=>console.log("123123123123")}  ref={buttonRef} accept="image/*" {...register("file")} id="icon-button-file"
+                                            <form >
+                                                <Input onChange={onChangeAvatar} accept="image/*"  id="icon-button-file"
                                                        type="file"/>
                                                 <IconButton type={"submit"} style={{
                                                     backgroundColor: "rgb(55, 125, 255)",
@@ -218,7 +246,7 @@ function General(props) {
                                                            padding: "5px 5px",
                                                            fontSize: 18
                                                        }
-                                                   }}  {...register("login", {
+                                                   }} inputProps={{readOnly: true}}  {...register("login", {
                                             minLength: {
                                                 value: 1,
                                                 message: "length must be greater than 0 character"
@@ -237,7 +265,7 @@ function General(props) {
 
                                     <Grid item xs={12} sm={5.8} marginBottom={1}>
                                         <TextField size={"medium"} InputLabelProps={{style: {padding: "5px"}}}
-                                                   inputProps={{readOnly: true}} InputProps={{
+                                                    InputProps={{
                                             style: {
                                                 borderRadius: 8,
                                                 padding: "5px 5px",

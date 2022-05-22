@@ -40,22 +40,49 @@ function ChangePassword(props) {
 
 
     async function changePassword(data) {
-        if (data.password === data.passwordConfirm) {
-            const userData = {
-                key: searchParams.get("key"),
-                newPassword: data.password
+        if(data.newPassword === data.passwordConfirm){
+            const passData = {
+                currentPassword : data.oldPassword,
+                newPassword : data.newPassword
             }
-            const response = await axios.post(`${API_BASE}/account/change-password`, userData, {
-                headers: {
-                    "Content-Type": "application/json"
+            let jwtToken = localStorage.getItem("token");
+            try {
+                const response = await axios.post(`${API_BASE}/account/change-password`, passData, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${jwtToken}`
+                    }
+                });
+                if (response.status === 200) {
+                    setNewPassword('')
+                    setPasswordConfirm('')
+                    setOldPassword('')
+                    enqueueSnackbar(`Password successfully updated!`, {
+                        variant: "success",
+                        anchorOrigin: {
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        },
+                    });
                 }
-            });
-            if (response.status === 200) {
-                setSent(true);
             }
-        } else {
-            enqueueSnackbar("The password are not the same!", {variant: "error"});
+            catch (error) {
+                enqueueSnackbar("Wrong current password", {variant: "error",
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    },});
+            }
+        }else{
+            enqueueSnackbar(`Wrong password confirmation.`, {
+                variant: "error",
+                anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                },
+            });
         }
+
 
     }
 
@@ -84,24 +111,17 @@ function ChangePassword(props) {
                         <Grid item xs={12} marginBottom={3}>
                             <Divider/>
                         </Grid>
-                        <Grid item xs={11.5} marginBottom={1}>
+                        <Grid item xs={11.5} marginBottom={3}>
                             <form
-                                style={{width: "100%"}}
+                                style={{width: "100%", display:"flex", flexDirection:"column"}}
                                 onSubmit={handleSubmit(changePassword)}
                             >
-                                {sent ?
-                                    <>
-                                        <Alert severity="success" style={{marginBottom: 20}}>
-                                            <AlertTitle>Success</AlertTitle>
-                                            The password was successfully reset!!!
-                                        </Alert>
-                                    </>
-                                    :
-                                    <>
-                                        <Grid xs={12} container marginBottom={1} direction={"column"} justifyContent={"space-between"}>
+
+
+                                        <Grid xs={11} sm={12} container marginBottom={1} direction={"column"} justifyContent={"space-between"} alignSelf={"center"}>
 
                                             <TextField size={"medium"} InputLabelProps={{style:{padding:"5px"}}} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("oldPassword", {
-                                                required: 'Old password field is required',
+                                                required: 'Current password field is required',
                                                 minLength: {
                                                     value: 4,
                                                     message: "length must be greater than 3 character"
@@ -114,13 +134,13 @@ function ChangePassword(props) {
                                                        error={!!errors?.oldPassword}
                                                        value={oldPassword} onChange={handleOldPasswordChange} fontFamily={"Inter"} type={"text"}
                                                        fullWidth
-                                                       label="Password" variant="outlined"/>
+                                                       label="Current password" variant="outlined"/>
                                         </Grid>
 
-                                        <Grid xs={12} container marginBottom={1} direction={"column"} justifyContent={"space-between"}>
+                                        <Grid xs={11} sm={12} container marginBottom={1} direction={"column"} justifyContent={"space-between"} alignSelf={"center"}>
 
-                                            <TextField size={"medium"} InputLabelProps={{style:{padding:"5px"}}} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("oldPassword", {
-                                                required: 'Old password field is required',
+                                            <TextField size={"medium"} InputLabelProps={{style:{padding:"5px"}}} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("newPassword", {
+                                                required: 'New password field is required',
                                                 minLength: {
                                                     value: 4,
                                                     message: "length must be greater than 3 character"
@@ -129,18 +149,18 @@ function ChangePassword(props) {
                                                     value: 99,
                                                     message: "length must be less than 100 character"
                                                 }
-                                            })} name={'oldPassword'} helperText={errors?.oldPassword && errors?.oldPassword?.message || ' '}
-                                                       error={!!errors?.oldPassword}
-                                                       value={oldPassword} onChange={handleOldPasswordChange} fontFamily={"Inter"} type={"text"}
+                                            })} name={'newPassword'} helperText={errors?.newPassword && errors?.newPassword?.message || ' '}
+                                                       error={!!errors?.newPassword}
+                                                       value={newPassword} onChange={handleNewPasswordChange} fontFamily={"Inter"} type={"text"}
                                                        fullWidth
-                                                       label="Password" variant="outlined"/>
+                                                       label="New password" variant="outlined"/>
                                         </Grid>
 
 
-                                        <Grid xs={12} container marginBottom={1} direction={"column"} justifyContent={"space-between"}>
+                                        <Grid xs={11} sm={12} container marginBottom={1} direction={"column"} justifyContent={"space-between"} alignSelf={"center"}>
 
-                                            <TextField size={"medium"} InputLabelProps={{style:{padding:"5px"}}} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("oldPassword", {
-                                                required: 'Old password field is required',
+                                            <TextField size={"medium"} InputLabelProps={{style:{padding:"5px"}}} InputProps={{style:{borderRadius:8,padding:"5px 5px",fontSize:18}}}  {...register("passwordConfirm", {
+                                                required: 'Password confirm field is required',
                                                 minLength: {
                                                     value: 4,
                                                     message: "length must be greater than 3 character"
@@ -149,20 +169,21 @@ function ChangePassword(props) {
                                                     value: 99,
                                                     message: "length must be less than 100 character"
                                                 }
-                                            })} name={'oldPassword'} helperText={errors?.oldPassword && errors?.oldPassword?.message || ' '}
-                                                       error={!!errors?.oldPassword}
-                                                       value={oldPassword} onChange={handleOldPasswordChange} fontFamily={"Inter"} type={"text"}
+                                            })} name={'passwordConfirm'} helperText={errors?.passwordConfirm && errors?.passwordConfirm?.message || ' '}
+                                                       error={!!errors?.passwordConfirm}
+                                                       value={passwordConfirm} onChange={handlePasswordConfirmChange} fontFamily={"Inter"} type={"text"}
                                                        fullWidth
-                                                       label="Password" variant="outlined"/>
+                                                       label="Password confirm" variant="outlined"/>
                                         </Grid>
 
 
 
-                                        <Grid
+                                        <Grid xs={11} sm={12}
                                             container
                                             direction={"row"}
                                             justifyContent={"space-between"}
                                             alignItems={"center"}
+                                              alignSelf={"center"}
                                         >
                                             <Button
                                                 size={"large"}
@@ -174,8 +195,6 @@ function ChangePassword(props) {
                                                 Reset password
                                             </Button>
                                         </Grid>
-                                    </>
-                                }
                             </form>
                         </Grid>
 
