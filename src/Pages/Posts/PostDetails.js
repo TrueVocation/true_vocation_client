@@ -6,6 +6,7 @@ import {Bookmark, BookmarkBorderOutlined, Favorite, FavoriteBorder, ModeCommentO
 import IconButton from "@mui/material/IconButton";
 import UserCommentCard from "../../Components/card/UserCommentCard";
 import Button from "@mui/material/Button";
+import "./_posts.scss"
 
 function PostDetails(props) {
     const [showComments, setShowComments] = useState(false)

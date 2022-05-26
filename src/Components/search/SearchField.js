@@ -12,20 +12,20 @@ function SearchField(props) {
     return (
         <Paper style={{
             boxShadow:"rgb(140 152 164 / 18%) 0px 10px 40px 10px",
-            padding:16,
-            borderRadius:8,
+            padding:8,
+            borderRadius:15,
             marginBottom:32
         }}>
             <Box display={"flex"} flexDirection={"row"}>
                 <Grid item container display={"flex"} flexDirection={"row"} style={{paddingTop:8,paddingBottom:8}}>
                     <InputBase fullWidth
                         id="outlined-adornment-weight"
-                        placeholder={"Search..."}
+                        placeholder={"Search blogs, topics and more"}
                         style={{fontSize:18}}
                         value={value}
                         onChange={handleChange}
                         startAdornment={<InputAdornment position="end" style={{marginRight:10}} >
-                            <Search style={{fontSize:35, color:"rgb(131, 0, 184)"}} />
+                            <Search style={{fontSize:35, color:"#2d3e4a"}} />
                             </InputAdornment>}
                         aria-describedby="outlined-weight-helper-text"
                         inputProps={{

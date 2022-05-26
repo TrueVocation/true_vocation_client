@@ -1,88 +1,126 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Paper from "@mui/material/Paper";
 import {Checkbox, Divider, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {Bookmark, BookmarkBorderOutlined, Favorite, FavoriteBorder, ModeCommentOutlined} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
+import randomColor from "randomcolor";
+import {API_BASE} from "../../../Constants/Constants";
+import {default as axios} from "axios";
+import Chip from "@mui/material/Chip";
 
-function PostsCardHorizontal(props) {
+function PostsCardHorizontal({post}) {
+    const [picture, setPicture] = useState('')
+
+    async function fetchPicture() {
+        try {
+            const url = new URL(`${API_BASE}/posts/viewPicture`);
+            url.searchParams.set('url', post?.picture);
+            const response = await axios.get(url.toString());
+            if (response.status === 200) {
+                const contentType = response.headers['content-type']
+                setPicture(`data:${contentType};base64,` + response.data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(()=>{
+        fetchPicture();
+    })
+
     return (
         <Paper variant={"elevation"} elevation={0} style={{
             borderRadius: 15,
             boxShadow: "rgb(140 152 164 / 25%) 0px 3px 6px 0px",
-            cursor:"pointer"
+            cursor: "pointer"
         }}>
-            <Grid container display={"flex"} flexDirection={"row"}>
+            <Grid container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
 
-            <Grid item xs={4} style={{padding:20}}>
-                <img style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius:15
-                }}
-                     src={"https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"}/>
-            </Grid>
-
-            <Grid item xs={8} display={"flex"} flexDirection={"column"} justifyContent={"space-between"} style={{
-                padding: "20px 20px 10px 10px"
-            }}>
-                <Grid item>
-                    <Typography variant={"h3"} style={{
-                        fontSize: 23,
-                        fontWeight: "600",
-                        fontFamily: "Inter",
-                        color: "#2d3e4a"
-                    }}>
-                        Sed ut perspiciatis
-                    </Typography>
-
-
-
-                    <Typography variant={"h3"} style={{
-                        fontSize: 17,
-                        fontFamily: "Inter",
-                        color: "rgb(99, 115, 129)",
-                        marginTop: 10
-                    }}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat.
-                    </Typography>
-                    <Typography variant={"body2"} style={{
-                        fontSize: 15,
-                        fontFamily: "Inter",
-                        color: "rgb(103, 119, 136)",
-                        fontWeight:400,
-                        marginTop: 10
-                    }}>
-                       16 Mar 2020
-                    </Typography>
+                <Grid item xs={4}>
+                    <img style={{
+                        width: "100%",
+                        height: "100%",
+                        borderTopLeftRadius: 15,
+                        borderBottomLeftRadius: 15
+                    }}
+                         src={picture}/>
                 </Grid>
 
-                <Grid item>
-                    <Divider style={{borderColor:"rgb(0, 0, 0, 0.12)",height:10,marginBottom:10}} />
-                    <Grid item container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
-                        <Grid item alignSelf={"center"}>
-                            <Checkbox style={{padding: 0}}
-
-                                      icon={<FavoriteBorder style={{fontSize: 32}}/>}
-                                      checkedIcon={<Favorite style={{color: "#FF2052", fontSize: 32}}/>}
-                            /> 256
-
-                            <IconButton style={{padding:0,marginLeft:10}}><ModeCommentOutlined style={{fontSize:30}}/></IconButton> 251
+                <Grid item xs={7.9} display={"flex"} flexDirection={"column"} justifyContent={"space-between"} style={{
+                    padding: "20px 20px 10px 10px"
+                }}>
+                    <Grid item>
+                        {/*<Typography variant={"h3"} style={{*/}
+                        {/*    fontSize: 16,*/}
+                        {/*    fontWeight: "bold",*/}
+                        {/*    fontFamily: "Inter",*/}
+                        {/*    color: `#e45159`,*/}
+                        {/*    marginBottom: 8*/}
+                        {/*}}>*/}
+                        {/*    {post?.tag}*/}
+                        {/*</Typography>*/}
+                        <Grid item container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
+                            <Typography variant={"h3"} style={{
+                                fontSize: 25,
+                                fontWeight: "600",
+                                fontFamily: "Inter",
+                                color: "#2d3e4a"
+                            }}>
+                                {post?.title}
+                            </Typography>
+                            <Chip label={post?.tag} variant="filled" style={{marginBottom:8}} />
                         </Grid>
-                        <Grid item alignSelf={"center"}>
-                            <Checkbox style={{padding: 0}}
 
-                                      icon={<BookmarkBorderOutlined style={{fontSize: 32}}/>}
-                                      checkedIcon={<Bookmark style={{color: "#FFC107", fontSize: 32}}/>}
-                            />
+
+
+                        <Typography variant={"h3"} style={{
+                            fontSize: 17,
+                            fontFamily: "Inter",
+                            color: "rgb(99, 115, 129)",
+                            marginTop: 10
+                        }}>
+                            {post?.shortDescription}
+                        </Typography>
+                        <Typography variant={"body2"} style={{
+                            fontSize: 15,
+                            fontFamily: "Inter",
+                            color: "rgb(103, 119, 136)",
+                            fontWeight: 400,
+                            marginTop: 10,
+                            marginBottom:5
+                        }}>
+                            {post?.createdDate}
+                        </Typography>
+
+                    </Grid>
+
+                    <Grid item>
+                        {/*<Divider style={{borderColor:"rgb(0, 0, 0, 0.12)",height:10,marginBottom:10}} />*/}
+                        <Grid item container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
+                            <Grid item alignSelf={"center"}>
+                                <Checkbox style={{padding: 0}}
+
+                                          icon={<FavoriteBorder style={{fontSize: 32}}/>}
+                                          checkedIcon={<Favorite style={{color: "#FF2052", fontSize: 32}}/>}
+                                /> 256
+
+                                <IconButton style={{padding: 0, marginLeft: 10}}><ModeCommentOutlined
+                                    style={{fontSize: 30}}/></IconButton> 251
+                            </Grid>
+                            <Grid item alignSelf={"center"}>
+                                <Checkbox style={{padding: 0}}
+
+                                          icon={<BookmarkBorderOutlined style={{fontSize: 32}}/>}
+                                          checkedIcon={<Bookmark style={{color: "#FFC107", fontSize: 32}}/>}
+                                />
+                            </Grid>
                         </Grid>
                     </Grid>
+
+
                 </Grid>
-
-
-            </Grid>
 
             </Grid>
         </Paper>

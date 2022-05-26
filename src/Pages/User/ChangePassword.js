@@ -192,7 +192,7 @@ function ChangePassword(props) {
                                                 variant="contained"
                                                 fontFamily={"Inter"}
                                             >
-                                                Reset password
+                                                Change password
                                             </Button>
                                         </Grid>
                             </form>
