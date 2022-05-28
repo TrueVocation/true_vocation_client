@@ -46,14 +46,22 @@ const DataGridView = (posts) => {
 function Posts(props) {
     const [value, setValue] = React.useState(0);
     const [view, setView] = React.useState('list');
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState([{}])
+    const [oldPosts, setOldPosts] = useState([{}])
+    const [height, setHeight] = useState(window.innerHeight);
+    const [firstPost, setFirstPost] = useState({})
 
     const [pagination, setPagination] = useState(null);
 
     const [page, setPage] = useState(1);
-    const [size, setSize] = useState(3);
+    const [size, setSize] = useState(6);
     const [sort, setSort] = useState("id");
     const [order, setOrder] = useState("desc");
+    const [searchText, setSearchText] = useState('')
+
+    const handleSearchTextChange = (event) => {
+        setSearchText(event.target.value);
+    };
 
     const handleChangeSelect = (event, nextView) => {
         setView(nextView);
@@ -65,32 +73,47 @@ function Posts(props) {
     };
 
     useEffect(() => {
-            fetchPosts()
-    }, [page])
+        fetchPosts()
+        window.scrollTo({
+            top: 0,
+            behavior:"smooth"
+        });
+    }, [page, searchText])
+
+
+
 
     async function fetchPosts() {
         try {
-            const url = new URL(`${API_BASE}/posts`);
-            url.searchParams.set('page', page-1);
+            const url = new URL(`${API_BASE}/posts-page`);
+            url.searchParams.set('page', page - 1);
             url.searchParams.set('size', size);
             url.searchParams.set('sort', sort);
             url.searchParams.set('order', order);
-            const response = await axios.get(url.toString());
+            url.searchParams.set('searchText', searchText);
+            let jwtToken = localStorage.getItem("token");
+            const response = await axios.get(url.toString(),{
+                headers:{
+                    Authorization: `Bearer ${jwtToken}`,
+                }
+            });
             if (response.status === 200) {
-                setPosts(response.data.content);
-                setSize(response.data.size);
+                console.log(response.data.latestPosts)
+                const arr = response.data.latestPosts.content
+                setFirstPost(arr[0])
+                setPosts(arr.slice(1,6));
                 setPagination({
-                    isFirstPage: response.data.first,
-                    isLastPage: response.data.last,
-                    pageNumber: response.data.number+1,
-                    pageSize: response.data.size,
-                    totalPages: response.data.totalPages,
-                    totalElements: response.data.totalElements,
+                    isFirstPage: response.data.latestPosts.first,
+                    isLastPage: response.data.latestPosts.last,
+                    pageNumber: response.data.latestPosts.number + 1,
+                    pageSize: response.data.latestPosts.size,
+                    totalPages: response.data.latestPosts.totalPages,
+                    totalElements: response.data.latestPosts.totalElements,
                 })
-                // setPage(response.data.number);
-                if(response.data.totalPages < page){
+                if (response.data.latestPosts.totalPages < page) {
                     setPage(1)
                 }
+                setOldPosts(response.data.oldPosts)
             }
         } catch (error) {
             console.error(error);
@@ -171,13 +194,13 @@ function Posts(props) {
 
                 <Grid container item display={"flex"} mt={7} flexdirection={"row"} justifyContent={"center"} xs={12}>
                     <Grid xs={11} container item display={"flex"} flexdirection={"row"} justifyContent={"space-between"}>
-                        <Grid container item xs={8} style={{marginBottom: 50}}>
+                        <Grid container item xs={8.2} style={{marginBottom: 50}}>
                             <Grid item xs={12}>
                                 <Typography variant={"h5"} fontFamily={"Inter"}
                                             style={{color: "#2d3e4a", marginBottom: 15, fontWeight: "bold", fontSize: 20}}>
                                     Latest blogs
                                 </Typography>
-                                <SearchField/>
+                                <SearchField value={searchText} handleChange={handleSearchTextChange} />
                             </Grid>
                             <Grid container item xs={12} display={"flex"} flexdirection={"row"} justifyContent={"space-between"}>
                                 <Grid item xs={12} style={{marginBottom: 35}}>
@@ -185,7 +208,7 @@ function Posts(props) {
                                         display: "flex",
                                         alignItems: "center"
                                     }}>
-                                        <PostsCardHorizontal post={posts[0]}/>
+                                        <PostsCardHorizontal post={firstPost}/>
                                     </CustomAnimatedComponent>
                                 </Grid>
 
@@ -205,30 +228,22 @@ function Posts(props) {
                             <Grid item container display={"flex"} flexdirection={"row"} justifyContent={"center"}>
                                 <Pagination size={"large"}
                                             count={pagination?.totalPages}
-                                            hideNextButton={pagination?.isLastPage}
-                                            hidePrevButton={pagination?.isFirstPage}
-                                            page={pagination?.pageNumber}
-                                            onChange={(_, num)=>setPage(num)}
-                                    // renderItem={(item) =>
-                                    //     <PaginationItem
-                                    //         component={NavLink}
-                                    //         to={`/?page`}
-                                    //         {...item} />
-                                    // }
+                                            page={page}
+                                            onChange={(_, num) => setPage(num)}
                                             showFirstButton
                                             showLastButton
                                 />
                             </Grid>
                         </Grid>
 
-                        <Grid container display={"flex"} flexdirection={"row"} item xs={3.7} style={{marginBottom: 30}}>
+                        <Grid container display={"flex"} flexdirection={"row"} item xs={3.6} style={{marginBottom: 30}}>
                             <Grid item xs={12}>
                                 <Typography variant={"h5"} fontFamily={"Inter"}
                                             style={{color: "#2d3e4a", marginBottom: 15, fontWeight: "bold", fontSize: 20}}>
                                     News
                                 </Typography>
                                 {
-                                    posts.map(post => {
+                                    oldPosts.map(post => {
                                         return <Grid key={post.id} item xs={12} marginBottom={2}>
                                             <PostSmallCard post={post}/>
                                         </Grid>

@@ -68,7 +68,7 @@ function PostSmallCard({post}) {
                     {/*}}>*/}
                     {/*    {post?.tag}*/}
                     {/*</Typography>*/}
-                    <Chip label={post?.tag} variant="outlined" style={{color:"#e45159",borderColor:"#e45159"}} />
+                    {/*<Chip label={post?.tag} variant="outlined" style={{color:"#e45159",borderColor:"#e45159"}} />*/}
                     <Typography variant={"h3"} style={{
                         fontSize: 14,
                         fontFamily: "Inter",
