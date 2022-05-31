@@ -17,6 +17,7 @@ import UniversityDetails from "./Pages/Universities/UniversityDetails";
 import Posts from "./Pages/Posts/Posts";
 import PostDetails from "./Pages/Posts/PostDetails";
 import Profile from "./Pages/User/Profile";
+import UniversityFilter from "./Pages/Universities/UniversityFilter";
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
               <Route path="reset-password" element={<ResetPassword />} />
               <Route path="account/reset/finish" element={<ResetPasswordFinish />} />
               <Route path="subjects" element={<Subjects />} />
+              <Route path="universities" element={<UniversityFilter/>}/>
               <Route path="tests" element={<Tests />} />
               <Route path="tests/:id" element={<TestDetails />} />
               <Route path="university/:id" element={<UniversityDetails />} />

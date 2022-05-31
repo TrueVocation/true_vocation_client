@@ -4,7 +4,6 @@ import {Checkbox, Divider, Grid, Skeleton} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {Bookmark, BookmarkBorderOutlined, Favorite, FavoriteBorder, ModeCommentOutlined} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
-import randomColor from "randomcolor";
 import {API_BASE} from "../../../Constants/Constants";
 import {default as axios} from "axios";
 import Chip from "@mui/material/Chip";
