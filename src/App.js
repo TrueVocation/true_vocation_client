@@ -14,6 +14,10 @@ import Subjects from "./Pages/Subjects/Subjects";
 import Tests from "./Pages/Tests/Tests";
 import TestDetails from "./Pages/Tests/TestDetails";
 import UniversityDetails from "./Pages/Universities/UniversityDetails";
+import Posts from "./Pages/Posts/Posts";
+import PostDetails from "./Pages/Posts/PostDetails";
+import Profile from "./Pages/User/Profile";
+import UniversityFilter from "./Pages/Universities/UniversityFilter";
 
 function App() {
     return (
@@ -26,12 +30,16 @@ function App() {
             <Route index element={<Home />} />
               <Route path="sign-in" element={<SignIn />} />
               <Route path="sign-up" element={<SignUp />} />
+              <Route path="posts" element={<Posts />} />
+              <Route path="posts/:id" element={<PostDetails />} />
               <Route path="reset-password" element={<ResetPassword />} />
               <Route path="account/reset/finish" element={<ResetPasswordFinish />} />
               <Route path="subjects" element={<Subjects />} />
+              <Route path="universities" element={<UniversityFilter/>}/>
               <Route path="tests" element={<Tests />} />
               <Route path="tests/:id" element={<TestDetails />} />
               <Route path="university/:id" element={<UniversityDetails />} />
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<NotFound404 />} />
           </Route>
 

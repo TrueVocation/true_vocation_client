@@ -1,0 +1,10 @@
+$box_shadow: rgba(140, 152, 164, 0.2) 0px 3px 6px 0px;
+
+#post_small_card{
+  background-color: transparent;
+  &:hover {
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    transition: box-shadow 0.5s, transform 0.5s;
+  }
+}

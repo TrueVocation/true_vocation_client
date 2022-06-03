@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import {Divider, Grid, Tab, Tabs} from "@mui/material";
 import CustomAnimatedComponent from "../../Components/motion/CustomAnimatedComponent";
@@ -17,6 +17,10 @@ import {
 } from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 import GoogleMaps from "../../Components/googlemap/GoogleMaps";
+import {API_BASE} from "../../Constants/Constants";
+import {default as axios} from "axios";
+import {useParams} from "react-router-dom";
+import {RenderIf} from "../../Components/RenderIf";
 
 function TabPanel(props) {
     return null;
@@ -29,19 +33,55 @@ TabPanel.propTypes = {
 };
 
 function UniversityDetails(props) {
+    let { id } = useParams();
     const [value, setValue] = React.useState(0);
+    const [university, setUniversity] = useState({});
+    const [image, setImage] = useState('');
+
+    async function fetchUniversity() {
+        try {
+            const url = new URL(`${API_BASE}/universities/${id}`);
+            const response = await axios.get(url.toString());
+            if (response.status === 200) {
+                setUniversity(response.data);
+                fetchLogo(response.data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function fetchLogo(university) {
+        try {
+            const url = new URL(`${API_BASE}/universities/viewPicture`);
+            url.searchParams.set('url', university.logo);
+            const response = await axios.get(url.toString());
+            if (response.status === 200) {
+                const contentType = response.headers['Content-Type']
+                setImage(`data:${contentType};base64,` + response.data);
+                console.log(response.data)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(()=>{
+        fetchUniversity();
+
+    },[])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    const university = {
-        name: "International Information Technology University",
-        image: "https://mir-s3-cdn-cf.behance.net/project_modules/1400/ddac8642525883.57cf40545c043.jpg",
-        description: "Rather than worrying about switching offices every couple years, you can instead stay in the same location and grow-up from your shared coworking space to an office that takes up an entire floor.",
-        city: "Almaty",
-        address: "Manasa street 8"
-    }
+    // const university = {
+    //     name: "International Information Technology University",
+    //     image: "https://mir-s3-cdn-cf.behance.net/project_modules/1400/ddac8642525883.57cf40545c043.jpg",
+    //     description: "Rather than worrying about switching offices every couple years, you can instead stay in the same location and grow-up from your shared coworking space to an office that takes up an entire floor.",
+    //     city: "Almaty",
+    //     address: "Manasa street 8"
+    // }
 
     const animationText = {
         visible: custom => ({opacity: 1, x: 0, transition: {delay: custom * 0.2, duration: 0.5}}),
@@ -114,26 +154,20 @@ function UniversityDetails(props) {
                 <Grid container display={"flex"} flexDirection={"row"}>
                     <Grid item xs={4} sm={4} md={0.5} lg={0.5} xl={1}/>
                     <Grid
-                        style={{backgroundImage: "url('data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='517' preserveAspectRatio='none' viewBox='0 0 1440 517'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1000%26quot%3b)' fill='none'%3e%3crect width='1440' height='517' x='0' y='0' fill='rgba(190%2c 222%2c 255%2c 1)'%3e%3c/rect%3e%3cpath d='M0%2c550.31C106.52%2c554.043%2c210.283%2c523.977%2c303.333%2c471.996C400.651%2c417.632%2c511.232%2c354.668%2c542.01%2c247.528C572.489%2c141.429%2c479.983%2c42.319%2c457.831%2c-65.826C437.452%2c-165.315%2c467.524%2c-273.311%2c417.251%2c-361.55C362.181%2c-458.209%2c276.194%2c-545.992%2c168.461%2c-573.726C61.612%2c-601.232%2c-53.587%2c-562.784%2c-148.96%2c-507.31C-233.079%2c-458.382%2c-262.125%2c-355.81%2c-328.515%2c-284.66C-398.467%2c-209.692%2c-517.477%2c-176.554%2c-548.714%2c-78.893C-580.706%2c21.128%2c-537.399%2c130.015%2c-491.336%2c224.386C-446.072%2c317.121%2c-375.964%2c394.161%2c-289.971%2c451.204C-203.09%2c508.836%2c-104.194%2c546.659%2c0%2c550.31' fill='%2365b1ff'%3e%3c/path%3e%3cpath d='M1440 1171.13C1560.2930000000001 1168.501 1638.329 1048.1399999999999 1738.675 981.7470000000001 1837.371 916.446 1972.534 890.241 2024.924 784.126 2077.526 677.582 2017.463 553.748 2008.476 435.266 1998.714 306.574 2058.773 151.421 1969.837 57.894000000000005 1880.246-36.322 1717.998 31.581000000000017 1592.459-2.227999999999952 1471.046-34.924999999999955 1373.048-150.75800000000004 1248.124-136.46799999999996 1118.798-121.67399999999998 995.677-37.72900000000004 928.441 73.731 863.985 180.58300000000003 910.147 315.03200000000004 900.709 439.462 892.053 553.5889999999999 831.133 669.3009999999999 875.257 774.909 919.692 881.261 1038.46 928.7909999999999 1132.815 994.99 1231.437 1064.183 1319.555 1173.763 1440 1171.13' fill='white'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1000'%3e%3crect width='1440' height='517' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e')"}}
                         item xs={4} sm={4} md={3.5} lg={2.5} xl={2} display={"flex"} justifyContent={"center"} alignItems={"start"}>
                         <CustomAnimatedComponent variants={animationTextRightToLeft} custom={1}>
-                            <img src={university.image} style={{borderRadius: 15}} width={"100%"}/>
+                            <img src={image} style={{borderRadius: 15}} width={"100%"}/>
                         </CustomAnimatedComponent>
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={8} lg={8} xl={8} display={"flex"} flexDirection={"column"} style={{padding: "20px 20px 50px 20px"}}>
                         <CustomAnimatedComponent variants={animationText} custom={1}>
                             <Typography variant={"h2"} fontFamily={"Inter"} fontWeight={"bold"}
-                                        style={{color: "#2d3e4a", marginBottom: 0}}>De Montfort University</Typography>
+                                        style={{color: "#2d3e4a", marginBottom: 0}}>{university.name}</Typography>
                         </CustomAnimatedComponent>
                         <CustomAnimatedComponent variants={animationText} custom={2}>
                             <Typography variant={"h5"} fontFamily={"Inter"}
-                                        style={{color: "rgb(103, 119, 136)", marginTop: 20, fontSize: 20}}>De Montfort
-                                University Leicester (DMU) is a public university in the city of Leicester, England. It
-                                was established in accordance with the Further and Higher Education Act in 1992 as a
-                                degree awarding body. The name De Montfort University was taken from Simon de Montfort,
-                                a 13th-century Earl of Leicester credited with establishing the first Parliament of
-                                England in 1265.</Typography>
+                                        style={{color: "rgb(103, 119, 136)", marginTop: 20, fontSize: 20}}>{university.description}</Typography>
                         </CustomAnimatedComponent>
                         <Grid container flexDirection={"row"} xs={12}
                               style={{marginTop: 30}}>
@@ -173,41 +207,31 @@ function UniversityDetails(props) {
                             </Grid>
 
                             <Grid container item xs={12} sm={"auto"} md={"auto"} lg={"auto"} xl={"auto"} display={"flex"} flexDirection={"row"}>
-                                <Grid container item xs={"auto"} style={{marginRight:10}}>
-                                    <DoneOutlined fontSize={"medium"} style={{color:"rgb(0,224,140)"}}/>
-                                    <Typography variant={"h4"} fontFamily={"Inter"}
-                                                style={{color: "#2d3e4a", marginBottom: 0,fontSize:20}}>State</Typography>
-                                </Grid>
+                                    <Grid container item xs={"auto"} style={{marginRight:10}}>
+                                        <DoneOutlined fontSize={"medium"} style={{color:"rgb(0,224,140)"}}/>
+                                        <Typography variant={"h4"} fontFamily={"Inter"}
+                                                    style={{color: "#2d3e4a", marginBottom: 0,fontSize:20}}>{university.status}</Typography>
+                                    </Grid>
+                                <RenderIf isTrue={university.dormitory}>
                                 <Grid container item xs={"auto"} style={{marginRight:10}}>
                                     <DoneOutlined fontSize={"medium"} style={{color:"rgb(0,224,140)"}}/>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{color: "#2d3e4a", marginBottom: 0,fontSize:20}}>Dormitory</Typography>
                                 </Grid>
+                                </RenderIf>
+                                <RenderIf isTrue={university.military}>
                                 <Grid container item xs={"auto"} style={{marginRight:10}}>
                                     <DoneOutlined fontSize={"medium"} style={{color:"rgb(0,224,140)"}}/>
                                     <Typography variant={"h4"} fontFamily={"Inter"}
                                                 style={{color: "#2d3e4a", marginBottom: 0,fontSize:20}}>Military</Typography>
                                 </Grid>
-
+                                </RenderIf>
                             </Grid>
                         </Grid>
 
                         <Typography variant={"h5"} fontFamily={"Inter"}
                                     style={{color: "rgb(103, 119, 136)", marginTop: 20, fontSize: 20}}>
-                            De Montfort University Leicester (DMU) is a public university in the city of Leicester,
-                            England. It was established in accordance with the Further and Higher Education Act in 1992
-                            as a degree awarding body. The name De Montfort University was taken from Simon de Montfort,
-                            a 13th-century Earl of Leicester credited with establishing the first Parliament of England
-                            in 1265.
-
-                            De Montfort University has approximately 27,000 full and part-time students, 3,240 staff and
-                            an annual turnover in the region of £168 million.[1] The university is organised into four
-                            faculties: Art, Design, and Humanities (ADH); Business and Law (BAL); Health and Life
-                            Sciences (H&LS); and Computing, Engineering and Media (CEM). It is a Sustainable Development
-                            Hub, focusing on Peace, Justice and Strong Institutions, an initiative by the United Nations
-                            launched in 2018. The Department of Education awarded university a Gold rating in the 2017
-                            Teaching Excellence Framework. It is a member of the Association of Commonwealth
-                            Universities.
+                            {university.description}
                         </Typography>
 
                        <Grid item container display={"flex"} flexDirection={"row"} style={{marginTop:20, marginBottom:35}}>

@@ -11,13 +11,41 @@
 }
 
 .custom_active_link {
-  border-bottom: 3px solid rgb(131, 0, 184);
+  border-bottom: 3px solid #7635dc;
   padding-top: 2px;
   padding-bottom: 2px;
   margin-left: 8px;
   margin-right: 8px;
   //border-end-end-radius: 18px;
 }
+
+.custom_menu_link {
+  padding: 10px 20px 10px 20px;
+  border-bottom: 3px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  color: rgb(45, 62, 74);
+  &:hover {
+    background: rgba(85, 105, 255, 0.1);
+    color: rgb(85, 105, 255);
+  }
+}
+
+//.custom_menu_active_link {
+//  padding: 10px 20px 10px 20px;
+//  border-bottom: 3px solid white;
+//  border-radius: 10px;
+//  cursor: pointer;
+//  font-weight: 700;
+//  color: rgb(45, 62, 74);
+//  border-left:3px solid #44b700;
+//  &:hover {
+//    background: rgba(85, 105, 255, 0.1);
+//    color: rgb(85, 105, 255);
+//  }
+//}
+
 
 
 #footer_link{
@@ -34,6 +62,8 @@
 #social_facebook{
   color:#AEB4BE;
   margin-left: 20px;
+  font-size:30px;
+  cursor: pointer;
   &:hover {
     color: #006ebe;
   }
@@ -42,6 +72,8 @@
 #social_twitter{
   color:#AEB4BE;
   margin-left: 20px;
+  font-size:30px;
+  cursor: pointer;
   &:hover {
     color: #0095FF;
   }
@@ -50,6 +82,8 @@
 #social_github{
   color:#AEB4BE;
   margin-left: 20px;
+  font-size:30px;
+  cursor: pointer;
   &:hover {
     color: #ff6100;
   }
@@ -58,6 +92,8 @@
 #social_youtube{
   color:#AEB4BE;
   margin-left: 20px;
+  font-size:30px;
+  cursor: pointer;
   &:hover {
     color: #fd0001;
   }

@@ -13,15 +13,19 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {ReactComponent as Logo} from '../../images/Group 58.svg';
-import {ClickAwayListener, Container, Divider, Grid, ListItemIcon, useScrollTrigger} from "@mui/material";
+import {Container, Divider, Grid, useScrollTrigger} from "@mui/material";
 import PropTypes from "prop-types";
 import useAuth from "../../AuthConfig/useAuth";
 import Button from "@mui/material/Button";
 import {Link, useNavigate} from "react-router-dom";
 import CustomLink from "../links/CustomLink";
 import Avatar from "@mui/material/Avatar";
-import {Logout, PersonAdd, Settings} from "@mui/icons-material";
+import {Block, Logout, School} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
+import CustomMenuLink from "../links/CustomMenuLink";
+import {API_BASE} from "../../Constants/Constants";
+import {default as axios} from "axios";
+import {useEffect} from "react";
 
 
 const Search = styled('div')(({theme}) => ({
@@ -37,6 +41,35 @@ const Search = styled('div')(({theme}) => ({
     [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(3),
         width: 'auto',
+    },
+}));
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        backgroundColor: '#44b700',
+        color: '#44b700',
+        boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+        '&::after': {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            borderRadius: '50%',
+            animation: 'ripple 1.2s infinite ease-in-out',
+            border: '1px solid currentColor',
+            content: '""',
+        },
+    },
+    '@keyframes ripple': {
+        '0%': {
+            transform: 'scale(.8)',
+            opacity: 1,
+        },
+        '100%': {
+            transform: 'scale(2.4)',
+            opacity: 0,
+        },
     },
 }));
 
@@ -95,6 +128,7 @@ HideOnScroll.propTypes = {
 
 export function Headers() {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [avatar, setAvatar] = React.useState('');
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
     const auth = useAuth();
@@ -128,6 +162,16 @@ export function Headers() {
     const handleClose = () => {
         setAnchor(null);
     };
+
+    const [menu, setMenu] = React.useState(null);
+    const openMenu = Boolean(menu);
+    const handleClickMenu = (event) => {
+        setMenu(event.currentTarget);
+    };
+    const handleCloseMenu = () => {
+        setMenu(null);
+    };
+
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -205,253 +249,439 @@ export function Headers() {
 
     return (
         <>
-        <HideOnScroll>
-            <AppBar position={"sticky"} color={"inherit"}>
-                <Container maxWidth={"xl"}>
-                    <Toolbar style={{justifyContent:"space-between"}}>
-                        {/*<IconButton*/}
-                        {/*    size="large"*/}
-                        {/*    edge="start"*/}
-                        {/*    style={{color:"rgb(34, 51, 84)"}}*/}
-                        {/*    aria-label="open drawer"*/}
-                        {/*    sx={{ mr: 2 }}*/}
-                        {/*>*/}
-                        {/*    <MenuIcon />*/}
-                        {/*</IconButton>*/}
-                        {/*<img src={logo} width={80}/>*/}
+            <HideOnScroll>
+                <AppBar position={"sticky"} color={"inherit"}>
+                    <Container maxWidth={"xl"}>
+                        <Toolbar style={{justifyContent: "space-between"}}>
+                            {/*<IconButton*/}
+                            {/*    size="large"*/}
+                            {/*    edge="start"*/}
+                            {/*    style={{color:"rgb(34, 51, 84)"}}*/}
+                            {/*    aria-label="open drawer"*/}
+                            {/*    sx={{ mr: 2 }}*/}
+                            {/*>*/}
+                            {/*    <MenuIcon />*/}
+                            {/*</IconButton>*/}
+                            {/*<img src={logo} width={80}/>*/}
 
-                        <Box display={"flex"} flexDirection={"row"} sx={{flexGrow:1}}>
-                            <Link to={"/"}><Logo/></Link>
-                                    <Link to={"/"}
-                                          style={{
-                                              color: "rgb(34, 51, 84)",
-                                              marginLeft: 5,
-                                              fontWeight: 700,
-                                              marginTop: 7,
-                                              fontFamily: "Inter",
-                                              fontSize: 21,
-                                              textDecoration:"none",
-                                              alignSelf:"center"
-                                          }}>
+                            <Box display={"flex"} flexDirection={"row"} sx={{flexGrow: 1}}>
+                                <Link to={"/"}><Logo/></Link>
+                                <Link to={"/"}
+                                      style={{
+                                          color: "rgb(34, 51, 84)",
+                                          marginLeft: 5,
+                                          fontWeight: 700,
+                                          marginTop: 7,
+                                          fontFamily: "Inter",
+                                          fontSize: 21,
+                                          textDecoration: "none",
+                                          alignSelf: "center"
+                                      }}>
 
-                                        True Vocation</Link>
+                                    True Vocation</Link>
 
 
-                            <Grid container item sx={{paddingTop:1, marginLeft:5}} xs={6}
-                                  display={"flex"} flexDirection={"row"} justifyContent={"flex-start"} alignItems={"center"}>
-                                <CustomLink item to={"/"} style={{color:"white",fontFamily:"Inter"}}>Home</CustomLink>
-                                <CustomLink item to={"/ацуацу"} style={{color:"white",fontFamily:"Inter"}}>Subjects</CustomLink>
-                                {/*<div onClick={handleClick} style={{color:"rgb(103, 119, 136)",fontFamily:"Inter",cursor:"pointer"}}>Subjects</div>*/}
+                                <Grid container item sx={{paddingTop: 1, marginLeft: 5}} xs={6}
+                                      display={"flex"} flexDirection={"row"} justifyContent={"flex-start"}
+                                      alignItems={"center"}>
+                                    <CustomLink item to={"/"}
+                                                style={{color: "white", fontFamily: "Inter"}}>Home</CustomLink>
+                                    {/*<CustomLink item to={"/ацуацу"} style={{color:"white",fontFamily:"Inter"}}>Subjects</CustomLink>*/}
+                                    <div className="custom_link" onClick={handleClick} style={{
+                                        fontFamily: "Inter",
+                                        cursor: "pointer",
+                                        textDecoration: "none",
+                                        fontSize: 15,
+                                        color: "rgb(103, 119, 136)",
+                                    }}>Subjects
+                                    </div>
 
-                                <CustomLink to={"/tests"} style={{color:"#08262C",fontFamily:"Inter"}}>Tests</CustomLink>
-                                <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>Professions</CustomLink>
+                                    <CustomLink to={"/tests"}
+                                                style={{color: "#08262C", fontFamily: "Inter"}}>Tests</CustomLink>
+                                    <CustomLink to={"/fwefwe"}
+                                                style={{color: "#08262C", fontFamily: "Inter"}}>Professions</CustomLink>
+                                    <CustomLink to={"/posts"}
+                                                style={{color: "#08262C", fontFamily: "Inter"}}>Posts</CustomLink>
+                                </Grid>
+                            </Box>
+
+
+                            {/*<Box flexDirection={"column"}>*/}
+                            {/*    <Grid container item justifyContent={"center"}>*/}
+                            {/*        <Logo />*/}
+                            {/*    </Grid>*/}
+                            {/*    <Grid container item flexDirection={"column"} justifyContent={"center"}>*/}
+                            {/*        <Typography*/}
+                            {/*            variant="h6"*/}
+                            {/*            noWrap*/}
+                            {/*            component="p"*/}
+                            {/*            sx={{ display: { xs: 'none', sm: 'block' } }}*/}
+                            {/*            style={{color:"rgb(34, 51, 84)",fontWeight:700, fontFamily:"Inter",fontSize:18, margin:0, padding:0}}*/}
+                            {/*            alignSelf={"center"}*/}
+                            {/*        >*/}
+                            {/*            True*/}
+                            {/*        </Typography>*/}
+                            {/*        <Typography*/}
+                            {/*            variant="body1"*/}
+                            {/*            noWrap*/}
+                            {/*            component="span"*/}
+                            {/*            sx={{ display: { xs: 'none', sm: 'block' } }}*/}
+                            {/*            style={{color:"rgb(34, 51, 84)",fontWeight:700, fontFamily:"Inter",fontSize:18, margin:0, padding:0}}*/}
+                            {/*            alignSelf={"center"}*/}
+                            {/*        >*/}
+                            {/*            Vocation*/}
+                            {/*        </Typography>*/}
+                            {/*    </Grid>*/}
+                            {/*</Box>*/}
+
+
+                            {/*<Search style={{backgroundColor:"rgba(110, 117, 159, 0.1)"}}>*/}
+                            {/*    <SearchIconWrapper>*/}
+                            {/*        <SearchIcon style={{color:"rgb(34, 51, 84)"}} />*/}
+                            {/*    </SearchIconWrapper>*/}
+                            {/*    <StyledInputBase*/}
+                            {/*        style={{color:"rgb(34, 51, 84)"}}*/}
+                            {/*        placeholder="Search…"*/}
+                            {/*        inputProps={{ 'aria-label': 'search' }}*/}
+                            {/*    />*/}
+                            {/*</Search>*/}
+
+                            {auth.user != null ?
+                                <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+                                    {/*<IconButton size="large" aria-label="show 4 new mails" color="inherit">*/}
+                                    {/*    <Badge badgeContent={4} color="error">*/}
+                                    {/*        <MailIcon style={{color: "rgb(34, 51, 84)"}}/>*/}
+                                    {/*    </Badge>*/}
+                                    {/*</IconButton>*/}
+                                    {/*<IconButton*/}
+                                    {/*    size="large"*/}
+                                    {/*    aria-label="show 17 new notifications"*/}
+                                    {/*    color="inherit"*/}
+                                    {/*>*/}
+                                    {/*    <Badge badgeContent={17} color="error">*/}
+                                    {/*        <NotificationsIcon style={{color: "rgb(34, 51, 84)"}}/>*/}
+                                    {/*    </Badge>*/}
+                                    {/*</IconButton>*/}
+                                    <IconButton
+                                        size="large"
+                                        edge="end"
+                                        aria-label="account of current user"
+                                        aria-controls={menuId}
+                                        aria-haspopup="true"
+                                        onClick={handleClickMenu}
+                                        color="inherit"
+                                    >
+                                        {/*<AccountCircle style={{color: "rgb(34, 51, 84)"}}/>*/}
+                                        <StyledBadge
+                                            overlap="circular"
+                                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                            variant="dot"
+                                        >
+                                        <Avatar
+                                            alt="Remy Sharp"
+                                            variant={"circular"}
+                                            style={{ width: 40, height: 40}}
+                                            src={auth.avatar != null ? auth.avatar : null}
+                                        />
+                                        </StyledBadge>
+                                    </IconButton>
+                                </Box>
+                                :
+                                <Box display={"flex"} flexDirection={"row"} justifyContent={"space-between"}
+                                     width={185}>
+                                    <Button variant={"outlined"} onClick={() => navigate('/sign-in')}
+                                            id={'primary_button_outlined'}>
+                                        {/*<Link to={"/sign-in"} style={{textTransform:"initial",textDecoration:"none", color: "white"}}>Sign in</Link>*/}
+                                        Sign in
+                                    </Button>
+                                    <Button variant={"contained"} onClick={() => navigate('/sign-up')}
+                                            id={'primary_button'}>
+                                        {/*<Link to={"/sign-up"} style={{textTransform:"initial",textDecoration:"none", color: "white"}}>Sign up</Link>*/}
+                                        Sign up
+                                    </Button>
+                                </Box>
+                            }
+
+
+                            {/*<Box sx={{display: {xs: 'flex', md: 'none'}}}>*/}
+                            {/*    <IconButton*/}
+                            {/*        size="large"*/}
+                            {/*        aria-label="show more"*/}
+                            {/*        aria-controls={mobileMenuId}*/}
+                            {/*        aria-haspopup="true"*/}
+                            {/*        onClick={handleMobileMenuOpen}*/}
+                            {/*        color="inherit"*/}
+                            {/*    >*/}
+                            {/*        <MoreIcon/>*/}
+                            {/*    </IconButton>*/}
+                            {/*</Box>*/}
+                        </Toolbar>
+                    </Container>
+                </AppBar>
+            </HideOnScroll>
+            <Menu
+                anchorEl={anchor}
+                variant={"menu"}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                onMouseLeave={handleClose}
+                PaperProps={{
+                    elevation: 0,
+                    sx: {
+                        // overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        //borderBottom: "3px solid rgb(55, 125, 255)",
+                        padding: "25px 15px 10px 25px",
+                        width: 550,
+                        borderRadius: 6,
+                        mt: 1.5,
+                        '& .MuiAvatar-root': {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1,
+                        },
+                        '&:before': {
+                            content: '""',
+                            display: 'block',
+                            position: 'absolute',
+                            top: 0,
+                            left: 10,
+                            width: 10,
+                            height: 10,
+                            bgcolor: 'background.paper',
+                            transform: 'translateY(-50%) rotate(45deg)',
+                            zIndex: 0,
+                        },
+                    },
+                }}
+                transformOrigin={{horizontal: 'left', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+            >
+                <Grid container xs={12} display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
+                    <Grid item xs={3.5} display={"flex"} flexDirection={"column"}>
+                        <Grid item marginBottom={5} container justifyContent={"center"}>
+                            <Grid item container flexDirection={"row"} marginBottom={1}>
+                                <Avatar variant={"square"} style={{
+                                    width: 26, height: 26, backgroundColor: "rgb(111, 53, 186)", borderRadius: 8
+                                }}>
+                                    <School fontSize={"small"}/>
+                                </Avatar>
+                                <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
+                                            style={{
+                                                color: "rgb(52, 71, 103)",
+                                                fontWeight: "bold",
+                                                fontSize: 14,
+                                                letterSpacing: 0,
+                                                alignSelf: "center",
+                                            }}>
+                                    True Vocation</Typography>
                             </Grid>
-                        </Box>
 
-
-
-                        {/*<Box flexDirection={"column"}>*/}
-                        {/*    <Grid container item justifyContent={"center"}>*/}
-                        {/*        <Logo />*/}
-                        {/*    </Grid>*/}
-                        {/*    <Grid container item flexDirection={"column"} justifyContent={"center"}>*/}
-                        {/*        <Typography*/}
-                        {/*            variant="h6"*/}
-                        {/*            noWrap*/}
-                        {/*            component="p"*/}
-                        {/*            sx={{ display: { xs: 'none', sm: 'block' } }}*/}
-                        {/*            style={{color:"rgb(34, 51, 84)",fontWeight:700, fontFamily:"Inter",fontSize:18, margin:0, padding:0}}*/}
-                        {/*            alignSelf={"center"}*/}
-                        {/*        >*/}
-                        {/*            True*/}
-                        {/*        </Typography>*/}
-                        {/*        <Typography*/}
-                        {/*            variant="body1"*/}
-                        {/*            noWrap*/}
-                        {/*            component="span"*/}
-                        {/*            sx={{ display: { xs: 'none', sm: 'block' } }}*/}
-                        {/*            style={{color:"rgb(34, 51, 84)",fontWeight:700, fontFamily:"Inter",fontSize:18, margin:0, padding:0}}*/}
-                        {/*            alignSelf={"center"}*/}
-                        {/*        >*/}
-                        {/*            Vocation*/}
-                        {/*        </Typography>*/}
-                        {/*    </Grid>*/}
-                        {/*</Box>*/}
-
-
-                        {/*<Search style={{backgroundColor:"rgba(110, 117, 159, 0.1)"}}>*/}
-                        {/*    <SearchIconWrapper>*/}
-                        {/*        <SearchIcon style={{color:"rgb(34, 51, 84)"}} />*/}
-                        {/*    </SearchIconWrapper>*/}
-                        {/*    <StyledInputBase*/}
-                        {/*        style={{color:"rgb(34, 51, 84)"}}*/}
-                        {/*        placeholder="Search…"*/}
-                        {/*        inputProps={{ 'aria-label': 'search' }}*/}
-                        {/*    />*/}
-                        {/*</Search>*/}
-
-                        {auth.user != null ?
-                            <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-                                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                                    <Badge badgeContent={4} color="error">
-                                        <MailIcon style={{color: "rgb(34, 51, 84)"}}/>
-                                    </Badge>
-                                </IconButton>
-                                <IconButton
-                                    size="large"
-                                    aria-label="show 17 new notifications"
-                                    color="inherit"
-                                >
-                                    <Badge badgeContent={17} color="error">
-                                        <NotificationsIcon style={{color: "rgb(34, 51, 84)"}}/>
-                                    </Badge>
-                                </IconButton>
-                                <IconButton
-                                    size="large"
-                                    edge="end"
-                                    aria-label="account of current user"
-                                    aria-controls={menuId}
-                                    aria-haspopup="true"
-                                    onClick={handleProfileMenuOpen}
-                                    color="inherit"
-                                >
-                                    <AccountCircle style={{color: "rgb(34, 51, 84)"}}/>
-                                </IconButton>
-                            </Box>
-                            :
-                            <Box display={"flex"} flexDirection={"row"} justifyContent={"space-between"} width={185}>
-                                <Button variant={"outlined"} onClick={() => navigate('/sign-in')}
-                                        id={'primary_button_outlined'}>
-                                    {/*<Link to={"/sign-in"} style={{textTransform:"initial",textDecoration:"none", color: "white"}}>Sign in</Link>*/}
-                                    Sign in
-                                </Button>
-                                <Button variant={"contained"} onClick={() => navigate('/sign-up')} id={'primary_button'}>
-                                    {/*<Link to={"/sign-up"} style={{textTransform:"initial",textDecoration:"none", color: "white"}}>Sign up</Link>*/}
-                                    Sign up
-                                </Button>
-                            </Box>
-                        }
-
-
-                        {/*<Box sx={{display: {xs: 'flex', md: 'none'}}}>*/}
-                        {/*    <IconButton*/}
-                        {/*        size="large"*/}
-                        {/*        aria-label="show more"*/}
-                        {/*        aria-controls={mobileMenuId}*/}
-                        {/*        aria-haspopup="true"*/}
-                        {/*        onClick={handleMobileMenuOpen}*/}
-                        {/*        color="inherit"*/}
-                        {/*    >*/}
-                        {/*        <MoreIcon/>*/}
-                        {/*    </IconButton>*/}
-                        {/*</Box>*/}
-                    </Toolbar>
-                </Container>
-            </AppBar>
-        </HideOnScroll>
-    <Menu
-        anchorEl={anchor}
-        variant={"menu"}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-            elevation: 0,
-            sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                //borderBottom: "3px solid rgb(55, 125, 255)",
-                padding:"25px 10px 10px 30px",
-                width:550,
-                mt: 1.5,
-                '& .MuiAvatar-root': {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                },
-                '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    left: 25,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0,
-                },
-            },
-        }}
-        transformOrigin={{ horizontal: 'left', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-    >
-        <Grid container xs={12} display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
-            <Grid item xs={3} display={"flex"} flexDirection={"column"}>
-                <Grid item marginBottom={5}>
-                    <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
-                                style={{
-                                    color: "rgb(52, 71, 103)",
-                                    fontWeight: "bold",
-                                    fontSize: 14,
-                                    marginBottom:10,
-                                    letterSpacing:0
+                            <CustomLink to={"/fwef"} style={{
+                                color: "#08262C",
+                                fontFamily: "Inter",
+                                textAlign: "center",
+                                marginBottom: 20
+                            }}>Specialities</CustomLink>
+                            <CustomLink to={"/fwefwe"}
+                                        style={{color: "#08262C", fontFamily: "Inter"}}>Professions</CustomLink>
+                        </Grid>
+                        <Grid item container justifyContent={"center"}>
+                            <Grid item container flexDirection={"row"} marginBottom={1}>
+                                <Avatar variant={"square"} style={{
+                                    width: 26, height: 26, backgroundColor: "rgb(111, 53, 186)", borderRadius: 8
                                 }}>
-                        True Vocation</Typography>
-                    <CustomLink to={"/fwef"} style={{color:"#08262C",fontFamily:"Inter"}}>Specialities</CustomLink>
-                    <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>Professions</CustomLink>
-                </Grid>
-                <Grid item>
-                    <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
-                                style={{
-                                    color: "rgb(52, 71, 103)",
-                                    fontWeight: "bold",
-                                    fontSize: 14,
-                                    marginBottom:10,
-                                    letterSpacing:0
-                                }}>
-                        True Vocation</Typography>
-                    <CustomLink to={"/fwef"} style={{color:"#08262C",fontFamily:"Inter"}}>Specialities</CustomLink>
-                    <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>Professions</CustomLink>
-                </Grid>
-            </Grid>
-            <Grid item xs={1} display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-                <Divider orientation={"vertical"} variant={"fullWidth"} style={{height:"100%"}} />
-            </Grid>
+                                    <School fontSize={"small"}/>
+                                </Avatar>
+                                <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
+                                            style={{
+                                                color: "rgb(52, 71, 103)",
+                                                fontWeight: "bold",
+                                                fontSize: 14,
+                                                letterSpacing: 0,
+                                                alignSelf: "center"
+                                            }}>
+                                    True Vocation</Typography>
+                            </Grid>
 
-            <Grid  item xs={3} display={"flex"} flexDirection={"column"} >
-                <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
-                            style={{
-                                color: "rgb(52, 71, 103)",
-                                fontWeight: "bold",
-                                fontSize: 14,
-                                marginBottom:10,
-                                letterSpacing:0
+                            <CustomLink to={"/fwef"} style={{
+                                color: "#08262C",
+                                fontFamily: "Inter",
+                                textAlign: "center"
+                            }}>Specialities</CustomLink>
+                            <CustomLink to={"/fwefwe"}
+                                        style={{color: "#08262C", fontFamily: "Inter"}}>Professions</CustomLink>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={0.5} display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+                        <Divider orientation={"vertical"} variant={"fullWidth"} style={{height: "100%"}}/>
+                    </Grid>
+
+                    <Grid item xs={3.5}>
+                        <Grid item container justifyContent={"center"}>
+                            <Grid item container flexDirection={"row"} marginBottom={1}>
+                                <Avatar variant={"square"} style={{
+                                    width: 26, height: 26, backgroundColor: "rgb(111, 53, 186)", borderRadius: 8
+                                }}>
+                                    <School fontSize={"small"}/>
+                                </Avatar>
+                                <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
+                                            style={{
+                                                color: "rgb(52, 71, 103)",
+                                                fontWeight: "bold",
+                                                fontSize: 14,
+                                                letterSpacing: 0,
+                                                alignSelf: "center"
+                                            }}>
+                                    True Vocation</Typography>
+                            </Grid>
+
+                            <CustomLink to={"/fwef"} style={{
+                                color: "#08262C",
+                                fontFamily: "Inter",
+                                textAlign: "center"
+                            }}>Specialities</CustomLink>
+                            <CustomLink to={"/fwefwe"}
+                                        style={{color: "#08262C", fontFamily: "Inter"}}>Professions</CustomLink>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={0.5} display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+                        <Divider orientation={"vertical"} variant={"fullWidth"} style={{height: "100%"}}/>
+                    </Grid>
+                    <Grid item xs={3} display={"flex"} flexDirection={"column"}>
+                        <Grid item container justifyContent={"center"}>
+                            <Grid item container flexDirection={"row"} marginBottom={1}>
+                                <Avatar variant={"square"} style={{
+                                    width: 26, height: 26, backgroundColor: "rgb(111, 53, 186)", borderRadius: 8
+                                }}>
+                                    <School fontSize={"small"}/>
+                                </Avatar>
+                                <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
+                                            style={{
+                                                color: "rgb(52, 71, 103)",
+                                                fontWeight: "bold",
+                                                fontSize: 14,
+                                                letterSpacing: 0,
+                                                alignSelf: "center"
+                                            }}>
+                                    True Vocation</Typography>
+                            </Grid>
+
+                            <CustomLink to={"/fwef"} style={{
+                                color: "#08262C",
+                                fontFamily: "Inter",
+                                textAlign: "center"
+                            }}>Specialities</CustomLink>
+                            <CustomLink to={"/fwefwe"}
+                                        style={{color: "#08262C", fontFamily: "Inter"}}>Professions</CustomLink>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Menu>
+
+            <Menu
+                anchorEl={menu}
+                variant={"menu"}
+                id="account-menu"
+                open={openMenu}
+                onClose={handleCloseMenu}
+                onClick={handleCloseMenu}
+                MenuListProps={{
+                    sx: {
+                        padding: 0
+                    }
+                }}
+                PaperProps={{
+                    elevation: 0,
+                    sx: {
+                        // overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        //borderBottom: "3px solid rgb(55, 125, 255)",
+                        width: 350,
+                        padding: 0,
+                        borderRadius: 3,
+                        '& .MuiAvatar-root': {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1,
+                        },
+                        '&:before': {
+                            content: '""',
+                            display: 'block',
+                            position: 'absolute',
+                            top: 0,
+                            left: 10,
+                            width: 10,
+                            height: 10,
+                            bgcolor: 'background.paper',
+                            transform: 'translateY(-50%) rotate(45deg)',
+                            zIndex: 0,
+                        },
+                    },
+                }}
+                transformOrigin={{horizontal: 'right', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+
+            >
+
+                <Grid container xs={12} display={"flex"} flexDirection={"column"}>
+                    <Grid container item xs={12} display={"flex"} flexDirection={"row"}
+                          style={{padding: "15px 25px 20px 25px", backgroundColor: "rgba(34, 51, 84, 0.08)",
+                          marginBottom:10}}
+                    >
+                        <Avatar
+                            alt="Remy Sharp"
+                            variant={"rounded"}
+                            style={{borderRadius: 8, width: 50, height: 50}}
+                            src={auth.avatar != null ? auth.avatar : null}
+                            sx={{width: "100%", height: "100%"}}/>
+
+
+                        <Grid style={{marginLeft:10}} item xs={"auto"} display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>
+                            <Typography style={{
+                                fontFamily: "Inter",
+                                fontSize: "17px",
+                                fontWeight: "700",
+                                color: "rgb(45, 62, 74)",
                             }}>
-                    True Vocation</Typography>
-                <CustomLink to={"/fwef"} style={{color:"#08262C",fontFamily:"Inter"}}>qweqwe</CustomLink>
-                <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>qweqwe</CustomLink>
-            </Grid>
-            <Grid item xs={1} display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-                <Divider orientation={"vertical"} variant={"fullWidth"} style={{height:"100%"}} />
-            </Grid>
-            <Grid  item xs={3} display={"flex"} flexDirection={"column"}>
-                <Typography variant={"h5"} fontFamily={"Inter"} textAlign={"start"}
-                            style={{
-                                color: "rgb(52, 71, 103)",
-                                fontWeight: "bold",
-                                fontSize: 14,
-                                marginBottom:10,
-                                letterSpacing:0
+                                {auth.user !== null ?
+                                    auth.user.firstname === null || auth.user.lastName == null ?
+                                        auth.user.login :
+                                        auth.user.firstName+" "+auth.user.lastName
+                                    : ''}
+                            </Typography>
+
+                            <Typography style={{
+                                fontFamily: "Inter",
+                                fontSize: "15px",
+                                fontWeight: "400",
+                                color: "rgb(103, 119, 136)"
                             }}>
-                    True Vocation</Typography>
-                <CustomLink to={"/Subjects"} style={{color:"#08262C",fontFamily:"Inter"}}>Subjects</CustomLink>
-                <CustomLink to={"/fwefwe"} style={{color:"#08262C",fontFamily:"Inter"}}>123123</CustomLink>
-            </Grid>
-        </Grid>
-    </Menu>
-    </>
+                                {auth.user != null ? auth.user.email : null}
+                            </Typography>
+                        </Grid>
+
+                    </Grid>
+                    <Grid container item xs={12} display={"flex"} flexDirection={"column"}
+                    style={{padding:"10px 18px 14px 18px"}}>
+                        <CustomMenuLink to={"/profile"}>My Account</CustomMenuLink>
+                        <CustomMenuLink to={"/wefwe"}>Settings</CustomMenuLink>
+                    </Grid>
+                    <Divider style={{height:"1px", background:"rgba(34, 51, 84, 0.1)", border:0}}/>
+                    <Grid container item xs={12} display={"flex"} flexDirection={"column"}
+                          style={{padding:"5px 10px"}}>
+                        <Button onClick={() => {
+                            auth.signout(() => navigate("/"));
+                        }} size={"large"} startIcon={<Logout/>} variant={"text"}  id={"menu_text_button"}>Sign out</Button>
+                    </Grid>
+                </Grid>
+
+
+            </Menu>
+        </>
     );
 }

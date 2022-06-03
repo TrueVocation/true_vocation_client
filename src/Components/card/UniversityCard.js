@@ -1,16 +1,48 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import {Checkbox, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {Bookmark, BookmarkBorderOutlined, LocationCity, LocationOnOutlined} from "@mui/icons-material";
+import {
+    AccountBalanceOutlined, AssessmentOutlined,
+    Bookmark,
+    BookmarkBorderOutlined,
+    ForumRounded, GroupsOutlined,
+    HomeOutlined,
+    LocationCity,
+    LocationOnOutlined
+} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import {useNavigate} from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import {API_BASE} from "../../Constants/Constants";
+import {default as axios} from "axios";
+import TextTruncate from 'react-text-truncate';
 
 function UniversityCard(props) {
     const {university} = props;
+    const [image, setImage] = useState('');
 
     const navigate = useNavigate();
+
+    async function fetchLogo() {
+        try {
+            const url = new URL(`${API_BASE}/universities/viewPicture`);
+            url.searchParams.set('url', university.logo);
+            const response = await axios.get(url.toString());
+            if (response.status === 200) {
+                const contentType = response.headers['content-type']
+                setImage(`data:${contentType};base64,` + response.data);
+                console.log(response.data)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(()=>{
+        fetchLogo();
+    },[])
 
     return (
         <Paper variant={"elevation"} elevation={0} style={{
@@ -24,7 +56,7 @@ function UniversityCard(props) {
                       style={{borderBottom: "1px solid #E0E0E0", paddingBottom: 5}}>
                     <Grid item xs={4} alignSelf={"center"}>
                         <img style={{width: "100%", height: "auto", borderRadius: 8}}
-                             src={university.image}/>
+                             src={image}/>
                     </Grid>
                     <Grid item xs={8} paddingLeft={1} alignSelf={"center"}>
                         <Typography variant={"h5"} fontFamily={"Inter"}
@@ -39,7 +71,12 @@ function UniversityCard(props) {
                     <Grid item xs={12} marginBottom={1}>
                         <Typography variant={"h5"} fontFamily={"Inter"}
                                     style={{color: "rgb(45, 62, 74)", fontSize: 15}}>
-                            {university.description}
+                            <TextTruncate
+                                line={3}
+                                element="span"
+                                truncateText="…"
+                                text={university.description}
+                            />
                         </Typography>
                     </Grid>
                     {/*<Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>*/}
@@ -49,10 +86,26 @@ function UniversityCard(props) {
                     {/*        style={{color: "rgb(45, 62, 74)"}}>{university.city}</strong></Typography>*/}
                     {/*</Grid>*/}
                     <Grid item xs={12} display={"flex"} flexDirection={"row"} marginBottom={1}>
-                        <LocationOnOutlined/>
-                        <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"end"}
-                                    style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 3}}>Address: <strong
-                            style={{color: "rgb(45, 62, 74)"}}>{university.address}</strong></Typography>
+                        <Grid item xs={12} display={"flex"} flexDirection={"row"}>
+                            <LocationOnOutlined style={{color:"rgb(99, 115, 129)",alignSelf:"center",fontSize:25}}/>
+                            <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"center"}
+                                        style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 10}}>{university.address}</Typography>
+                        </Grid>
+
+
+                    </Grid>
+                    <Grid item xs={12} display={"flex"} flexDirection={"row"}>
+                        <Grid item xs={6} display={"flex"} flexDirection={"row"}>
+                            <GroupsOutlined style={{color:"rgb(99, 115, 129)",alignSelf:"center",fontSize:25}}/>
+                            <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"center"}
+                                        style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft:10}}>Military</Typography>
+                        </Grid>
+                        <Grid item xs={6} display={"flex"} flexDirection={"row"}>
+                            <HomeOutlined style={{color:"rgb(99, 115, 129)",alignSelf:"center",fontSize:25}} alignSelf={"center"}/>
+                            <Typography variant={"h5"} fontFamily={"Inter"} alignSelf={"center"}
+                                        style={{color: "rgb(103, 119, 136)", fontSize: 15, marginLeft: 10}}>Dormitory</Typography>
+                        </Grid>
+
                     </Grid>
                 </Grid>
                 <Grid xs={12} item container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}
@@ -70,4 +123,4 @@ function UniversityCard(props) {
     );
 }
 
-export default UniversityCard;
+export default React.memo(UniversityCard);
