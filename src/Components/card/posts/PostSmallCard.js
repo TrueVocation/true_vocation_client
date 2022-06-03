@@ -12,43 +12,47 @@ function PostSmallCard({post}) {
     const [picture, setPicture] = useState('')
     const navigate = useNavigate();
 
-    async function fetchPicture() {
+    async function fetchPicture(post) {
         try {
             const url = new URL(`${API_BASE}/posts/viewPicture`);
             url.searchParams.set('url', post?.picture);
+
             const response = await axios.get(url.toString());
             if (response.status === 200) {
                 const contentType = response.headers['content-type']
                 setPicture(`data:${contentType};base64,` + response.data);
             }
         } catch (error) {
+            console.log(typeof post);
             console.error(error);
         }
     }
 
-    useEffect(()=>{
-        fetchPicture();
-    })
+    useEffect(() => {
+        if (post.picture !== undefined) {
+            fetchPicture(post);
+        }
+    }, [])
 
 
     return (
         <Paper id={"post_small_card"} variant={"elevation"} elevation={0} style={{
             borderRadius: 15,
             padding: "10px",
-            cursor:"pointer",
-            display:"flex",
-            justifyContent:"space-between"
-        }} onClick={()=>navigate(`/posts/${1}`)}>
+            cursor: "pointer",
+            display: "flex",
+            justifyContent: "space-between"
+        }} onClick={() => navigate(`/posts/${1}`)}>
             <Grid item xs={2} container display={"flex"} alignItems={"center"}>
                 <img style={{
                     width: "100%",
-                    height:"100%",
-                    borderRadius:15,
+                    height: "100%",
+                    borderRadius: 15,
                 }}
                      src={picture}/>
             </Grid>
             <Grid container item xs={9.8} display={"flex"} flexDirection={"column"} justifyContent={"space-between"}
-            style={{padding:5}}>
+                  style={{padding: 5}}>
                 <Grid item marginBottom={1}>
                     <Typography variant={"h3"} style={{
                         fontSize: 17,
@@ -73,7 +77,7 @@ function PostSmallCard({post}) {
                         fontSize: 14,
                         fontFamily: "Inter",
                         color: "rgb(103, 119, 136)",
-                        alignSelf:"end"
+                        alignSelf: "end"
                     }}>
                         {post?.createdDate}
                     </Typography>

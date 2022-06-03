@@ -8,12 +8,17 @@ import {useNavigate} from "react-router-dom";
 import {API_BASE} from "../../../Constants/Constants";
 import {default as axios} from "axios";
 import Chip from "@mui/material/Chip";
+import useAuth from "../../../AuthConfig/useAuth";
+import {RenderIf} from "../../RenderIf";
 
 function PostsCardVertical({post}) {
     const [picture, setPicture] = useState('')
     const navigate = useNavigate();
     const [isFavorite, setIsFavorite] = useState(false)
     const [isLiked, setIsLiked] = useState(false)
+    const [likeCount, setLikeCount] = useState(0)
+
+    const {user} = useAuth();
 
     async function fetchPicture() {
         try {
@@ -29,11 +34,50 @@ function PostsCardVertical({post}) {
         }
     }
 
+    async function userLike() {
+        try {
+            const url = new URL(`${API_BASE}/user-like`);
+            url.searchParams.set('userId', user?.id);
+            url.searchParams.set('postId', post?.id);
+            const response = await axios.post(url.toString());
+            if (response.status === 200) {
+                setIsLiked(prevState => !prevState)
+                setLikeCount(prevState => prevState-1)
+            }
+            else if (response.status === 201) {
+                setIsLiked(prevState => !prevState)
+                setLikeCount(prevState => prevState+1)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function userFavorite() {
+        try {
+            const url = new URL(`${API_BASE}/user-favorite`);
+            url.searchParams.set('userId', user?.id);
+            url.searchParams.set('postId', post?.id);
+            const response = await axios.post(url.toString());
+            if (response.status === 200) {
+                setIsFavorite(prevState => !prevState)
+            }
+            else if (response.status === 201) {
+                setIsFavorite(prevState => !prevState)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     useEffect(()=>{
-        fetchPicture();
-        setIsFavorite(post.favorite)
-        setIsLiked(post.liked)
-    })
+        if(post !== null) {
+            fetchPicture();
+            setIsFavorite(post.favorite)
+            setIsLiked(post.liked)
+            setLikeCount(post.likeCount)
+        }
+    },[post])
 
     return (
         <Paper variant={"elevation"} elevation={0} style={{
@@ -41,8 +85,7 @@ function PostsCardVertical({post}) {
             width:"100%",
             boxShadow: "rgb(140 152 164 / 25%) 0px 3px 6px 0px",
             padding: "0 0 0 0",
-            cursor:"pointer"
-        }} onClick={()=>navigate(`/posts/${1}`)}>
+        }} >
             <Grid>
                 {picture === '' ?
                     <Skeleton animation="wave" variant="rectangular" style={{
@@ -74,8 +117,9 @@ function PostsCardVertical({post}) {
                         fontSize: 25,
                         fontWeight: "bold",
                         fontFamily: "Inter",
-                        color: "#2d3e4a"
-                    }}>
+                        color: "#2d3e4a",
+                        cursor:"pointer"
+                    }} onClick={()=>navigate(`/posts/${post?.id}`)}>
                         {post?.title}
                     </Typography>
                     :
@@ -157,11 +201,13 @@ function PostsCardVertical({post}) {
                         <Grid item alignSelf={"center"}>
                             <Checkbox style={{padding: 0}}
                                       checked={isLiked}
+                                      onChange={userLike}
+                                      disabled={user == null}
                                       icon={<FavoriteBorder style={{fontSize: 32}}/>}
                                       checkedIcon={<Favorite style={{color: "#FF2052", fontSize: 32}}/>}
-                            />   256
+                            /> {likeCount}
 
-                            <IconButton><ModeCommentOutlined style={{fontSize:30}}/></IconButton>151
+                            <IconButton disabled={user == null}><ModeCommentOutlined style={{fontSize:30}}/></IconButton>151
                         </Grid>
                         :
                         <Skeleton animation="wave" variant="rectangular" style={{
@@ -173,25 +219,29 @@ function PostsCardVertical({post}) {
                             color: "#2d3e4a"
                         }}/>
                     }
-                    {post?.createdDate ?
+                    <RenderIf isTrue={user!=null}>
+                        {post?
 
-                        <Grid item alignSelf={"center"}>
-                            <Checkbox style={{padding: 0}}
-                                      checked={isFavorite}
-                                      icon={<BookmarkBorderOutlined style={{fontSize: 32}}/>}
-                                      checkedIcon={<Bookmark style={{color: "#FFC107", fontSize: 32}}/>}
-                            />
-                        </Grid>
-                        :
-                        <Skeleton animation="wave" variant="rectangular" style={{
-                            width:"15%",
-                            borderRadius:15,
-                            fontSize: 25,
-                            fontWeight: "600",
-                            fontFamily: "Inter",
-                            color: "#2d3e4a"
-                        }}/>
-                    }
+                            <Grid item alignSelf={"center"}>
+                                <Checkbox style={{padding: 0}}
+                                          checked={isFavorite}
+                                          onChange={userFavorite}
+                                          icon={<BookmarkBorderOutlined style={{fontSize: 32}}/>}
+                                          checkedIcon={<Bookmark style={{color: "#FFC107", fontSize: 32}}/>
+                                          }
+                                />
+                            </Grid>
+                            :
+                            <Skeleton animation="wave" variant="rectangular" style={{
+                                width:"15%",
+                                borderRadius:15,
+                                fontSize: 25,
+                                fontWeight: "600",
+                                fontFamily: "Inter",
+                                color: "#2d3e4a"
+                            }}/>
+                        }
+                    </RenderIf>
 
 
                 </Grid>

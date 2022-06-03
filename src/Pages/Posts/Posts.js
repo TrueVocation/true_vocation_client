@@ -11,6 +11,8 @@ import useAuth from "../../AuthConfig/useAuth";
 import {API_BASE} from "../../Constants/Constants";
 import {default as axios} from "axios";
 import PostSmallCard from "../../Components/card/posts/PostSmallCard";
+import {RenderIf} from "../../Components/RenderIf";
+import {DoNotDisturbAlt} from "@mui/icons-material";
 
 function TabPanel(props) {
     return null;
@@ -50,6 +52,7 @@ function Posts(props) {
     const [oldPosts, setOldPosts] = useState([{}])
     const [height, setHeight] = useState(window.innerHeight);
     const [firstPost, setFirstPost] = useState({})
+    const [noData, setNoData] = useState(true)
 
     const [pagination, setPagination] = useState(null);
 
@@ -76,11 +79,9 @@ function Posts(props) {
         fetchPosts()
         window.scrollTo({
             top: 0,
-            behavior:"smooth"
+            behavior: "smooth"
         });
     }, [page, searchText])
-
-
 
 
     async function fetchPosts() {
@@ -92,16 +93,27 @@ function Posts(props) {
             url.searchParams.set('order', order);
             url.searchParams.set('searchText', searchText);
             let jwtToken = localStorage.getItem("token");
-            const response = await axios.get(url.toString(),{
-                headers:{
+            const response = await axios.get(url.toString(), {
+                withCredentials:true,
+                headers: {
+                    'x-apikey': 'ZGM4MDY5MjY3ZjQyZGMxNzRjMjRiNmU5ZmQ5N2QwZjdmY2Y0MzM0NWNkNWNkMmVmMmE0NTY5N2YxMjYzNGEzZWI0MWNkODg2ZWY0ZmJkMmFkM2FhNGFhNmY5Y2Y0NzEzZjBjYWM5NGYyMzBkMjc1NDRjMWJhN2M2MDU5NTUzNmE=',
                     Authorization: `Bearer ${jwtToken}`,
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Allow-Methods': '*',
+                    'Access-Control-Allow-Credentials': true,
                 }
             });
             if (response.status === 200) {
                 console.log(response.data.latestPosts)
                 const arr = response.data.latestPosts.content
-                setFirstPost(arr[0])
-                setPosts(arr.slice(1,6));
+                if (arr.length !== 0) {
+                    setFirstPost(arr[0])
+                    setPosts(arr.slice(1, 6));
+                    setNoData(false);
+                } else {
+                    setNoData(true);
+                }
                 setPagination({
                     isFirstPage: response.data.latestPosts.first,
                     isLastPage: response.data.latestPosts.last,
@@ -193,66 +205,108 @@ function Posts(props) {
 
 
                 <Grid container item display={"flex"} mt={7} flexdirection={"row"} justifyContent={"center"} xs={12}>
-                    <Grid xs={11} container item display={"flex"} flexdirection={"row"} justifyContent={"space-between"}>
-                        <Grid container item xs={8.2} style={{marginBottom: 50}}>
-                            <Grid item xs={12}>
-                                <Typography variant={"h5"} fontFamily={"Inter"}
-                                            style={{color: "#2d3e4a", marginBottom: 15, fontWeight: "bold", fontSize: 20}}>
-                                    Latest blogs
-                                </Typography>
-                                <SearchField value={searchText} handleChange={handleSearchTextChange} />
-                            </Grid>
-                            <Grid container item xs={12} display={"flex"} flexdirection={"row"} justifyContent={"space-between"}>
-                                <Grid item xs={12} style={{marginBottom: 35}}>
-                                    <CustomAnimatedComponent whileHover={{scale: 1.02}} style={{
-                                        display: "flex",
-                                        alignItems: "center"
-                                    }}>
-                                        <PostsCardHorizontal post={firstPost}/>
-                                    </CustomAnimatedComponent>
+                    <Grid xs={11} container item display={"flex"} flexdirection={"row"}
+                          justifyContent={"space-between"}>
+
+                            <Grid container item xs={12} lg={8.5} style={{marginBottom: 50}} display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+                                <Grid container display={"flex"} flexDirection={"column"} item xs={12}>
+                                    <Grid item>
+                                        <Typography variant={"h2"} fontFamily={"Inter"}
+                                                    style={{
+                                                        color: "#2d3e4a",
+                                                        marginBottom: 15,
+                                                        fontWeight: "bold",
+                                                        fontSize: 20
+                                                    }}>
+                                            Latest blogs
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <SearchField value={searchText} handleChange={handleSearchTextChange}/>
+                                    </Grid>
+                                    <RenderIf isTrue={noData === true}>
+                                        <Grid item container display={"flex"} alignContent={"center"} flexDirection={"column"} justifyContent={"space-between"}>
+                                            <Grid item container justifyContent={"center"}>
+                                                <Typography variant={"h5"} fontFamily={"Inter"}
+                                                            style={{
+                                                                color: "#2d3e4a",
+                                                                marginBottom: 20,
+                                                                fontWeight: "bold",
+                                                                fontSize: 50
+                                                            }}>
+                                                    Not Found Posts
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item container justifyContent={"center"}>
+                                                <DoNotDisturbAlt  style={{fontSize:150}}/>
+                                            </Grid>
+                                        </Grid>
+                                    </RenderIf>
                                 </Grid>
 
-                                {
-                                    posts.map(post => {
-                                        return <Grid key={post.id} item xs={5.8} style={{marginBottom: 35}}>
-                                            <CustomAnimatedComponent whileHover={{scale: 1.02}} style={{
-                                                display: "flex",
-                                                alignItems: "center"
-                                            }}>
-                                                <PostsCardVertical post={post}/>
-                                            </CustomAnimatedComponent>
-                                        </Grid>
-                                    })
-                                }
-                            </Grid>
-                            <Grid item container display={"flex"} flexdirection={"row"} justifyContent={"center"}>
-                                <Pagination size={"large"}
-                                            count={pagination?.totalPages}
-                                            page={page}
-                                            onChange={(_, num) => setPage(num)}
-                                            showFirstButton
-                                            showLastButton
-                                />
-                            </Grid>
-                        </Grid>
+                                <RenderIf isTrue={noData === false}>
+                                <Grid container item xs={12} display={"flex"} flexdirection={"row"}
+                                      justifyContent={"space-between"}>
+                                    <Grid item xs={12} style={{marginBottom: 35}}>
+                                        <CustomAnimatedComponent whileHover={{scale: 1.01}} style={{
+                                            display: "flex",
+                                            alignItems: "center"
+                                        }}>
+                                            <PostsCardHorizontal post={firstPost}/>
+                                        </CustomAnimatedComponent>
+                                    </Grid>
 
-                        <Grid container display={"flex"} flexdirection={"row"} item xs={3.6} style={{marginBottom: 30}}>
-                            <Grid item xs={12}>
-                                <Typography variant={"h5"} fontFamily={"Inter"}
-                                            style={{color: "#2d3e4a", marginBottom: 15, fontWeight: "bold", fontSize: 20}}>
-                                    News
-                                </Typography>
-                                {
-                                    oldPosts.map(post => {
-                                        return <Grid key={post.id} item xs={12} marginBottom={2}>
-                                            <PostSmallCard post={post}/>
-                                        </Grid>
-                                    })
-                                }
+                                    {
+                                        posts.map(post => {
+                                            return <Grid key={post.id} item xs={12} sm={5.8} style={{marginBottom: 35}}>
+                                                <CustomAnimatedComponent whileHover={{scale: 1.02}} style={{
+                                                    display: "flex",
+                                                    alignItems: "center"
+                                                }}>
+                                                    <PostsCardVertical post={post}/>
+                                                </CustomAnimatedComponent>
+                                            </Grid>
+                                        })
+                                    }
+                                </Grid>
+                                <Grid item container display={"flex"} flexdirection={"row"} justifyContent={"center"}>
+                                    <Pagination size={"large"}
+                                                count={pagination?.totalPages}
+                                                page={page}
+                                                onChange={(_, num) => setPage(num)}
+                                                showFirstButton
+                                                showLastButton
+                                    />
+                                </Grid>
+                                </RenderIf>
+
+                            </Grid>
+
+                            <Grid item container display={"flex"} flexDirection={"row"} justifyContent={"flex-start"} xs={12} lg={2.6} xl={3.3}
+                                  style={{marginBottom: 30}}>
+                                    <Grid item xs={12}>
+                                        <Typography variant={"h5"} fontFamily={"Inter"}
+                                                    style={{
+                                                        color: "#2d3e4a",
+                                                        marginBottom: 15,
+                                                        fontWeight: "bold",
+                                                        fontSize: 20
+                                                    }}>
+                                            News
+                                        </Typography>
+
+                                    {
+                                        oldPosts.map(post => {
+                                            return <Grid key={post.id} item xs={12} marginBottom={2}>
+                                                <PostSmallCard post={post}/>
+                                            </Grid>
+                                        })
+                                    }
+                                    </Grid>
+
                             </Grid>
 
 
-                        </Grid>
                     </Grid>
                 </Grid>
 

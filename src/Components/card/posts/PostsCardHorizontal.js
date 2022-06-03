@@ -1,17 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import Paper from "@mui/material/Paper";
-import {Checkbox, Divider, Grid, Skeleton} from "@mui/material";
+import {Checkbox, Grid, Skeleton} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {Bookmark, BookmarkBorderOutlined, Favorite, FavoriteBorder, ModeCommentOutlined} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import {API_BASE} from "../../../Constants/Constants";
 import {default as axios} from "axios";
 import Chip from "@mui/material/Chip";
+import useAuth from "../../../AuthConfig/useAuth";
+import {RenderIf} from "../../RenderIf";
 
 function PostsCardHorizontal({post}) {
     const [picture, setPicture] = useState('')
     const [isFavorite, setIsFavorite] = useState(false)
     const [isLiked, setIsLiked] = useState(false)
+    const [likeCount, setLikeCount] = useState(0)
+
+    const {user} = useAuth();
 
     async function fetchPicture() {
         try {
@@ -27,11 +32,48 @@ function PostsCardHorizontal({post}) {
         }
     }
 
+    async function userLike() {
+        try {
+            const url = new URL(`${API_BASE}/user-like`);
+            url.searchParams.set('userId', user?.id);
+            url.searchParams.set('postId', post?.id);
+            const response = await axios.post(url.toString());
+            if (response.status === 200) {
+                setIsLiked(prevState => !prevState)
+                setLikeCount(prevState => prevState-1)
+            }
+            else if (response.status === 201) {
+                setIsLiked(prevState => !prevState)
+                setLikeCount(prevState => prevState+1)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function userFavorite() {
+        try {
+            const url = new URL(`${API_BASE}/user-favorite`);
+            url.searchParams.set('userId', user?.id);
+            url.searchParams.set('postId', post?.id);
+            const response = await axios.post(url.toString());
+            if (response.status === 200) {
+                setIsFavorite(prevState => !prevState)
+            }
+            else if (response.status === 201) {
+                setIsFavorite(prevState => !prevState)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     useEffect(()=>{
         fetchPicture();
         setIsFavorite(post.favorite)
         setIsLiked(post.liked)
-    })
+        setLikeCount(post.likeCount)
+    },[post])
 
     return (
         <Paper variant={"elevation"} elevation={0} style={{
@@ -163,11 +205,13 @@ function PostsCardHorizontal({post}) {
                                 <Grid item alignSelf={"center"}>
                                     <Checkbox style={{padding: 0}}
                                               checked={isLiked}
+                                              onChange={userLike}
+                                              disabled={user == null}
                                               icon={<FavoriteBorder style={{fontSize: 32}}/>}
                                               checkedIcon={<Favorite style={{color: "#FF2052", fontSize: 32}}/>}
-                                    /> {post?.likeCount}
+                                    /> {likeCount}
 
-                                    <IconButton style={{padding: 0, marginLeft: 10}}><ModeCommentOutlined
+                                    <IconButton disabled={user == null} style={{padding: 0, marginLeft: 10}}><ModeCommentOutlined
                                         style={{fontSize: 30}}/></IconButton> {post?.commentCount}
                                 </Grid>
                                 :
@@ -180,30 +224,29 @@ function PostsCardHorizontal({post}) {
                                     color: "#2d3e4a"
                                 }}/>
                             }
+                            <RenderIf isTrue={user!=null}>
+                                {post?
 
-                            {post?
-
-                                <Grid item alignSelf={"center"}>
-                                    <Checkbox style={{padding: 0}}
-                                              checked={isFavorite}
-                                              icon={<BookmarkBorderOutlined style={{fontSize: 32}}/>}
-                                              checkedIcon={<Bookmark style={{color: "#FFC107", fontSize: 32}}/>
-                                    }
-                                    />
-                                </Grid>
-                                :
-                                <Skeleton animation="wave" variant="rectangular" style={{
-                                    width:"15%",
-                                    borderRadius:15,
-                                    fontSize: 25,
-                                    fontWeight: "600",
-                                    fontFamily: "Inter",
-                                    color: "#2d3e4a"
-                                }}/>
-                            }
-
-
-
+                                    <Grid item alignSelf={"center"}>
+                                        <Checkbox style={{padding: 0}}
+                                                  checked={isFavorite}
+                                                  onChange={userFavorite}
+                                                  icon={<BookmarkBorderOutlined style={{fontSize: 32}}/>}
+                                                  checkedIcon={<Bookmark style={{color: "#FFC107", fontSize: 32}}/>
+                                                  }
+                                        />
+                                    </Grid>
+                                    :
+                                    <Skeleton animation="wave" variant="rectangular" style={{
+                                        width:"15%",
+                                        borderRadius:15,
+                                        fontSize: 25,
+                                        fontWeight: "600",
+                                        fontFamily: "Inter",
+                                        color: "#2d3e4a"
+                                    }}/>
+                                }
+                            </RenderIf>
                         </Grid>
                     </Grid>
 
