@@ -298,8 +298,8 @@ export function Headers() {
 
                                     <CustomLink to={"/tests"}
                                                 style={{color: "#08262C", fontFamily: "Inter"}}>Tests</CustomLink>
-                                    <CustomLink to={"/fwefwe"}
-                                                style={{color: "#08262C", fontFamily: "Inter"}}>Professions</CustomLink>
+                                    <CustomLink to={"/universities"}
+                                                style={{color: "#08262C", fontFamily: "Inter"}}>Universities</CustomLink>
                                     <CustomLink to={"/posts"}
                                                 style={{color: "#08262C", fontFamily: "Inter"}}>Posts</CustomLink>
                                 </Grid>
