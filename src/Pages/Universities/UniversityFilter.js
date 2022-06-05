@@ -1,6 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
-import {Checkbox, FormControl, Grid, InputAdornment, InputLabel, Select} from "@mui/material";
+import {
+    Checkbox,
+    FormControl,
+    FormLabel,
+    Grid,
+    InputAdornment,
+    InputLabel,
+    Radio,
+    RadioGroup,
+    Select
+} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import UniversityCardMain from "../../Components/card/UniversityCardMain";
 import {API_BASE} from "../../Constants/Constants";
@@ -19,8 +29,42 @@ import FormGroup from "@mui/material/FormGroup";
 
 function UniversityFilter(props) {
     const [universities, setUniversities] = useState([])
+    const [cities, setCities] = useState([])
     const [displayType, setDisplayType] = useState(true);
-    const [city, setCity] = React.useState('');
+    const [city, setCity] = React.useState(null);
+    const [search, setSearch] = useState('');
+    const [hasDormitory, setHasDormitory] = useState(false);
+    const [hasMilitary, setHasMilitary] = useState(false);
+    const [averagePrice, setAveragePrice] = React.useState({
+        one : false,
+        two : false,
+        three : false,
+        four : false,
+        five : false,
+    });
+
+    const [status, setStatus] = React.useState({
+        publicStatus : false,
+        privateStatus : false,
+    });
+
+    const {one, two, three, four, five} = averagePrice
+    const {privateStatus, publicStatus} = status
+
+    const handleStatusChange = (event) => {
+        setStatus({
+            ...status,
+            [event.target.name]: event.target.checked,
+        });
+    };
+
+
+    const handleAveragePriceChange = (event) => {
+        setAveragePrice({
+            ...averagePrice,
+            [event.target.name]: event.target.checked,
+        });
+    };
 
     const handleChange = (event) => {
         setCity(event.target.value);
@@ -28,18 +72,52 @@ function UniversityFilter(props) {
 
     useEffect(() => {
         fetchUniversities();
-    }, [])
+        fetchCities();
+    }, [search, city, status, hasDormitory, hasMilitary, averagePrice])
 
     async function fetchUniversities() {
         try {
-            const url = new URL(`${API_BASE}/universities`);
-            url.searchParams.set('page', 0);
-            url.searchParams.set('size', 8);
-            url.searchParams.set('sort', 'id');
-            url.searchParams.set('order', 'desc');
-            const response = await axios.get(url.toString());
+            let filter = {
+                search: search,
+                cityId : city,
+                statuses: [
+                    status.publicStatus ? "public" : null,
+                    status.privateStatus ? "private" : null
+                ],
+                dormitory: hasDormitory,
+                military : hasMilitary,
+                averagePriceList: [
+                    averagePrice.one ? {from:0, to:300000}:null,
+                    averagePrice.two? {from:300000, to:600000}:null,
+                    averagePrice.three? {from:600000, to:900000}:null,
+                    averagePrice.four? {from:900000, to:1200000}:null,
+                    averagePrice.five? {from:1200000, to:10000000}:null,
+                ]
+            }
+            const url = new URL(`${API_BASE}/universities/filter`);
+            // url.searchParams.set('page', 0);
+            // url.searchParams.set('size', 8);
+            // url.searchParams.set('sort', 'id');
+            // url.searchParams.set('order', 'desc');
+            const response = await axios.post(url.toString(), filter);
             if (response.status === 200) {
                 setUniversities(response.data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function fetchCities() {
+        try {
+            const url = new URL(`${API_BASE}/cities`);
+            // url.searchParams.set('page', 0);
+            // url.searchParams.set('size', 8);
+            // url.searchParams.set('sort', 'id');
+            // url.searchParams.set('order', 'desc');
+            const response = await axios.get(url.toString());
+            if (response.status === 200) {
+                setCities(response.data);
             }
         } catch (error) {
             console.error(error);
@@ -134,6 +212,8 @@ function UniversityFilter(props) {
                                                id="outlined-adornment-weight"
                                                placeholder={"Search for a university..."}
                                                style={{fontSize: 16}}
+                                               value={search}
+                                               onChange={(e)=>setSearch(e.target.value)}
                                                startAdornment={<InputAdornment position="start"
                                                                                style={{marginRight: 5}}>
                                                    <Search style={{fontSize: 24, color: "rgb(103, 119, 136)"}}/>
@@ -156,7 +236,7 @@ function UniversityFilter(props) {
                             {
 
                                 universities?.map(universities => {
-                                    return <Grid key={universities.id} item xs={4} mb={1} style={{padding: "0 5px 0 5px"}}>
+                                    return <Grid key={universities.id} item xs={3} mb={1} style={{padding: "0 5px 0 5px"}}>
                                         <UniversityCardMain university={universities}/>
                                     </Grid>
                                 })
@@ -194,7 +274,7 @@ function UniversityFilter(props) {
                                 fontSize:16
                             }} />
                         </Grid>
-                        <Grid item xs={12} mt={5} container display={"flex"} flexDirection={"column"}>
+                        <Grid item xs={12} mt={4} container display={"flex"} flexDirection={"column"}>
                             <Typography variant={"h5"} fontFamily={"Inter"}
                                         style={{
                                             color: "rgb(45, 62, 74)",
@@ -203,21 +283,22 @@ function UniversityFilter(props) {
                                             marginBottom:8
                                         }}>City</Typography>
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">City</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     value={city}
-                                    label="City"
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    <MenuItem value={null}>All</MenuItem>
+                                    {cities?.map(city=>{
+                                        return <MenuItem value={city?.id}>{city?.name}</MenuItem>
+                                    })}
+
+
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={12} mt={5}>
+                        <Grid item xs={12} mt={4}>
                             <Typography variant={"h5"} fontFamily={"Inter"}
                                         style={{
                                             color: "rgb(45, 62, 74)",
@@ -226,15 +307,71 @@ function UniversityFilter(props) {
                                             marginBottom:8
                                         }}>Status</Typography>
                             <FormGroup>
-                                <FormControlLabel control={<Checkbox defaultChecked />} label="Private" />
-                                <FormControlLabel control={<Checkbox />} label="Public" />
+                                <FormControlLabel control={<Checkbox checked={privateStatus} onChange={handleStatusChange} name="privateStatus" />} label="Private" />
+                                <FormControlLabel control={<Checkbox checked={publicStatus} onChange={handleStatusChange} name="publicStatus" />} label="Public" />
                             </FormGroup>
                         </Grid>
-                        <Grid item xs={12} mt={5}>
+                        <Grid item xs={12} mt={4}>
+                            <Typography variant={"h5"} fontFamily={"Inter"}
+                                        style={{
+                                            color: "rgb(45, 62, 74)",
+                                            fontSize: 18,
+                                            fontWeight: "bold",
+                                            marginBottom:8
+                                        }}>Availability</Typography>
                             <FormGroup>
-                                <FormControlLabel control={<Checkbox defaultChecked />} label="Dormitory" />
-                                <FormControlLabel control={<Checkbox />} label="Military" />
+                                <FormControlLabel control={<Checkbox checked={hasDormitory} onChange={(e)=>setHasDormitory(e.target.checked)} />} label="Dormitory" />
+                                <FormControlLabel control={<Checkbox checked={hasMilitary} onChange={(e)=>setHasMilitary(e.target.checked)}/>} label="Military" />
                             </FormGroup>
+                        </Grid>
+                        <Grid item xs={12} mt={4}>
+                        <FormControl>
+                            {/*<FormLabel id="demo-controlled-radio-buttons-group">Average Price</FormLabel>*/}
+                            <Typography variant={"h5"} fontFamily={"Inter"}s
+                                        style={{
+                                            color: "rgb(45, 62, 74)",
+                                            fontSize: 18,
+                                            fontWeight: "bold",
+                                            marginBottom:8
+                                        }}>Average Price</Typography>
+                            <RadioGroup
+                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                name="controlled-radio-buttons-group"
+                                value={averagePrice}
+                                onChange={handleChange}
+                            >
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox checked={one} onChange={handleAveragePriceChange} name="one" />
+                                    }
+                                    label="0 - 300 000 KZT"
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox checked={two} onChange={handleAveragePriceChange} name="two" />
+                                    }
+                                    label="300 000 - 600 000 KZT"
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox checked={three} onChange={handleAveragePriceChange} name="three" />
+                                    }
+                                    label="600 000 - 900 000 KZT"
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox checked={four} onChange={handleAveragePriceChange} name="four" />
+                                    }
+                                    label="900 000 - 1 200 000 KZT"
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox checked={five} onChange={handleAveragePriceChange} name="five" />
+                                    }
+                                    label="1 200 000+ KZT"
+                                />
+                            </RadioGroup>
+                        </FormControl>
                         </Grid>
                     </Grid>
                     </Paper>

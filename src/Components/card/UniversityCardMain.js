@@ -12,7 +12,8 @@ import Paper from "@mui/material/Paper";
 
 function UniversityCardMain(props) {
     const {university} = props;
-    const [image, setImage] = useState('');
+    const [picture, setPicture] = useState('');
+    const [logo, setLogo] = useState('');
 
     const navigate = useNavigate();
 
@@ -23,7 +24,21 @@ function UniversityCardMain(props) {
             const response = await axios.get(url.toString());
             if (response.status === 200) {
                 const contentType = response.headers['content-type']
-                setImage(`data:${contentType};base64,` + response.data);
+                setLogo(`data:${contentType};base64,` + response.data);
+                console.log(response.data)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function fetchPicture() {
+        try {
+            const url = new URL(`${API_BASE}/universities/getPictures/${university.id}`);
+            const response = await axios.get(url.toString());
+            if (response.status === 200) {
+                const contentType = response.headers['content-type']
+                setPicture(`data:${contentType};base64,` + response.data);
                 console.log(response.data)
             }
         } catch (error) {
@@ -33,6 +48,7 @@ function UniversityCardMain(props) {
 
     useEffect(()=>{
         fetchLogo();
+        fetchPicture();
     },[])
     return (
         <Paper variant={"elevation"} elevation={0} style={{
@@ -45,7 +61,7 @@ function UniversityCardMain(props) {
                 <Grid xs={12} container flexDirection={"row"} style={{position:"relative"}}>
                     <Grid item xs={12}>
                         <img style={{objectFit:"cover",width:"100%", height: "150px", borderTopRightRadius:8, borderTopLeftRadius:8}}
-                             src={"https://adaldyq.kz/assets/images/univerimg/univer_4.jpg"}/>
+                             src={picture}/>
                     </Grid>
                     <Grid item xs={2.6} alignSelf={"center"} style={{
                         position:"absolute",
@@ -53,7 +69,7 @@ function UniversityCardMain(props) {
                         left:20,
                     }}>
                         <img style={{width: "100%", height: "auto", borderRadius: 8}}
-                             src={image}/>
+                             src={logo}/>
                     </Grid>
                 </Grid>
                 <Grid xs={12} container flexDirection={"column"} marginTop={5} style={{padding:"15px 15px 0 15px"}}>

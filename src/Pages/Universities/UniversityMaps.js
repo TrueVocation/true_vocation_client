@@ -4,6 +4,7 @@ import {CastForEducation, TrafficSharp} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import UniversityCardMain from "../../Components/card/UniversityCardMain";
 import CustomMarker from "./CustomMarker";
+import {RenderIf} from "../../Components/RenderIf";
 
 const containerStyle = {
     width: '100%',
@@ -53,8 +54,14 @@ function GoogleMaps({universities}) {
             zoom={14}
             onUnmount={onUnmount}
         >
-            <CustomMarker university={universities[0]} position={position}/>
-            <CustomMarker university={universities[1]} position={position2}/>
+            {
+                universities?.map(university=>{
+                   return <RenderIf isTrue={university?.location != null}>
+                        <CustomMarker university={university}/>
+                    </RenderIf>
+                })
+            }
+
 
             <></>
         </GoogleMap>

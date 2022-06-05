@@ -251,7 +251,7 @@ export function Headers() {
         <>
             <HideOnScroll>
                 <AppBar position={"sticky"} color={"inherit"}>
-                    <Container maxWidth={"xl"}>
+                    <Container style={{maxWidth:"none"}}>
                         <Toolbar style={{justifyContent: "space-between"}}>
                             {/*<IconButton*/}
                             {/*    size="large"*/}
