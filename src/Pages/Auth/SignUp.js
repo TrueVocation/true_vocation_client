@@ -55,7 +55,7 @@ function SignUp() {
 
     async function registraion(userData) {
         try {
-            const response = await axios.post(`${API_BASE}/account/register`,userData);
+            const response = await axios.post(`${API_BASE}/account/registration`,userData);
             if(response.status === 201){
                 enqueueSnackbar("Account created successfully! Check your mail to activate account!", {variant:"success"});
                 setEmail('')

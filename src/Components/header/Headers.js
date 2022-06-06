@@ -670,6 +670,7 @@ export function Headers() {
                     style={{padding:"10px 18px 14px 18px"}}>
                         <CustomMenuLink to={"/profile"}>My Account</CustomMenuLink>
                         <CustomMenuLink to={"/wefwe"}>Settings</CustomMenuLink>
+                        <CustomMenuLink to={"/portfolio"}>Portfolio</CustomMenuLink>
                     </Grid>
                     <Divider style={{height:"1px", background:"rgba(34, 51, 84, 0.1)", border:0}}/>
                     <Grid container item xs={12} display={"flex"} flexDirection={"column"}

@@ -156,7 +156,7 @@ function General(props) {
                                 <Badge
                                     overlap="circular"
                                     anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-                                    style={{ height:"100%"}}
+                                    style={{ height:"100%",width:"100%"}}
                                     badgeContent={
                                         <label htmlFor="icon-button-file">
                                             <form >
@@ -172,7 +172,7 @@ function General(props) {
                                         </label>
                                     }
                                 >
-                                    <Avatar style={{width: "100%", height: "100%"}} alt="Travis Howard"
+                                    <Avatar style={{width: "100%",height:"100%"}} alt="Travis Howard"
                                             src={auth.avatar !== null ? auth.avatar : null}/>
                                 </Badge>
                             </Box>
