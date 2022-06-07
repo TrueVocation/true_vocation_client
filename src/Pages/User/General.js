@@ -381,7 +381,7 @@ function General(props) {
                                                    variant="outlined"/>
                                     </Grid>
 
-                                    <Grid item xs={12} display={"flex"} marginBottom={3} justifyContent={"flex-start"}>
+                                    <Grid item xs={12} display={"flex"}marginBottom={3} justifyContent={"flex-start"}>
                                         <Button id={"primary_button"} size={"large"} type={"submit"} variant="contained"
                                                 fontFamily={"Inter"}>Save changes</Button>
                                     </Grid>

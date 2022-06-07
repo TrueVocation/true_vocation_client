@@ -72,7 +72,7 @@ function UniversityCardMain(props) {
                              src={logo}/>
                     </Grid>
                 </Grid>
-                <Grid xs={12} container flexDirection={"column"} marginTop={5} style={{padding:"15px 15px 0 15px"}}>
+                <Grid xs={12} container flexDirection={"column"} marginTop={2} style={{padding:"15px 15px 0 15px"}}>
                     <Grid item xs={12} mb={1}>
                         <Typography onClick={()=>navigate(`/university/${university?.id}`)} variant={"h5"} fontFamily={"Inter"}
                                     style={{
@@ -80,7 +80,7 @@ function UniversityCardMain(props) {
                                         fontSize: 20,
                                         fontWeight: "bold",
                                         cursor:"pointer",
-                                        height:50
+                                        height:75
                                     }}>{university.name}</Typography>
                     </Grid>
                     {/*<Grid item xs={12} marginBottom={1}>*/}

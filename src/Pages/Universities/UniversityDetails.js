@@ -169,17 +169,17 @@ function UniversityDetails(props) {
                             <Typography variant={"h5"} fontFamily={"Inter"}
                                         style={{color: "rgb(103, 119, 136)", marginTop: 20, fontSize: 20}}>{university.description}</Typography>
                         </CustomAnimatedComponent>
-                        <Grid container flexDirection={"row"} xs={12}
-                              style={{marginTop: 30}}>
-                            <CustomAnimatedComponent variants={animationButton} custom={3}>
-                                <Button size={"large"} style={{marginRight:20, marginBottom:15}} variant={"outlined"} id={"primary_button_outlined"}>Purchase
-                                    now</Button>
-                            </CustomAnimatedComponent>
-                            <CustomAnimatedComponent variants={animationButton} custom={4}>
-                                <Button size={"large"} variant={"contained"} id={"primary_button"}>View
-                                    documentation</Button>
-                            </CustomAnimatedComponent>
-                        </Grid>
+                        {/*<Grid container flexDirection={"row"} xs={12}*/}
+                        {/*      style={{marginTop: 30}}>*/}
+                        {/*    <CustomAnimatedComponent variants={animationButton} custom={3}>*/}
+                        {/*        <Button size={"large"} style={{marginRight:20, marginBottom:15}} variant={"outlined"} id={"primary_button_outlined"}>Purchase*/}
+                        {/*            now</Button>*/}
+                        {/*    </CustomAnimatedComponent>*/}
+                        {/*    <CustomAnimatedComponent variants={animationButton} custom={4}>*/}
+                        {/*        <Button size={"large"} variant={"contained"} id={"primary_button"}>View*/}
+                        {/*            documentation</Button>*/}
+                        {/*    </CustomAnimatedComponent>*/}
+                        {/*</Grid>*/}
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={0.5} lg={1} xl={1}/>
@@ -187,7 +187,7 @@ function UniversityDetails(props) {
             </motion.div>
 
             <Grid container style={{marginTop:20}}>
-                <Grid item xs={0.5} sm={0.5} md={0.5} lg={1}  xl={1}/>
+                <Grid item xs={0.8}/>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="University" style={{textTransform: "none"}} {...a11yProps(0)} />
                     <Tab label="Photos" style={{textTransform: "none"}} {...a11yProps(1)} />
@@ -197,7 +197,7 @@ function UniversityDetails(props) {
             </Grid>
 
             <Grid container>
-                <Grid item xs={0.5} sm={0.5} md={0.5} lg={1}  xl={1}/>
+                <Grid item xs={0.8}/>
                 <Grid xs={11} sm={11} md={11} lg={10} xl={10} container  display={"flex"} flexDirection={"column"}>
                     <TabPanel value={value} index={0}>
                         <Grid item container display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
