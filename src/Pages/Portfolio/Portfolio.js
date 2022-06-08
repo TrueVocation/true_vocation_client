@@ -6,14 +6,24 @@ import {
     Divider,
     FormControl,
     Grid,
-    Input, LinearProgress, linearProgressClasses,
+    Input,
+    LinearProgress,
+    linearProgressClasses,
     Select,
     TextField
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import {Clear, PhotoCamera} from "@mui/icons-material";
+import {
+    ArrowForwardIos,
+    CheckCircle,
+    Clear,
+    DoNotDisturbOn,
+    PersonOutline,
+    PhotoCamera,
+    SettingsOutlined
+} from "@mui/icons-material";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 import {API_BASE} from "../../Constants/Constants";
@@ -29,8 +39,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Chip from "@mui/material/Chip";
+import {Show} from 'react-haiku';
+import {useNavigate} from "react-router-dom";
+import JsPDF from 'jspdf';
+import Report from "./Report";
+import ChangePassword from "../User/ChangePassword";
 
-const Head = () =>{
+
+
+const Head = ({state, setState, setGenerate, generate}) =>{
     return <Grid item xs={12} mb={2}>
         <Paper style={{
             boxShadow: "0px 0px 12px -5px rgba(0,0,0,0.1)",
@@ -38,12 +55,57 @@ const Head = () =>{
             borderRadius: 12,
             margin: "15px 0",
         }}>
-            <Typography variant={"h5"} fontFamily={"Inter"}
-                        style={{
-                            color: "rgb(45, 62, 74)",
-                            fontSize: 25,
-                            fontWeight: "bold",
-                        }}>My Portfolio</Typography>
+            <Grid container display={"flex"} flexDirection={"row"}>
+                <Grid item xs={2}  container display={"flex"} flexDirection={"row"} alignItems={"center"}>
+                    <Typography variant={"h5"} fontFamily={"Inter"}
+                                style={{
+                                    color: "rgb(45, 62, 74)",
+                                    fontSize: 25,
+                                    fontWeight: "bold",
+                                }}>My Portfolio</Typography>
+                </Grid>
+              <Grid item xs={10} container>
+                  <Grid onClick={()=>setState(0)} style={{cursor:"pointer"}} item xs={2} container display={"flex"} flexDirection={"row"} alignItems={"center"}>
+                      <Avatar variant={"circular"} style={{
+                           width: 50, height: 50, backgroundColor: state===0 ?  "#E7E4FC" : "#EDF0FF"
+                      }}>
+                          <PersonOutline fontSize={"large"} style={{
+                              color: state === 0 ? "#604BE8" : "#969DB6"
+                          }} />
+                      </Avatar>
+                      <Typography variant={"h5"} fontFamily={"Inter"}
+                                  style={{
+                                      color: state === 0 ? "#604BE8" : "#969DB6",
+                                      fontSize: 18,
+                                      marginLeft:10,
+                                      fontWeight:"bold"
+                                  }}>Profile</Typography>
+                  </Grid>
+                  <Grid onClick={()=>setState(1)} style={{cursor:"pointer"}} item xs={2} container display={"flex"} flexDirection={"row"} alignItems={"center"}>
+                      <Avatar variant={"circular"} style={{
+                          width: 50, height: 50, backgroundColor: state===1 ?  "#E7E4FC" : "#EDF0FF"
+                      }}>
+                          <SettingsOutlined fontSize={"large"} style={{
+                              color:state === 1 ? "#604BE8" : "#969DB6"
+                          }} />
+                      </Avatar>
+                      <Typography variant={"h5"} fontFamily={"Inter"}
+                                  style={{
+                                      color:state === 1 ? "#604BE8" : "#969DB6",
+                                      fontSize: 18,
+                                      marginLeft:10,
+                                      fontWeight:"bold"
+                                  }}>Settings</Typography>
+                  </Grid>
+                  <Grid item xs={2} container alignSelf={"flex-end"} display={"flex"}>
+                      <Button id={"primary_button"} onClick={()=>setGenerate(true)}>Export</Button>
+                      {generate ? "true" : "false"}
+                  </Grid>
+
+              </Grid>
+
+            </Grid>
+
         </Paper>
     </Grid>
 }
@@ -55,11 +117,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
-        backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+        backgroundColor: theme.palette.mode === 'light' ? '#604BE8' : '#604BE8',
     },
 }));
 
-function FacebookCircularProgress(props) {
+function FacebookCircularProgress({progress}) {
     return (
         <Box sx={{ position: 'relative',display: 'inline-flex' }}>
             <CircularProgress
@@ -69,14 +131,13 @@ function FacebookCircularProgress(props) {
                         theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
                 }}
                 size={150}
-                {...props}
                 value={100}
             />
             <CircularProgress
                 variant="determinate"
                 disableShrink
                 sx={{
-                    color: (theme) => (theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'),
+                    color: (theme) => (theme.palette.mode === 'light' ? '#604BE8' : '#604BE8'),
                     position: 'absolute',
                     left: 0,
                     [`& .${circularProgressClasses.circle}`]: {
@@ -84,8 +145,7 @@ function FacebookCircularProgress(props) {
                     },
                 }}
                 size={150}
-                value={80}
-                {...props}
+                value={progress}
             />
             <Box
                 sx={{
@@ -99,8 +159,8 @@ function FacebookCircularProgress(props) {
                     justifyContent: 'center',
                 }}
             >
-                <Typography fontSize={30} fontWeight={"bold"} variant="caption" component="div" color="text.secondary">
-                    {`${100}%`}
+                <Typography style={{color:"#604BE8"}} fontSize={30} fontWeight={"bold"} variant="caption" component="div" color="text.secondary">
+                    {`${progress}%`}
                 </Typography>
             </Box>
         </Box>
@@ -165,6 +225,12 @@ function Portfolio(props) {
     const Input = styled('input')({
         display: 'none',
     });
+
+    const [state, setState] = useState(0)
+    const [generate, setGenerate] = useState(false)
+
+    const navigate = useNavigate();
+
     const [open, setOpen] = React.useState(false);
     const [openSchoolDialog, setOpenSchoolDialog] = React.useState(false);
     const [openLanguageDialog, setOpenLanguageDialog] = React.useState(false);
@@ -258,11 +324,63 @@ function Portfolio(props) {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [gender, setGender] = useState('Men');
+    const [gender, setGender] = useState('');
     const [birthdate, setBirthdate] = useState(null);
     const [aboutMe, setAboutMe] = useState('');
 
     const { enqueueSnackbar } = useSnackbar();
+
+    const [portfolioProgress, setPortfolioProgress] = useState(0)
+
+    const defineProgress = (portfolio) => {
+        let progress = 0
+        if((null !== firstName && firstName !== '') || (null !== lastName && lastName !== '')){
+            progress+=10
+            console.log(progress)
+            console.log("firstname")
+        }
+        if(phoneNumber != null && phoneNumber !== ''){
+            progress+=10
+            console.log(progress)
+            console.log("phoneNumber")
+        }
+        if(setBirthdate != null){
+            progress+=10
+            console.log(progress)
+            console.log("setBirthdate")
+        }
+        if(auth.avatar !==null || auth.avatar!==''){
+            progress+=10
+            console.log(progress)
+            console.log("avatar")
+        }
+        if(gender !==null || gender!==''){
+            progress+=10
+            console.log(progress)
+            console.log("gender")
+        }
+        if(portfolio.hobby!==null && portfolio.hobby!==''){
+            progress+=10
+            console.log(progress)
+            console.log("chipData")
+        }
+        if(portfolio.aboutMe != null && portfolio.aboutMe !== ''){
+            progress+=10
+            console.log(progress)
+            console.log("aboutMe")
+        }
+        if(portfolio.schools.length!==0){
+            progress+=10
+            console.log(progress)
+            console.log("mySchools")
+        }
+        if(portfolio.languages.length!==0){
+            progress+=10
+            console.log(progress)
+            console.log("myLanguages")
+        }
+        setPortfolioProgress(progress)
+    }
 
 
     const handleChange = (event) => {
@@ -424,8 +542,9 @@ function Portfolio(props) {
             fetchSchools()
             fetchLanguages()
 
+
         }
-    }, [auth.user, auth.avatar])
+    }, [auth.user, auth.avatar, auth.updateData])
 
 
 
@@ -456,16 +575,19 @@ function Portfolio(props) {
                 setMySchools(response.data.schools)
                 setAboutMe(response.data.aboutMe)
                 let count = hobbyCounter
-                const arr = response.data.hobby.split(",").map(chip => {
-                    count = count+1
-                    return {key: count,label: chip}
-                })
+                let arr = []
+                if(response.data.hobby!==null && response.data.hobby!==''){
+                    arr = response.data.hobby.split(",").map(chip => {
+                        count = count+1
+                        return {key: count,label: chip}
+                    })
+                }
                 console.log(arr)
                 setGender(response.data.gender)
                 setChipData(arr)
                 setHobbyCounter(count+1)
                 fetchAchievements(response.data.id)
-                // set
+                defineProgress(response.data)
             }
         } catch (error) {
             console.error(error);
@@ -483,6 +605,10 @@ function Portfolio(props) {
             });
             if (response.status === 200) {
                 setMyAchievements(response.data)
+                if(response.data.length!==0){
+                    setPortfolioProgress(prevState => prevState+10)
+                    console.log("myAchievements")
+                }
             }
         } catch (error) {
             console.error(error);
@@ -544,7 +670,7 @@ function Portfolio(props) {
     return (
         <Box display={"flex"} justifyContent={"center"} style={{padding:"20px",backgroundColor: "rgb(242, 245, 249)"}}>
         <Grid container xs={11} display={"flex"} justifyContent={"space-between"}>
-            <Head/>
+            <Head state={state} setState={setState} setGenerate={setGenerate} generate={generate}/>
             <Grid item xs={8}>
                 <Paper style={{
                     boxShadow: "0px 0px 12px -5px rgba(0,0,0,0.1)",
@@ -553,6 +679,8 @@ function Portfolio(props) {
                     margin: "15px 0",
                 }}>
                     <Grid container display={"flex"} flexDirection={"row"}>
+                        <Show>
+                            <Show.When isTrue={state === 0}>
                         <Grid item xs={12} mb={2}>
                             <Typography variant={"h5"} fontFamily={"Inter"}
                                         style={{
@@ -575,7 +703,7 @@ function Portfolio(props) {
                                                     <Input onChange={onChangeAvatar} accept="image/*"  id="icon-button-file"
                                                            type="file"/>
                                                     <IconButton type={"submit"} style={{
-                                                        backgroundColor: "rgb(55, 125, 255)",
+                                                        backgroundColor: "#604BE8",
                                                         color: "white"
                                                     }} size={"large"} aria-label="upload picture" component="span">
                                                         <PhotoCamera/>
@@ -1105,6 +1233,12 @@ function Portfolio(props) {
                         <Grid item xs={12} display={"flex"} justifyContent={"flex-end"}>
                             <Button id={"primary_button"} onClick={savePortfolio}>Save</Button>
                         </Grid>
+                            </Show.When>
+                            <Show.Else>
+                                <ChangePassword/>
+                                <Report setGenerate={setGenerate} generate={generate} portfolio={portfolio} myHobbies={chipData} myAchievements={myAchievements}/>
+                            </Show.Else>
+                        </Show>
                     </Grid>
 
                 </Paper>
@@ -1116,7 +1250,230 @@ function Portfolio(props) {
                     borderRadius: 12,
                     margin: "15px 0",
                 }}>
-                    <FacebookCircularProgress/>
+                    <Grid container xs={12} display={"flex"} flexDirection={"row"}>
+                        <Grid item xs={5}>
+                            <FacebookCircularProgress progress={portfolioProgress}/>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: firstName === '' && lastName === '' ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a fullname
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={firstName !== '' && lastName!==''}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: auth.avatar === '' ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a picture of you
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={auth.avatar !== ''}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: phoneNumber === '' ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a phone number
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={phoneNumber !== ''}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: birthdate === '' ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a birthdate
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={birthdate !== ''}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: gender === '' ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a gender
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={gender !== ''}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: chipData.length === 0 ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a hobby
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={chipData.length !== 0}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: aboutMe === '' ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a bio
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={aboutMe !== ''}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: mySchools.length === 0 ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a schools
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={mySchools.length !== 0}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: myLanguages.length === 0 ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a languages
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={myLanguages.length !== 0}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+
+                            <Grid item xs={12} container display={"flex"} justifyContent={"space-between"} mb={1}>
+                                <Typography style={{
+                                    fontFamily:"Inter",
+                                    fontSize:16,
+                                    color: myAchievements.length === 0 ? "rgba(34, 51, 84, 0.7)" : "rgb(45, 62, 74)"
+                                }}>
+                                    Add a achievements
+                                </Typography>
+                                <Show>
+                                    <Show.When isTrue={myAchievements.length !== 0}>
+                                        <CheckCircle style={{color:"rgb(87, 202, 34)"}}/>
+                                    </Show.When>
+                                    <Show.Else>
+                                        <DoNotDisturbOn style={{color:"rgb(255, 25, 67)"}}/>
+                                    </Show.Else>
+                                </Show>
+                            </Grid>
+
+                        </Grid>
+                    </Grid>
+
+                </Paper>
+
+                <Paper style={{
+                    boxShadow: "0px 0px 12px -5px rgba(0,0,0,0.1)",
+                    padding: "25px 20px",
+                    borderRadius: 12,
+                    margin: "15px 0",
+                    backgroundColor:"#604BE8"
+                }}>
+                <Grid container display={"flex"} flexDirection={"row"}>
+                    <Grid item xs={2}>
+                        <img width={"80%"} src={"https://cdn-user-icons.flaticon.com/28161/28161454/1654602920665.svg?token=exp=1654603821~hmac=b6dd2781c73e0ba5068f1e064b81350e"}/>
+                    </Grid>
+                    <Grid item xs={8} container display={"flex"} flexDirection={"column"}>
+                        <Typography variant={"h5"} fontFamily={"Inter"}
+                                    style={{
+                                        color: "white",
+                                        fontSize: 16,
+                                        fontWeight: "bold",
+                                        marginBottom:10,
+                                    }}>
+                            Take the test and get to know your professional orientation
+                        </Typography>
+                        <Typography variant={"h5"} fontFamily={"Inter"}
+                                    style={{
+                                        color: "#C3CDE4",
+                                        fontSize: 14,
+                                        fontWeight: "bold",
+                                    }}>
+                            Click the button to start your survey
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <IconButton onClick={()=>navigate("/tests/1")} size="large" style={{border:"1xp solid white"}}>
+                            <ArrowForwardIos fontSize="inherit" style={{color:"white"}} />
+                        </IconButton>
+                    </Grid>
+                </Grid>
                 </Paper>
             </Grid>
         </Grid>
