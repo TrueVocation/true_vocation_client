@@ -287,17 +287,17 @@ export function Headers() {
                                     <CustomLink item to={"/"}
                                                 style={{color: "white", fontFamily: "Inter"}}>Home</CustomLink>
                                     {/*<CustomLink item to={"/ацуацу"} style={{color:"white",fontFamily:"Inter"}}>Subjects</CustomLink>*/}
-                                    <div className="custom_link" onClick={handleClick} style={{
-                                        fontFamily: "Inter",
-                                        cursor: "pointer",
-                                        textDecoration: "none",
-                                        fontSize: 15,
-                                        color: "rgb(103, 119, 136)",
-                                    }}>Subjects
-                                    </div>
+                                    {/*<div className="custom_link" onClick={handleClick} style={{*/}
+                                    {/*    fontFamily: "Inter",*/}
+                                    {/*    cursor: "pointer",*/}
+                                    {/*    textDecoration: "none",*/}
+                                    {/*    fontSize: 15,*/}
+                                    {/*    color: "rgb(103, 119, 136)",*/}
+                                    {/*}}>Subjects*/}
+                                    {/*</div>*/}
 
-                                    <CustomLink to={"/tests"}
-                                                style={{color: "#08262C", fontFamily: "Inter"}}>Tests</CustomLink>
+                                    <CustomLink to={"/tests/1"}
+                                                style={{color: "#08262C", fontFamily: "Inter"}}>Test</CustomLink>
                                     <CustomLink to={"/universities"}
                                                 style={{color: "#08262C", fontFamily: "Inter"}}>Universities</CustomLink>
                                     <CustomLink to={"/posts"}

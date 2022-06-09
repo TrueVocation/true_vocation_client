@@ -77,6 +77,18 @@ function UniversityFilter(props) {
 
     async function fetchUniversities() {
         try {
+            const arr = []
+            if(averagePrice.one){
+                arr.push({from:0, to:300000})
+            }else if(averagePrice.two){
+                arr.push({from:300000, to:600000})
+            }else if(averagePrice.three){
+                arr.push( {from:600000, to:900000})
+            }else if(averagePrice.four){
+                arr.push( {from:900000, to:1200000})
+            }else if(averagePrice.five){
+                arr.push( {from:1200000, to:10000000})
+            }
             let filter = {
                 search: search,
                 cityId : city,
@@ -86,13 +98,7 @@ function UniversityFilter(props) {
                 ],
                 dormitory: hasDormitory,
                 military : hasMilitary,
-                averagePriceList: [
-                    averagePrice.one ? {from:0, to:300000}:null,
-                    averagePrice.two? {from:300000, to:600000}:null,
-                    averagePrice.three? {from:600000, to:900000}:null,
-                    averagePrice.four? {from:900000, to:1200000}:null,
-                    averagePrice.five? {from:1200000, to:10000000}:null,
-                ]
+                averagePriceList: arr
             }
             const url = new URL(`${API_BASE}/universities/filter`);
             // url.searchParams.set('page', 0);

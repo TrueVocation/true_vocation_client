@@ -3,6 +3,7 @@ import {InfoWindow, Marker} from "@react-google-maps/api";
 import Typography from "@mui/material/Typography";
 import UniversityCardMain from "../../Components/card/UniversityCardMain";
 import {Grid} from "@mui/material";
+import UniversityCardMainMap from "../../Components/card/UniversityCardMainMap";
 
 function CustomMarker({university}) {
     const [isVisible, setIsVisible] = useState(false)
@@ -20,7 +21,7 @@ function CustomMarker({university}) {
         >
             {isVisible && <InfoWindow onCloseClick={()=>setIsVisible(prevState => !prevState)} position={position}>
                 <Grid style={{width:400}}>
-                    <UniversityCardMain university={university} />
+                    <UniversityCardMainMap university={university} />
                 </Grid>
             </InfoWindow>}
 
