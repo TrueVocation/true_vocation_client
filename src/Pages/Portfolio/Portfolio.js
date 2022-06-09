@@ -20,6 +20,7 @@ import {
     CheckCircle,
     Clear,
     DoNotDisturbOn,
+    FileDownloadOutlined,
     PersonOutline,
     PhotoCamera,
     SettingsOutlined
@@ -41,10 +42,9 @@ import DialogActions from "@mui/material/DialogActions";
 import Chip from "@mui/material/Chip";
 import {Show} from 'react-haiku';
 import {useNavigate} from "react-router-dom";
-import JsPDF from 'jspdf';
 import Report from "./Report";
 import ChangePassword from "../User/ChangePassword";
-
+import Example from "./Example";
 
 
 const Head = ({state, setState, setGenerate, generate}) =>{
@@ -97,10 +97,25 @@ const Head = ({state, setState, setGenerate, generate}) =>{
                                       fontWeight:"bold"
                                   }}>Settings</Typography>
                   </Grid>
-                  <Grid item xs={2} container alignSelf={"flex-end"} display={"flex"}>
-                      <Button id={"primary_button"} onClick={()=>setGenerate(true)}>Export</Button>
-                      {generate ? "true" : "false"}
+                  <Grid onClick={()=>setState(2)} style={{cursor:"pointer"}} item xs={2} container display={"flex"} flexDirection={"row"} alignItems={"center"}>
+                      <Avatar variant={"circular"} style={{
+                          width: 50, height: 50, backgroundColor: state===1 ?  "#E7E4FC" : "#EDF0FF"
+                      }}>
+                          <FileDownloadOutlined fontSize={"large"} style={{
+                              color:state === 2 ? "#604BE8" : "#969DB6"
+                          }} />
+                      </Avatar>
+                      <Typography variant={"h5"} fontFamily={"Inter"}
+                                  style={{
+                                      color:state === 2 ? "#604BE8" : "#969DB6",
+                                      fontSize: 18,
+                                      marginLeft:10,
+                                      fontWeight:"bold"
+                                  }}>Export</Typography>
                   </Grid>
+                  {/*<Grid item xs={2} container alignSelf={"flex-end"} display={"flex"}>*/}
+                  {/*    <Button id={"primary_button"} onClick={()=>setGenerate(true)}>Export</Button>*/}
+                  {/*</Grid>*/}
 
               </Grid>
 
@@ -671,6 +686,9 @@ function Portfolio(props) {
         <Box display={"flex"} justifyContent={"center"} style={{padding:"20px",backgroundColor: "rgb(242, 245, 249)"}}>
         <Grid container xs={11} display={"flex"} justifyContent={"space-between"}>
             <Head state={state} setState={setState} setGenerate={setGenerate} generate={generate}/>
+            <Show>
+                <Show.When isTrue={state !== 2}>
+
             <Grid item xs={8}>
                 <Paper style={{
                     boxShadow: "0px 0px 12px -5px rgba(0,0,0,0.1)",
@@ -1160,7 +1178,6 @@ function Portfolio(props) {
                                         </Grid>
                                     })
                                 }
-
                             </Grid>
 
                             <Dialog maxWidth={"md"} fullWidth={true} open={openAchievementDialog} onClose={handleCloseAchievementDialog}>
@@ -1236,8 +1253,7 @@ function Portfolio(props) {
                             </Show.When>
                             <Show.Else>
                                 <ChangePassword/>
-                                <Report setGenerate={setGenerate} generate={generate} portfolio={portfolio} myHobbies={chipData} myAchievements={myAchievements}/>
-                            </Show.Else>
+                                </Show.Else>
                         </Show>
                     </Grid>
 
@@ -1442,7 +1458,7 @@ function Portfolio(props) {
                     boxShadow: "0px 0px 12px -5px rgba(0,0,0,0.1)",
                     padding: "25px 20px",
                     borderRadius: 12,
-                    margin: "15px 0",
+                    margin: "25px 0",
                     backgroundColor:"#604BE8"
                 }}>
                 <Grid container display={"flex"} flexDirection={"row"}>
@@ -1476,6 +1492,20 @@ function Portfolio(props) {
                 </Grid>
                 </Paper>
             </Grid>
+
+                </Show.When>
+                <Show.Else>
+                    <Grid container xs={12} display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"}>
+                        <Grid item xs={5}>
+                            <Report setGenerate={setGenerate} generate={generate} portfolio={portfolio} myHobbies={chipData} myAchievements={myAchievements}/>
+                        </Grid>
+                        <Grid item xs={5}>
+                            <Example setGenerate={setGenerate} generate={generate} portfolio={portfolio} myHobbies={chipData} myAchievements={myAchievements}/>
+                        </Grid>
+                    </Grid>
+
+                </Show.Else>
+            </Show>
         </Grid>
         </Box>
     );

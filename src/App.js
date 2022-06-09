@@ -19,8 +19,13 @@ import PostDetails from "./Pages/Posts/PostDetails";
 import Profile from "./Pages/User/Profile";
 import UniversityFilter from "./Pages/Universities/UniversityFilter";
 import Portfolio from "./Pages/Portfolio/Portfolio";
+import { useFavicon } from 'react-haiku';
+import { useTitle } from 'react-haiku';
 
 function App() {
+  const { setFavicon } = useFavicon();
+  setFavicon("http://localhost:8080/api/static/logo.png")
+  useTitle("True Vocation");
     return (
     <>
     <SnackbarProvider>
